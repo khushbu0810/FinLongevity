@@ -3,7 +3,7 @@ spring:
     name: api-gateway
 
 server:
-  port: 8012
+  port: 8082
 
 #Registering api gateway on eureka client discovery server -----
 eureka:
