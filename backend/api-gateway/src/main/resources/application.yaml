@@ -23,6 +23,10 @@ eureka:
     service-url:
       defaultZone: http://localhost:8010/eureka
 
+security:
+  jwt:
+    secret-base64: ${JWT_SECRET_BASE64:VGhpc0lzQVN1cGVyU2VjcmV0S2V5Rm9yRmluTG9uZ2V2aXR5RGV2T25seTEyMzQ1Njc4OTA=}
+
 management:
   endpoints:
     web:
