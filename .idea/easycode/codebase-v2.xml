@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/backend/api-gateway/src/main/java/com/example/api_gateway/ApiGatewayApplication.java;C:/projects/FinLongevity/backend/api-gateway/src/main/resources/application.yaml;C:/projects/FinLongevity/backend/config-server/src/main/java/com/example/config_server/ConfigServerApplication.java;C:/projects/FinLongevity/backend/config-server/src/main/resources/config-repo/identity-service.yaml;C:/projects/FinLongevity/backend/config-server/src/main/resources/application.yaml;C:/projects/FinLongevity/backend/eureka-discovery-server/src/main/java/com/example/eureka_discovery_server/EurekaDiscoveryServerApplication.java;C:/projects/FinLongevity/backend/eureka-discovery-server/src/main/resources/application.yaml;C:/projects/FinLongevity/backend/identity-service/src/main/java/com/example/identity_service/controller/HealthController.java;C:/projects/FinLongevity/backend/identity-service/src/main/java/com/example/identity_service/IdentityServiceApplication.java;C:/projects/FinLongevity/backend/identity-service/src/main/resources/application.yaml" />
+  </component>
+</project>
