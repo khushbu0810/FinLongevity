@@ -1,6 +1,18 @@
 spring:
   application:
     name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: identity-service
+              uri: lb://identity-service
+              predicates:
+                - Path=/api/identity/**
+              filters:
+                - StripPrefix=2
+
 
 server:
   port: 8082
