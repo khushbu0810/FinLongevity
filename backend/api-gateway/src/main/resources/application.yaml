@@ -1,3 +1,20 @@
 spring:
   application:
     name: api-gateway
+
+server:
+  port: 8012
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8010/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      access: unrestricted
