@@ -1,4 +1,4 @@
-package com.example.customer_service.dto;
+package com.example.customer_service.dto.profile;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;

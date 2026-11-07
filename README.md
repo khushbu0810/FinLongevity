@@ -422,3 +422,42 @@ Customer Service follows a Gateway-based authentication model.
 **Identity Service establishes who the user is. API Gateway authenticates incoming requests. Customer Service manages the user's customer profile.**
 
 This separation maintains clear service responsibilities and independent database ownership within the FinLongevity microservices architecture.
+
+## now
+Now implementing: payment modes for customer:
+can have one full time employment and may have multiple side earning business
+
+
+## Employment
+- `PUT /api/customers/me/employment` — create or update one current employment record.
+- `GET /api/customers/me/employment` — retrieve it.
+
+Example:
+```json
+{
+  "employmentType": "FULL_TIME",
+  "employerName": "Example Technologies",
+  "designation": "Software Engineer",
+  "employmentStartDate": "2025-06-27",
+  "employmentEndDate": null,
+  "currentlyEmployed": true
+}
+```
+
+## Income sources
+- `POST /api/customers/me/income-sources` — add a source.
+- `GET /api/customers/me/income-sources` — list the signed-in user's sources.
+- `PUT /api/customers/me/income-sources/{id}` — update an owned source.
+- `DELETE /api/customers/me/income-sources/{id}` — delete an owned source.
+
+Example:
+```json
+{
+  "incomeType": "SALARY",
+  "sourceName": "Monthly Salary",
+  "amount": 85000.00,
+  "frequency": "MONTHLY",
+  "currency": "INR",
+  "active": true
+}
+```
