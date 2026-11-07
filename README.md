@@ -465,3 +465,5 @@ Example:
 now customer can add assets and his liabilities
 
 now customer can add nominies
+- Each nominee belongs to one authenticated identity user (identityUserId).
+- 
