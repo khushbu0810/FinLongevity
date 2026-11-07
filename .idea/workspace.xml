@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added employment and income sources for customer">
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added assets and liabilities for customer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -79,10 +79,10 @@
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/8-assets__liabilities&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/9-nominees&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/customer-service/src/main/java/com/example/customer_service/repository&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/customer-service/src/main/java/com/example/customer_service/dto/nominee&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -92,15 +92,16 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\nominee" />
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\nominee" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\repository" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\asset_liabilities" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\income" />
-      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\income" />
-      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.customer_service.service" />
       <recent name="com.example.customer_service.controller" />
+      <recent name="com.example.customer_service.repository" />
       <recent name="com.example.customer_service" />
     </key>
   </component>
@@ -109,7 +110,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.EurekaDiscoveryServerApplication">
+  <component name="RunManager" selected="Application.CustomerServiceApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.api_gateway.ApiGatewayApplication" />
       <module name="api-gateway" />
@@ -222,11 +223,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.EurekaDiscoveryServerApplication" />
         <item itemvalue="Application.CustomerServiceApplication" />
         <item itemvalue="Application.IdentityServiceApplication" />
-        <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.ConfigServerApplication" />
+        <item itemvalue="Application.ApiGatewayApplication" />
+        <item itemvalue="Application.EurekaDiscoveryServerApplication" />
       </list>
     </recent_temporary>
   </component>
