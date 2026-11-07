@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added risk_tolerance and investment preferences for customer">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added household and add members in customer's household" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/9-nominees" />
+        <entry key="$PROJECT_DIR$" value="feature/11-household_management" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -61,43 +58,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ConfigServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CustomerServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.EurekaDiscoveryServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.IdentityServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.api-gateway [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.backend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [site].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/11-household__management&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/customer-service/src/main/java/com/example/customer_service/repository&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ApiGatewayApplication.executor": "Run",
+    "Application.ConfigServerApplication.executor": "Run",
+    "Application.CustomerServiceApplication.executor": "Run",
+    "Application.EurekaDiscoveryServerApplication.executor": "Run",
+    "Application.IdentityServiceApplication.executor": "Run",
+    "Maven.api-gateway [clean].executor": "Run",
+    "Maven.backend [clean].executor": "Run",
+    "Maven.finlongevity-backend [clean,install].executor": "Run",
+    "Maven.finlongevity-backend [clean].executor": "Run",
+    "Maven.finlongevity-backend [install].executor": "Run",
+    "Maven.finlongevity-backend [site].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "feature/12-monthly__expenses",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/projects/FinLongevity/backend/customer-service/src/main/java/com/example/customer_service/dto/expenses",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\expenses" />
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\expenses" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\repository" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\household" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\household" />
-      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\risk_profile" />
-      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\risk_profile" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.customer_service.service" />
@@ -335,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794056397462</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added household and add members in customer's household">
+      <option name="closed" value="true" />
+      <created>1794061035052</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1794061035053</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -360,6 +365,7 @@
     <MESSAGE value="set up customer service on euraka client and also fetched db credentials using config server" />
     <MESSAGE value="added employment and income sources for customer" />
     <MESSAGE value="added nominees for customer" />
-    <option name="LAST_COMMIT_MESSAGE" value="added nominees for customer" />
+    <MESSAGE value="added household and add members in customer's household" />
+    <option name="LAST_COMMIT_MESSAGE" value="added household and add members in customer's household" />
   </component>
 </project>
