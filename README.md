@@ -496,3 +496,8 @@ Higher risk preference
 - Interested in Stocks and Mutual Funds
 - Objective: Long-term wealth creation
 - FinLongevity can highlight products matching those declared preferences.
+
+## Household & Family Members
+This module currently manages the household owner's household and dependant records.
+
+
