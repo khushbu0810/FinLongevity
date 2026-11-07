@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="implemented profile creation and getting self profile only for valid users via Gateway">
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added employment and income sources for customer">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/CustomerProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/CustomerProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/dto/CustomerProfileRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/dto/profile/CustomerProfileRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/dto/CustomerProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/dto/profile/CustomerProfileResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/service/CustomerProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/service/CustomerProfileService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +32,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/registeration-identityService-5" />
+        <entry key="$PROJECT_DIR$" value="feature/7-income_Employment" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -83,7 +79,7 @@
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/7-income__Employment&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/8-assets__liabilities&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/customer-service/src/main/java/com/example/customer_service/repository&quot;,
@@ -97,14 +93,15 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\repository" />
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\asset_liabilities" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\income" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\income" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service" />
-      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.example.customer_service" />
+      <recent name="com.example.customer_service.service" />
       <recent name="com.example.customer_service.controller" />
+      <recent name="com.example.customer_service" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -320,7 +317,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794033176498</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added employment and income sources for customer">
+      <option name="closed" value="true" />
+      <created>1794042309562</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1794042309562</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -343,6 +348,17 @@
     <MESSAGE value="added user registration and login in identity service &amp; protected current-user endpoint" />
     <MESSAGE value="removed identity-service level security and added security at API-GATEWAY level" />
     <MESSAGE value="set up customer service on euraka client and also fetched db credentials using config server" />
-    <option name="LAST_COMMIT_MESSAGE" value="set up customer service on euraka client and also fetched db credentials using config server" />
+    <MESSAGE value="added employment and income sources for customer" />
+    <option name="LAST_COMMIT_MESSAGE" value="added employment and income sources for customer" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
