@@ -10,6 +10,7 @@
         <module name="api-gateway" />
         <module name="config-server" />
         <module name="identity-service" />
+        <module name="customer-service" />
         <module name="eureka-discovery-server" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="api-gateway" options="" />
       <module name="backend" options="" />
       <module name="config-server" options="" />
+      <module name="customer-service" options="" />
       <module name="eureka-discovery-server" options="" />
       <module name="identity-service" options="" />
     </option>
