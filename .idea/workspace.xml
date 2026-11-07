@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="removed identity-service level security and added security at API-GATEWAY level">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="set up customer service on euraka client and also fetched db credentials using config server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/config-server/src/main/resources/config-repo/identity-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/config-server/src/main/resources/config-repo/identity-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +83,7 @@
     &quot;git-widget-placeholder&quot;: &quot;feature/customer-service-setup-6&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/customer-service/src/main/java/com/example/customer_service&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -93,6 +91,15 @@
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service" />
+      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\config" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.customer_service.controller" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean install" />
@@ -167,10 +174,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.CustomerServiceApplication" />
-        <item itemvalue="Application.ConfigServerApplication" />
-        <item itemvalue="Application.EurekaDiscoveryServerApplication" />
         <item itemvalue="Application.IdentityServiceApplication" />
         <item itemvalue="Application.ApiGatewayApplication" />
+        <item itemvalue="Application.ConfigServerApplication" />
+        <item itemvalue="Application.EurekaDiscoveryServerApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -253,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793974021115</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="set up customer service on euraka client and also fetched db credentials using config server">
+      <option name="closed" value="true" />
+      <created>1794033176497</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1794033176498</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -275,6 +290,7 @@
     <MESSAGE value="configured identity-service with apiGateway(Routes configuration)" />
     <MESSAGE value="added user registration and login in identity service &amp; protected current-user endpoint" />
     <MESSAGE value="removed identity-service level security and added security at API-GATEWAY level" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed identity-service level security and added security at API-GATEWAY level" />
+    <MESSAGE value="set up customer service on euraka client and also fetched db credentials using config server" />
+    <option name="LAST_COMMIT_MESSAGE" value="set up customer service on euraka client and also fetched db credentials using config server" />
   </component>
 </project>

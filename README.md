@@ -2,12 +2,13 @@
 
 ## Application Details
 
-| Application | Port | URL | Purpose |
-|---|---:|---|---|
-| Discovery Server | 8010 | http://localhost:8010 | Eureka dashboard and service registry |
-| Config Server | 8012 | http://localhost:8012/identity-service/default | Serves Identity Service configuration |
-| Identity Service | 8080 | http://localhost:8080/health | Initial service health endpoint |
-| API Gateway | 8082 | http://localhost:8082/actuator/health | API entry point and health endpoint |
+| Application      | Port | URL                                            | Purpose |
+|------------------|-----:|------------------------------------------------|---|
+| Discovery Server | 8010 | http://localhost:8010                          | Eureka dashboard and service registry |
+| Config Server    | 8012 | http://localhost:8012/identity-service/default | Serves Identity Service configuration |
+| Identity Service | 8080 | http://localhost:8080/health                   | Initial service health endpoint |
+| API Gateway      | 8082 | http://localhost:8082/actuator/health          | API entry point and health endpoint |
+| Customer service | 8081 | http://localhost:8081/actuator/health          | Initial service health endpoint  |
 
 ## Start-up Order
 
@@ -17,6 +18,7 @@ Start the applications in the following order:
 2. **Config Server** — http://localhost:8012
 3. **Identity Service** — http://localhost:8080
 4. **API Gateway** — http://localhost:8082
+5. **Customer Service** — http://localhost:8081
 
 ## Identity-service
 In this service we added database-backed customer registration, BCrypt password hashing, login, JWT access-token generation, and a protected current-user endpoint.
@@ -264,3 +266,159 @@ FinLongevity separates authentication responsibilities across its microservices 
 - **Spring Security:** Establishes the authenticated principal and enforces endpoint-level authorization.
 
 **Design Approach:** Centralized JWT validation at the API Gateway with service-level Spring Security authentication and authorization.
+
+
+
+# Customer Service – Authentication & Profile Management
+
+## Overview
+
+Customer Service is responsible for creating and managing customer profiles for users registered through Identity Service.
+
+It does not perform independent user authentication, JWT validation, or identity verification. These responsibilities belong to Identity Service and API Gateway.
+
+Customer Service trusts the authenticated identity context forwarded by API Gateway through HTTP headers.
+
+## Authentication Architecture
+
+```text
+                 CLIENT
+                   |
+                   | Request with JWT
+                   v
+              API GATEWAY
+                   |
+                   | 1. Extract Bearer Token
+                   | 2. Validate JWT Signature
+                   | 3. Validate Token Expiration
+                   | 4. Extract User Claims
+                   |
+                   | Forward Trusted Headers
+                   |
+                   | X-Authenticated-User-Id
+                   | X-Authenticated-User-Email
+                   | X-Authenticated-User-Role
+                   v
+             CUSTOMER SERVICE
+                   |
+                   | GatewayAuthenticationFilter
+                   | 1. Read Identity Headers
+                   | 2. Check Required Headers
+                   | 3. Create Security Principal
+                   | 4. Establish Security Context
+                   |
+                   v
+             CUSTOMER PROFILE
+                   |
+                   | Create / Retrieve / Update
+                   v
+          FINANCIAL_CUSTOMER_DB
+```
+
+## Responsibilities
+
+### 1. Identity Service
+
+- Handles user registration and login.
+- Validates user credentials.
+- Stores user identity information.
+- Generates JWT tokens after successful authentication.
+
+### 2. API Gateway
+
+- Acts as the entry point for client requests.
+- Validates JWT signatures and expiration.
+- Extracts authenticated user information from JWT claims.
+- Removes untrusted identity headers supplied by clients.
+- Adds trusted identity headers before forwarding requests to downstream services.
+
+### 3. Customer Service
+
+- Receives authenticated identity information from API Gateway.
+- Does not validate JWT tokens independently.
+- Does not access the Identity Service database.
+- Creates customer profiles for authenticated identity users.
+- Uses the authenticated user ID to associate a customer profile with its identity account.
+- Manages customer profile information independently.
+
+## Customer Profile Creation Flow
+
+```text
+1. User registers through Identity Service.
+                |
+                v
+2. Identity Service creates the user account.
+                |
+                v
+3. User logs in and receives JWT.
+                |
+                v
+4. Client sends a profile creation request
+   through API Gateway with the JWT.
+                |
+                v
+5. API Gateway validates the JWT.
+                |
+                v
+6. Gateway extracts userId, email and role.
+                |
+                v
+7. Gateway forwards authenticated identity headers.
+                |
+                v
+8. Customer Service GatewayAuthenticationFilter
+   reads the identity headers.
+                |
+                v
+9. SecurityContext is established.
+                |
+                v
+10. Customer Service creates the customer profile
+    using the authenticated user ID.
+                |
+                v
+11. Profile is saved in financial_customer_db.
+                |
+                v
+12. Successful response returned to the client.
+```
+
+## Identity Headers
+
+API Gateway forwards the following headers:
+
+| Header | Purpose |
+|---|---|
+| `X-Authenticated-User-Id` | Identifies the authenticated user |
+| `X-Authenticated-User-Email` | Provides the user's email |
+| `X-Authenticated-User-Role` | Provides the user's assigned role |
+
+Customer Service uses these headers to establish the local Spring Security principal.
+
+## Database Ownership
+
+| Service | Database | Responsibility |
+|---|---|---|
+| Identity Service | `financial_identity_db` | User accounts, credentials and roles |
+| Customer Service | `financial_customer_db` | Customer profiles and customer-related information |
+
+The customer profile references the identity account using its user ID. Customer Service does not maintain a direct database relationship with Identity Service.
+
+## Security Design
+
+Customer Service follows a Gateway-based authentication model.
+
+- JWT validation is centralized at API Gateway.
+- Identity Service remains the owner of user accounts.
+- Customer Service trusts identity headers inserted by the Gateway.
+- Customer Service creates its own local SecurityContext.
+- Missing authentication headers result in HTTP 401 Unauthorized.
+- Customer Service is not intended to be directly accessible by external clients.
+
+**Important:** Direct access to Customer Service must be restricted to trusted internal traffic. Otherwise, an external caller could forge identity headers and impersonate another user.
+
+## Design Principle
+
+**Identity Service establishes who the user is. API Gateway authenticates incoming requests. Customer Service manages the user's customer profile.**
+
+This separation maintains clear service responsibilities and independent database ownership within the FinLongevity microservices architecture.
