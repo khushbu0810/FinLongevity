@@ -461,3 +461,7 @@ Example:
   "active": true
 }
 ```
+
+now customer can add assets and his liabilities
+
+now customer can add nominies
