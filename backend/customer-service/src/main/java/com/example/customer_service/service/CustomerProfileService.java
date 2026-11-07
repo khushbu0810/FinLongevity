@@ -2,8 +2,8 @@ package com.example.customer_service.service;
 
 import com.example.customer_service.config.GatewayUserPrincipal;
 import com.example.customer_service.repository.CustomerProfileRepository;
-import com.example.customer_service.dto.CustomerProfileRequest;
-import com.example.customer_service.dto.CustomerProfileResponse;
+import com.example.customer_service.dto.profile.CustomerProfileRequest;
+import com.example.customer_service.dto.profile.CustomerProfileResponse;
 import com.example.customer_service.model.CustomerProfile;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;

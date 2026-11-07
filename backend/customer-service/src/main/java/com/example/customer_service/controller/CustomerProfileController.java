@@ -1,7 +1,7 @@
 package com.example.customer_service.controller;
 
-import com.example.customer_service.dto.CustomerProfileRequest;
-import com.example.customer_service.dto.CustomerProfileResponse;
+import com.example.customer_service.dto.profile.CustomerProfileRequest;
+import com.example.customer_service.dto.profile.CustomerProfileResponse;
 import com.example.customer_service.service.CustomerProfileService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

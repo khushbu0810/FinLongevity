@@ -1,4 +1,4 @@
-package com.example.customer_service.dto;
+package com.example.customer_service.dto.profile;
 
 import java.time.Instant;
 import java.time.LocalDate;
