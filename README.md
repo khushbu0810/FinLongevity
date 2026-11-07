@@ -466,4 +466,33 @@ now customer can add assets and his liabilities
 
 now customer can add nominies
 - Each nominee belongs to one authenticated identity user (identityUserId).
-- 
+
+## Risk Tolerance :
+"What kind of financial products and investment options are suitable for this customer's preferences and goals?"
+
+customer declared: risk profile
+
+This profile stores customer-declared preferences. It is not a regulated suitability assessment or a personalized investment recommendation.
+
+This tells us about:Customer A – Conservative
+Low risk preference
+- Beginner investor
+- Prefers Fixed Deposits and Bonds
+- Objective: Capital preservation
+- FinLongevity can prioritise showing lower-risk product options.
+
+
+Customer B – Moderate
+Medium risk preference
+- Intermediate investor
+- Prefers Mutual Funds and FDs
+- Objective: Wealth creation
+- FinLongevity can show a mix of product categories for comparison.
+
+
+Customer C – Aggressive
+Higher risk preference
+- Experienced investor
+- Interested in Stocks and Mutual Funds
+- Objective: Long-term wealth creation
+- FinLongevity can highlight products matching those declared preferences.

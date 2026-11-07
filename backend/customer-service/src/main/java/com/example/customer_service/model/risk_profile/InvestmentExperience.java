@@ -1,0 +1,7 @@
+package com.example.customer_service.model.risk_profile;
+
+public enum InvestmentExperience {
+    BEGINNER,
+    INTERMEDIATE,
+    EXPERIENCED
+}
