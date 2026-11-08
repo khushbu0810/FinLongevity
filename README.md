@@ -2,13 +2,14 @@
 
 ## Application Details
 
-| Application      | Port | URL                                            | Purpose |
-|------------------|-----:|------------------------------------------------|---|
-| Discovery Server | 8010 | http://localhost:8010                          | Eureka dashboard and service registry |
-| Config Server    | 8012 | http://localhost:8012/identity-service/default | Serves Identity Service configuration |
-| Identity Service | 8080 | http://localhost:8080/health                   | Initial service health endpoint |
-| API Gateway      | 8082 | http://localhost:8082/actuator/health          | API entry point and health endpoint |
-| Customer service | 8081 | http://localhost:8081/actuator/health          | Initial service health endpoint  |
+| Application              | Port | URL                                            | Purpose |
+|--------------------------|-----:|------------------------------------------------|---|
+| Discovery Server         | 8010 | http://localhost:8010                          | Eureka dashboard and service registry |
+| Config Server            | 8012 | http://localhost:8012/identity-service/default | Serves Identity Service configuration |
+| Identity Service         | 8080 | http://localhost:8080/health                   | Initial service health endpoint |
+| Customer service         | 8081 | http://localhost:8081/actuator/health          | Initial service health endpoint  |
+| API Gateway              | 8082 | http://localhost:8082/actuator/health          | API entry point and health endpoint |
+| Product-Provider service | 8083 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
 
 ## Start-up Order
 
