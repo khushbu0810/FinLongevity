@@ -11,6 +11,7 @@
         <module name="config-server" />
         <module name="identity-service" />
         <module name="customer-service" />
+        <module name="provider-product-service" />
         <module name="eureka-discovery-server" />
       </profile>
     </annotationProcessing>
@@ -23,6 +24,7 @@
       <module name="customer-service" options="" />
       <module name="eureka-discovery-server" options="" />
       <module name="identity-service" options="" />
+      <module name="provider-product-service" options="" />
     </option>
   </component>
 </project>
