@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -21,7 +22,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/api/providers/{providerId}/products")
+    @PostMapping("/{providerId}/products")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResponse createProduct(
             @PathVariable UUID providerId,
@@ -29,31 +30,31 @@ public class ProductController {
         return productService.createProduct(providerId, request);
     }
 
-    @PutMapping("/api/products/{productId}")
+    @PutMapping("/{productId}")
     public ProductResponse updateProduct(
             @PathVariable UUID productId,
             @Valid @RequestBody ProductRequest request) {
         return productService.updateProduct(productId, request);
     }
 
-    @PatchMapping("/api/products/{productId}/status")
+    @PatchMapping("/{productId}/status")
     public ProductResponse updateProductStatus(
             @PathVariable UUID productId,
             @RequestParam(name = "status") ProductStatus status) {
         return productService.updateProductStatus(productId, status);
     }
 
-    @GetMapping("/api/products/{productId}")
+    @GetMapping("/{productId}")
     public ProductResponse getProduct(@PathVariable UUID productId) {
         return productService.getProduct(productId);
     }
 
-    @GetMapping("/api/providers/{providerId}/products")
+    @GetMapping("/{providerId}/products")
     public List<ProductResponse> getProviderProducts(@PathVariable UUID providerId) {
         return productService.getProviderProducts(providerId);
     }
 
-    @GetMapping("/api/products/catalogue")
+    @GetMapping("/catalogue")
     public List<ProductResponse> getCatalogue(
             @RequestParam(name = "type", required = false) ProductType type) {
         return productService.getCatalogue(type);

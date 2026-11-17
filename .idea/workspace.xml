@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="changes">
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="completed investment service: setup and configure this with api gateway and also implemented functionalities.">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/provider-product-service/src/main/java/com/example/provider_product_service/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/provider-product-service/src/main/java/com/example/provider_product_service/controller/ProductController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +23,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="module-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -32,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/11-household_management" />
+        <entry key="$PROJECT_DIR$" value="feature/14-adding-providers_products" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -80,10 +87,10 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/14-adding-providers__products",
+    "git-widget-placeholder": "feature/15-investment-service",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/FinLongevity/backend/provider-product-service/src/main/java/com/example/provider_product_service",
+    "last_opened_file_path": "C:/projects/FinLongevity/backend/investment-service/src/main/java/com/example/investment_service",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -93,13 +100,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend\investment-service\src\main\java\com\example\investment_service" />
       <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service" />
       <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service\model\provider" />
       <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service\model" />
       <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\dto\expenses" />
-      <recent name="C:\projects\FinLongevity\backend\customer-service\src\main\java\com\example\customer_service\model\expenses" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.investment_service.dto.transaction" />
       <recent name="com.example.customer_service.service" />
       <recent name="com.example.customer_service.controller" />
       <recent name="com.example.customer_service.repository" />

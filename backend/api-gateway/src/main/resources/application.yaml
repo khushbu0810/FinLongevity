@@ -16,7 +16,18 @@ spring:
               uri: lb://customer-service
               predicates:
                 - Path=/api/customers/**
-
+            - id: investment-service
+              uri: lb://investment-service
+              predicates:
+                - Path=/api/investments/**
+            - id: provider-service
+              uri: lb://provider-product-service
+              predicates:
+                - Path=/api/providers/**
+            - id: product-service
+              uri: lb://provider-product-service
+              predicates:
+                - Path=/api/products/**
 
 server:
   port: 8082
