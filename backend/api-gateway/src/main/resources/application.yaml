@@ -28,6 +28,10 @@ spring:
               uri: lb://provider-product-service
               predicates:
                 - Path=/api/products/**
+            - id: payment-service
+              uri: lb://payment-service
+              predicates:
+                - Path=/api/payments/**
 
 server:
   port: 8082

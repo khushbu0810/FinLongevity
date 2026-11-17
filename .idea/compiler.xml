@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="investment-service" />
+        <module name="payment-service" />
         <module name="customer-service" />
         <module name="eureka-discovery-server" />
         <module name="api-gateway" />

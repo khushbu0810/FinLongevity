@@ -1,0 +1,14 @@
+package com.example.payment_service.model;
+
+public enum PaymentEventType {
+    PAYMENT_CREATED,
+    PAYMENT_INITIATED,
+    PAYMENT_PENDING,
+    PAYMENT_SUCCEEDED,
+    PAYMENT_FAILED,
+    PAYMENT_CANCELLED,
+    REFUND_INITIATED,
+    REFUND_SUCCEEDED,
+    REFUND_FAILED,
+    RECONCILIATION_UPDATED
+}
