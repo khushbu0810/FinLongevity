@@ -16,6 +16,7 @@
         <module>customer-service</module>
         <module>provider-product-service</module>
         <module>investment-service</module>
+        <module>payment-service</module>
     </modules>
 
     <properties>

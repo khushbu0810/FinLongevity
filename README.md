@@ -507,3 +507,7 @@ This module currently manages the household owner's household and dependant reco
 Its responsibility will be to manage customer investment records, holdings, investment transactions and redemption records. 
 
 It will reference products using their IDs from Provider & Product Service rather than storing or managing the product catalogue itself.
+
+## Payment service
+payment : created -> initiated 
+then either success or fails
