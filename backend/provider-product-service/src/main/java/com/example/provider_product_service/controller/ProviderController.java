@@ -4,6 +4,8 @@ import com.example.provider_product_service.dto.provider.ProviderRequest;
 import com.example.provider_product_service.dto.provider.ProviderResponse;
 import com.example.provider_product_service.model.provider.ProviderStatus;
 import com.example.provider_product_service.service.ProviderService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,15 @@ public class ProviderController {
     }
 
     @GetMapping("/{providerId}")
-    public ProviderResponse getProvider(@PathVariable UUID providerId) {
+    public ProviderResponse getProvider(
+            @Parameter(
+                    name = "providerId",
+                    description = "Enter the Provider UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID providerId) {
         return providerService.getProvider(providerId);
     }
 

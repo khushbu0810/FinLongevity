@@ -21,17 +21,80 @@ spring:
               predicates:
                 - Path=/api/investments/**
             - id: provider-service
-              uri: lb://provider-product-service
+              uri: lb://product-provider-service
               predicates:
                 - Path=/api/providers/**
             - id: product-service
-              uri: lb://provider-product-service
+              uri: lb://product-provider-service
               predicates:
                 - Path=/api/products/**
             - id: payment-service
               uri: lb://payment-service
               predicates:
                 - Path=/api/payments/**
+
+            #SWAGGER DOCUMENTATION ROUTES
+            - id: identity-swagger
+              uri: lb://identity-service
+              predicates:
+                - Path=/identity/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: customer-swagger
+              uri: lb://customer-service
+              predicates:
+                - Path=/customer/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: investment-swagger
+              uri: lb://investment-service
+              predicates:
+                - Path=/investment/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: product-provider-swagger
+              uri: lb://product-provider-service
+              predicates:
+                - Path=/product-provider/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: payment-swagger
+              uri: lb://payment-service
+              predicates:
+                - Path=/payment/v3/api-docs
+              filters:
+                - StripPrefix=1
+
+#SWAGGER UI CONFIGURATION
+springdoc:
+  api-docs:
+    enabled: true
+
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+    urls:
+      - name: Identity Service
+        url: /identity/v3/api-docs
+
+      - name: Customer Service
+        url: /customer/v3/api-docs
+
+      - name: Investment Service
+        url: /investment/v3/api-docs
+
+      - name: Product Provider Service
+        url: /product-provider/v3/api-docs
+
+      - name: Payment Service
+        url: /payment/v3/api-docs
+
+    urls-primary-name: Identity Service
+    disable-swagger-default-url: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+
 
 server:
   port: 8082

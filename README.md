@@ -2,15 +2,38 @@
 
 ## Application Details
 
-| Application                 | Port | URL                                            | Purpose |
-|-----------------------------|-----:|------------------------------------------------|---|
-| Discovery Server            | 8010 | http://localhost:8010                          | Eureka dashboard and service registry |
-| Config Server               | 8012 | http://localhost:8012/identity-service/default | Serves Identity Service configuration |
-| Identity Service            | 8080 | http://localhost:8080/health                   | Initial service health endpoint |
-| Customer service            | 8081 | http://localhost:8081/actuator/health          | Initial service health endpoint  |
-| API Gateway                 | 8082 | http://localhost:8082/actuator/health          | API entry point and health endpoint |
-| Product-Provider service    | 8083 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
-| Investment service | 8084 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+| Application              | Port | URL                                            | Purpose |
+|--------------------------|-----:|------------------------------------------------|---|
+| Eureka Discovery Server  | 8010 | http://localhost:8010                          | Eureka dashboard and service registry |
+| Config Server            | 8012 | http://localhost:8012/identity-service/default | Serves Identity Service configuration |
+| Identity Service         | 8080 | http://localhost:8080/health                   | Initial service health endpoint |
+| Customer service         | 8081 | http://localhost:8081/actuator/health          | Initial service health endpoint  |
+| API Gateway              | 8082 | http://localhost:8082/actuator/health          | API entry point and health endpoint |
+| Provider Product service | 8083 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+| Investment service       | 8084 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+| Payment service          | 8085 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+
+
+
+
+## SWAGGER
+
+### Centralized Swagger – API Gateway
+> **Note:** Ensure all required microservices are running and registered with Eureka before accessing centralized API documentation.
+**Swagger UI:** http://localhost:8082/swagger-ui/index.html
+
+
+### Individual Microservice Swagger URLs
+
+| Microservice             | Port | Swagger UI                                  |
+|--------------------------|-----:|---------------------------------------------|
+| API GATEWAY              | 8082 | http://localhost:8082/swagger-ui/index.html |
+| Identity Service         | 8080 | http://localhost:8080/swagger-ui/index.html |
+| Customer Service         | 8081 | http://localhost:8081/swagger-ui/index.html |
+| Provider Product Service | 8083 | http://localhost:8083/swagger-ui/index.html |
+| Investment Service       | 8084 | http://localhost:8084/swagger-ui/index.html |
+| Payment Service          | 8085 | http://localhost:8085/swagger-ui/index.html |
+
 
 ## Start-up Order
 
