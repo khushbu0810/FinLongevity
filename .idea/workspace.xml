@@ -4,30 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added swagger in customer service all services and modify the code related to swagger only">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="changes from UUID to long in payment and investment repos... for authentication header">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/AssetLiabilityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/AssetLiabilityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/ExpenseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/ExpenseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/FinancialProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/FinancialProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/HouseholdController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/HouseholdController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/NomineeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/controller/NomineeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/controller/InvestmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/controller/InvestmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/dto/investment/InvestmentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/dto/investment/InvestmentResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/model/investment/Investment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/model/investment/Investment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/model/transaction/InvestmentTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/model/transaction/InvestmentTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/repository/InvestmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/repository/InvestmentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/repository/InvestmentTransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/repository/InvestmentTransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/service/InvestmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/java/com/example/investment_service/service/InvestmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/model/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/repository/PaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/service/PaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/provider-product-service/src/main/java/com/example/provider_product_service/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/provider-product-service/src/main/java/com/example/provider_product_service/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/provider-product-service/src/main/java/com/example/provider_product_service/controller/ProviderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/provider-product-service/src/main/java/com/example/provider_product_service/controller/ProviderController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,12 +130,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="IdentityServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.identity_service.IdentityServiceApplication" />
-      <module name="identity-service" />
+    <configuration name="EurekaDiscoveryServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.eureka_discovery_server.EurekaDiscoveryServerApplication" />
+      <module name="eureka-discovery-server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.identity_service.*" />
+          <option name="PATTERN" value="com.example.eureka_discovery_server.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -206,11 +184,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ProviderProductServiceApplication" />
         <item itemvalue="Application.PaymentServiceApplication" />
         <item itemvalue="Application.InvestmentServiceApplication" />
-        <item itemvalue="Application.ProviderProductServiceApplication" />
+        <item itemvalue="Application.EurekaDiscoveryServerApplication" />
         <item itemvalue="Application.CustomerServiceApplication" />
-        <item itemvalue="Application.IdentityServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -357,7 +335,15 @@
       <option name="project" value="LOCAL" />
       <updated>1795628388434</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="changes from UUID to long in payment and investment repos... for authentication header">
+      <option name="closed" value="true" />
+      <created>1795667760583</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1795667760583</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -387,6 +373,7 @@
     <MESSAGE value="completed investment service: setup and configure this with api gateway and also implemented functionalities." />
     <MESSAGE value="added swagger in customer service" />
     <MESSAGE value="added swagger in customer service all services and modify the code related to swagger only" />
-    <option name="LAST_COMMIT_MESSAGE" value="added swagger in customer service all services and modify the code related to swagger only" />
+    <MESSAGE value="changes from UUID to long in payment and investment repos... for authentication header" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes from UUID to long in payment and investment repos... for authentication header" />
   </component>
 </project>

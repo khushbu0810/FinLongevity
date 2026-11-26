@@ -1,0 +1,77 @@
+<div class="page-heading">
+    <div><span class="eyebrow">DISCOVER FINANCIAL PRODUCTS</span>
+        <h1>Product catalogue</h1>
+        <p class="muted">Explore financial products offered by participating providers.</p>
+    </div><button class="outline-btn" type="button" (click)="loadCatalogue()">↻ Refresh catalogue</button>
+</div>
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+<section class="catalogue-toolbar content-card">
+    <div class="search-field"><span>⌕</span><input aria-label="Search products"
+            placeholder="Search product, provider or description" [ngModel]="query()"
+            (ngModelChange)="query.set($event)"></div><select aria-label="Filter by product type"
+        [ngModel]="selectedType()" (ngModelChange)="changeType($event)">
+        <option value="">All product types</option>@for (type of types; track type) { <option [value]="type">{{
+            formatLabel(type) }}</option> }
+    </select><button class="text-btn" type="button" (click)="clearFilters()">Clear filters</button>
+</section>
+<div class="catalogue-meta"><span>{{ filteredProducts().length }} product{{ filteredProducts().length === 1 ? '' : 's'
+        }} available in results</span><span>Catalogue data from Provider Product Service</span></div>
+@if (loading()) { <section class="content-card empty-state">Loading product catalogue…</section> }
+@else if (!filteredProducts().length) { <section class="content-card empty-state"><span
+        class="empty-icon">◇</span><strong>No products match your filters</strong>
+    <p>Try another keyword or clear the selected product type.</p><button class="outline-btn" type="button"
+        (click)="clearFilters()">Clear filters</button>
+</section> }
+@else { <section class="product-grid">@for (product of filteredProducts(); track product.id) { <article
+        class="product-card">
+        <div class="product-card-top"><span class="type-chip">{{ formatLabel(product.productType) }}</span>@if
+            (product.featured) { <span class="featured-chip">Featured</span> }</div>
+        <h3>{{ product.name }}</h3>
+        <p class="provider-name">{{ product.providerName || 'Financial provider' }}</p>
+        <p class="product-description">{{ product.description || 'Product details are available from the provider.' }}
+        </p>
+        <div class="investment-range">
+            <div><small>MINIMUM INVESTMENT</small><strong>{{ product.minimumInvestment |
+                    currency:product.currency:'symbol':'1.0-2' }}</strong></div>
+            <div><small>MAXIMUM INVESTMENT</small><strong>{{ product.maximumInvestment != null ?
+                    (product.maximumInvestment | currency:product.currency:'symbol':'1.0-2') : 'Not specified'
+                    }}</strong></div>
+        </div>
+        <div class="product-card-footer"><span class="status-pill" [class]="statusClass(product.status)">{{
+                formatLabel(product.status) }}</span><button type="button" (click)="openDetails(product)">View details
+                <span>→</span></button></div>
+    </article> }</section> }
+@if (selectedProduct(); as product) { <div class="detail-backdrop" (click)="closeDetails()">
+    <section class="detail-panel" role="dialog" aria-modal="true" aria-label="Product details"
+        (click)="$event.stopPropagation()">
+        <div class="detail-header">
+            <div><span class="eyebrow">PRODUCT INFORMATION</span>
+                <h2>{{ product.name }}</h2>
+                <p class="muted">{{ product.providerName || 'Financial provider' }}</p>
+            </div><button class="icon-btn" type="button" aria-label="Close details" (click)="closeDetails()">✕</button>
+        </div>@if (detailLoading()) { <div class="empty-state">Loading product details…</div> } @else { <div
+            class="detail-badges"><span class="type-chip">{{ formatLabel(product.productType) }}</span><span
+                class="status-pill" [class]="statusClass(product.status)">{{ formatLabel(product.status) }}</span></div>
+        <p class="detail-description">{{ product.description || 'No additional description provided.' }}</p>
+        <div class="detail-grid">
+            <div><small>Minimum investment</small><strong>{{ product.minimumInvestment |
+                    currency:product.currency:'symbol':'1.2-2' }}</strong></div>
+            <div><small>Maximum investment</small><strong>{{ product.maximumInvestment != null ?
+                    (product.maximumInvestment | currency:product.currency:'symbol':'1.2-2') : 'Not specified'
+                    }}</strong></div>
+            <div><small>Currency</small><strong>{{ product.currency }}</strong></div>
+            <div><small>External product code</small><strong>{{ product.externalProductCode }}</strong></div>
+            <div><small>Provider</small><strong>{{ product.providerName || '—' }}</strong></div>
+            <div><small>Featured</small><strong>{{ product.featured ? 'Yes' : 'No' }}</strong></div>
+            <div class="full-width"><small>Product ID</small><strong class="wrap-value">{{ product.id }}</strong></div>
+            <div class="full-width"><small>Provider ID</small><strong class="wrap-value">{{ product.providerId
+                    }}</strong></div>
+            <div><small>Created</small><strong>{{ product.createdAt ? (product.createdAt | date:'mediumDate') : '—'
+                    }}</strong></div>
+            <div><small>Last updated</small><strong>{{ product.updatedAt ? (product.updatedAt | date:'mediumDate') : '—'
+                    }}</strong></div>
+        </div>
+        <p class="catalogue-footnote">Product information is supplied by the provider catalogue. Review the provider's
+            official terms and product documentation before making an investment decision.</p> }
+    </section>
+</div> }

@@ -1,0 +1,100 @@
+<div class="page-heading">
+    <div><span class="eyebrow">FINANCIAL HEALTH</span>
+        <h1>Income sources</h1>
+        <p class="muted">See where your money comes from and keep your income profile current.</p>
+    </div><button class="primary-btn" (click)="newIncome()">＋ Add income</button>
+</div>
+@if (message()) { <div class="alert-success">{{ message() }}</div> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+<section class="metric-grid income-summary">
+    <article class="metric-card">
+        <div class="metric-top"><span class="metric-icon green">↗</span><span class="metric-label">ACTIVE SOURCES</span>
+        </div><strong>{{ activeCount() }}</strong><small>Income streams currently active</small>
+    </article>
+    <article class="metric-card">
+        <div class="metric-top"><span class="metric-icon blue">₹</span><span class="metric-label">MONTHLY
+                EQUIVALENT</span></div><strong>{{ monthlyEquivalent() | currency:'INR':'symbol':'1.0-0'
+            }}</strong><small>Estimated from recurring sources</small>
+    </article>
+    <article class="metric-card">
+        <div class="metric-top"><span class="metric-icon orange">▤</span><span class="metric-label">ALL SOURCES</span>
+        </div><strong>{{ sources().length }}</strong><small>Recorded income sources</small>
+    </article>
+</section>
+@if (showForm()) {
+<section class="content-card income-form-card">
+    <div class="card-heading">
+        <div>
+            <h3>{{ editingId() ? 'Update income source' : 'Add an income source' }}</h3>
+            <p class="muted">Enter the details as defined in your financial records.</p>
+        </div><button class="icon-btn" type="button" (click)="cancelForm()">✕</button>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
+        <div><label>Income type *</label><select formControlName="incomeType">
+                <option value="">Select type</option>@for (v of incomeTypes; track v) { <option [value]="v">{{ label(v)
+                    }}</option> }
+            </select></div>
+        <div><label>Source name *</label><input formControlName="sourceName" maxlength="120"
+                placeholder="e.g. Monthly salary"></div>
+        <div><label>Amount *</label><input type="number" min="0.01" step="0.01" formControlName="amount"
+                placeholder="0.00"></div>
+        <div><label>Frequency *</label><select formControlName="frequency">
+                <option value="">Select frequency</option>@for (v of frequencies; track v) { <option [value]="v">{{
+                    label(v) }}</option> }
+            </select></div>
+        <div><label>Currency *</label><input formControlName="currency" maxlength="3" placeholder="INR"
+                style="text-transform:uppercase"></div>
+        <div class="check-field"><label><input type="checkbox" formControlName="active"> This income source is
+                active</label></div>
+        <div class="form-actions"><button class="primary-btn" type="submit" [disabled]="form.invalid || saving()">{{
+                saving() ? 'Saving…' : 'Save income source' }}</button><button class="outline-btn" type="button"
+                (click)="cancelForm()">Cancel</button></div>
+    </form>
+</section>
+}
+<section class="content-card table-card">
+    <div class="card-heading">
+        <div>
+            <h3>Your income sources</h3>
+            <p class="muted">All income sources associated with your account.</p>
+        </div><button class="outline-btn" (click)="load()">↻ Refresh</button>
+    </div>
+    @if (loading()) { <div class="empty-state">Loading income sources…</div> }
+    @else if (!sources().length) { <div class="empty-state"><span class="empty-icon">↗</span><strong>No income sources
+            yet</strong>
+        <p>Add your salary, business, freelance or other income to get started.</p><button class="primary-btn"
+            (click)="newIncome()">Add your first income source</button>
+    </div> }
+    @else {
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>SOURCE</th>
+                    <th>TYPE</th>
+                    <th>AMOUNT</th>
+                    <th>FREQUENCY</th>
+                    <th>STATUS</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of sources(); track item.id) {
+                <tr>
+                    <td><strong>{{ item.sourceName }}</strong><small>{{ item.currency }}</small></td>
+                    <td>{{ label(item.incomeType) }}</td>
+                    <td class="amount-cell">{{ item.amount | currency:item.currency:'symbol':'1.2-2' }}</td>
+                    <td>{{ label(item.frequency) }}</td>
+                    <td><span class="status-pill" [class.inactive]="!item.active">{{ item.active ? 'Active' : 'Inactive'
+                            }}</span></td>
+                    <td>
+                        <div class="row-actions"><button (click)="edit(item)">Edit</button><button class="danger-link"
+                                (click)="remove(item)">Delete</button></div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+</section>

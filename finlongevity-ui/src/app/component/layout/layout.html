@@ -1,0 +1,38 @@
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand" routerLink="/dashboard"><span class="brand-mark">F</span><span>finlongevity<small>YOUR
+                    FINANCIAL COMPASS</small></span></a>
+        <div class="nav-label">WORKSPACE</div>
+        <nav>
+            <a routerLink="/dashboard" routerLinkActive="active"><span>◫</span> Overview</a>
+            <a routerLink="/profile" routerLinkActive="active"><span>◎</span> My profile</a>
+            <div class="nav-label">FINANCIAL HEALTH</div>
+            <a routerLink="/income" routerLinkActive="active"><span>↗</span> Income</a>
+            <a routerLink="/employment" routerLinkActive="active"><span>▣</span> Employment</a>
+            <a routerLink="/expenses" routerLinkActive="active"><span>↘</span> Expenses</a>
+            <a routerLink="/assets" routerLinkActive="active"><span>◇</span> Assets</a>
+            <a routerLink="/liabilities" routerLinkActive="active"><span>▤</span> Liabilities</a>
+            <div class="nav-label">WEALTH PLANNING</div>
+            <a routerLink="/investments" routerLinkActive="active"><span>◈</span> Investments</a>
+            <a routerLink="/catalogue" routerLinkActive="active"><span>⌕</span> Product catalogue</a>
+            <a routerLink="/risk-profile" routerLinkActive="active"><span>◎</span> Risk profile</a>
+            <a routerLink="/payments" routerLinkActive="active"><span>⇄</span> Payments</a>
+            <div class="nav-label">YOUR FAMILY</div>
+            <a routerLink="/household" routerLinkActive="active"><span>⌂</span> Household</a>
+            <a routerLink="/nominees" routerLinkActive="active"><span>♡</span> Nominees</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="help-card"><strong>Planning for tomorrow?</strong>
+                <p>Your financial journey starts with clarity.</p>
+            </div><button class="logout" (click)="logout()">↪ &nbsp; Sign out</button>
+        </div>
+    </aside>
+    <main class="main-area">
+        <header class="topbar">
+            <div class="breadcrumb">Workspace <span>/</span> <strong>Financial overview</strong></div>
+            <div class="top-actions"><span class="status-dot"></span><span class="user-avatar">{{ initials
+                    }}</span><span class="user-name">{{ auth.currentUser()?.fullName || 'My account' }}</span></div>
+        </header>
+        <section class="page-content"><router-outlet /></section>
+    </main>
+</div>

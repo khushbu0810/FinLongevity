@@ -1,0 +1,150 @@
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">PERSONALISED INVESTMENT PLANNING</span>
+        <h1>Risk profile</h1>
+        <p class="muted">Tell us about your comfort with risk, investment experience and financial goals.</p>
+    </div>
+    <span class="profile-status" [class.saved]="hasProfile()">{{ hasProfile() ? 'Profile saved' : 'Not yet saved'
+        }}</span>
+</div>
+
+@if (message()) { <div class="alert-success">{{ message() }}</div> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+@if (loading()) {
+<section class="content-card empty-state">Loading your risk profile…</section>
+} @else {
+<form [formGroup]="form" (ngSubmit)="saveProfile()">
+    <section class="content-card risk-section">
+        <div class="section-heading">
+            <span class="step-number">01</span>
+            <div>
+                <h3>Your risk comfort</h3>
+                <p class="muted">How would you feel if your investments temporarily lost value?</p>
+            </div>
+        </div>
+        <div class="choice-grid three-columns">
+            <label class="choice-card" [class.selected]="form.controls.riskTolerance.value === 'CONSERVATIVE'">
+                <input type="radio" formControlName="riskTolerance" value="CONSERVATIVE">
+                <span class="choice-icon green">▱</span><strong>Conservative</strong>
+                <small>Prefer stability and lower volatility, even if returns may be modest.</small>
+            </label>
+            <label class="choice-card" [class.selected]="form.controls.riskTolerance.value === 'MODERATE'">
+                <input type="radio" formControlName="riskTolerance" value="MODERATE">
+                <span class="choice-icon blue">◈</span><strong>Moderate</strong>
+                <small>Comfortable with some fluctuations for a balance of risk and return.</small>
+            </label>
+            <label class="choice-card" [class.selected]="form.controls.riskTolerance.value === 'AGGRESSIVE'">
+                <input type="radio" formControlName="riskTolerance" value="AGGRESSIVE">
+                <span class="choice-icon orange">↗</span><strong>Aggressive</strong>
+                <small>Accept higher volatility in pursuit of potentially higher long-term returns.</small>
+            </label>
+        </div>
+    </section>
+
+    <section class="content-card risk-section">
+        <div class="section-heading">
+            <span class="step-number">02</span>
+            <div>
+                <h3>Investment experience</h3>
+                <p class="muted">Choose the option that best describes your experience.</p>
+            </div>
+        </div>
+        <div class="inline-options">
+            <label class="radio-option"><input type="radio" formControlName="investmentExperience"
+                    value="BEGINNER"><span><strong>Beginner</strong><small>New to investing</small></span></label>
+            <label class="radio-option"><input type="radio" formControlName="investmentExperience"
+                    value="INTERMEDIATE"><span><strong>Intermediate</strong><small>Some investing
+                        experience</small></span></label>
+            <label class="radio-option"><input type="radio" formControlName="investmentExperience"
+                    value="EXPERIENCED"><span><strong>Experienced</strong><small>Confident with different
+                        products</small></span></label>
+        </div>
+    </section>
+
+    <section class="content-card risk-section">
+        <div class="section-heading">
+            <span class="step-number">03</span>
+            <div>
+                <h3>Investment horizon</h3>
+                <p class="muted">When do you expect to need most of the money you invest?</p>
+            </div>
+        </div>
+        <div class="inline-options">
+            <label class="radio-option"><input type="radio" formControlName="investmentHorizon"
+                    value="SHORT_TERM"><span><strong>Short term</strong><small>Up to 3 years</small></span></label>
+            <label class="radio-option"><input type="radio" formControlName="investmentHorizon"
+                    value="MEDIUM_TERM"><span><strong>Medium term</strong><small>3 to 7 years</small></span></label>
+            <label class="radio-option"><input type="radio" formControlName="investmentHorizon"
+                    value="LONG_TERM"><span><strong>Long term</strong><small>More than 7 years</small></span></label>
+        </div>
+    </section>
+
+    <section class="content-card risk-section">
+        <div class="section-heading">
+            <span class="step-number">04</span>
+            <div>
+                <h3>Liquidity requirement</h3>
+                <p class="muted">How easily might you need to access your invested money?</p>
+            </div>
+        </div>
+        <div class="inline-options">
+            <label class="radio-option"><input type="radio" formControlName="liquidityRequirement"
+                    value="HIGH"><span><strong>High</strong><small>Need quick access</small></span></label>
+            <label class="radio-option"><input type="radio" formControlName="liquidityRequirement"
+                    value="MEDIUM"><span><strong>Medium</strong><small>Some access flexibility</small></span></label>
+            <label class="radio-option"><input type="radio" formControlName="liquidityRequirement"
+                    value="LOW"><span><strong>Low</strong><small>Can lock funds for longer</small></span></label>
+        </div>
+    </section>
+
+    <section class="content-card risk-section">
+        <div class="section-heading">
+            <span class="step-number">05</span>
+            <div>
+                <h3>Investment preferences</h3>
+                <p class="muted">Select all investment types you are interested in. Choose at least one.</p>
+            </div>
+        </div>
+        <div class="check-grid">
+            @for (option of preferenceOptions; track option.value) {
+            <label class="check-card" [class.selected]="isPreferenceSelected(option.value)">
+                <input type="checkbox" [checked]="isPreferenceSelected(option.value)"
+                    (change)="togglePreference(option.value, $any($event.target).checked)">
+                <span class="check-mark">{{ isPreferenceSelected(option.value) ? '✓' : '' }}</span>
+                <span><strong>{{ option.label }}</strong><small>{{ option.description }}</small></span>
+            </label>
+            }
+        </div>
+    </section>
+
+    <section class="content-card risk-section">
+        <div class="section-heading">
+            <span class="step-number">06</span>
+            <div>
+                <h3>Financial objectives</h3>
+                <p class="muted">What are you investing to achieve? Select all that apply, at least one.</p>
+            </div>
+        </div>
+        <div class="check-grid">
+            @for (option of objectiveOptions; track option.value) {
+            <label class="check-card" [class.selected]="isObjectiveSelected(option.value)">
+                <input type="checkbox" [checked]="isObjectiveSelected(option.value)"
+                    (change)="toggleObjective(option.value, $any($event.target).checked)">
+                <span class="check-mark">{{ isObjectiveSelected(option.value) ? '✓' : '' }}</span>
+                <span><strong>{{ option.label }}</strong><small>{{ option.description }}</small></span>
+            </label>
+            }
+        </div>
+    </section>
+
+    <div class="save-bar">
+        <p class="muted">You can update your answers whenever your financial situation or goals change.</p>
+        <div class="save-actions">
+            <button class="outline-btn" type="button" (click)="resetForm()">Reset selections</button>
+            <button class="primary-btn" type="submit" [disabled]="saving()">{{ saving() ? 'Saving…' : 'Save risk
+                profile' }}</button>
+        </div>
+    </div>
+</form>
+}

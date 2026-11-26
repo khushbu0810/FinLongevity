@@ -1,0 +1,32 @@
+<div class="page-heading">
+    <div><span class="eyebrow">YOUR ACCOUNT</span>
+        <h1>Personal profile</h1>
+        <p class="muted">Keep your personal details accurate and up to date.</p>
+    </div>
+</div>
+@if (message()) { <div class="alert-success">{{ message() }}</div> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+<section class="content-card">
+    <div class="card-heading">
+        <div>
+            <h3>Personal information</h3>
+            <p class="muted">This information helps personalize your financial overview.</p>
+        </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
+        <div><label>First name *</label><input formControlName="firstName" placeholder="First name"></div>
+        <div><label>Last name *</label><input formControlName="lastName" placeholder="Last name"></div>
+        <div><label>Email address</label><input [value]="profile()?.email || ''" disabled></div>
+        <div><label>Phone number</label><input formControlName="phone" placeholder="+91 98765 43210"></div>
+        <div><label>Date of birth</label><input type="date" formControlName="dateOfBirth"></div>
+        <div><label>Gender</label><select formControlName="gender">
+                <option value="">Select</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+            </select></div>
+        <div class="form-actions"><button class="primary-btn" type="submit" [disabled]="form.invalid || saving()">{{
+                saving() ? 'Saving…' : 'Save changes' }}</button></div>
+    </form>
+</section>

@@ -1,0 +1,33 @@
+<main class="auth-page">
+    <section class="auth-brand-panel"><a class="brand brand-light" routerLink="/login"><span
+                class="brand-mark">F</span><span>finlongevity<small>YOUR FINANCIAL COMPASS</small></span></a>
+        <div class="auth-hero"><span class="eyebrow">A CLEARER FINANCIAL FUTURE</span>
+            <h1>Make your money<br>work for <em>your life.</em></h1>
+            <p>One thoughtful view of your finances today, and a more confident plan for tomorrow.</p>
+            <div class="auth-stat"><strong>Plan with purpose.</strong><span>Build financial resilience at every stage of
+                    life.</span></div>
+        </div>
+        <div class="auth-foot">© 2026 FinLongevity. All rights reserved.</div>
+    </section>
+    <section class="auth-form-panel">
+        <div class="auth-form-wrap">
+            <div class="mobile-brand brand"><span class="brand-mark">F</span><span>finlongevity</span></div><span
+                class="eyebrow">WELCOME BACK</span>
+            <h2>Sign in to your account</h2>
+            <p class="muted">Continue your journey towards financial confidence.</p>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <label>Email address</label><input type="email" formControlName="email" placeholder="you@example.com"
+                    autocomplete="email">
+                @if (form.controls.email.touched && form.controls.email.invalid) { <small class="field-error">Enter a
+                    valid email address.</small> }
+                <label>Password</label><input type="password" formControlName="password"
+                    placeholder="Enter your password" autocomplete="current-password">
+                @if (error()) { <div class="alert-error">{{ error() }}</div> }
+                <button class="primary-btn full-btn" type="submit" [disabled]="form.invalid || loading()">{{ loading() ?
+                    'Signing in…' : 'Sign in' }} <span>→</span></button>
+            </form>
+            <p class="auth-switch">New to FinLongevity? <a routerLink="/register">Create an account</a></p>
+            <p class="secure-note">▣ &nbsp; Your financial information is protected.</p>
+        </div>
+    </section>
+</main>

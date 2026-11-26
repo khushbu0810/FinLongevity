@@ -1,0 +1,31 @@
+<main class="auth-page">
+    <section class="auth-brand-panel"><a class="brand brand-light" routerLink="/register"><span
+                class="brand-mark">F</span><span>finlongevity<small>YOUR FINANCIAL COMPASS</small></span></a>
+        <div class="auth-hero"><span class="eyebrow">START WITH CLARITY</span>
+            <h1>Your future self<br>will <em>thank you.</em></h1>
+            <p>Bring your income, expenses, assets and ambitions into one connected financial picture.</p>
+        </div>
+        <div class="auth-foot">© 2026 FinLongevity. All rights reserved.</div>
+    </section>
+    <section class="auth-form-panel">
+        <div class="auth-form-wrap">
+            <div class="mobile-brand brand"><span class="brand-mark">F</span><span>finlongevity</span></div><span
+                class="eyebrow">GET STARTED</span>
+            <h2>Create your account</h2>
+            <p class="muted">A more intentional relationship with your money starts here.</p>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <label>Full name</label><input formControlName="fullName" placeholder="Your full name"
+                    autocomplete="name">
+                <label>Email address</label><input type="email" formControlName="email" placeholder="you@example.com"
+                    autocomplete="email">
+                <label>Password</label><input type="password" formControlName="password"
+                    placeholder="At least 8 characters" autocomplete="new-password">
+                @if (error()) { <div class="alert-error">{{ error() }}</div> }
+                <button class="primary-btn full-btn" type="submit" [disabled]="form.invalid || loading()">{{ loading() ?
+                    'Creating account…' : 'Create account' }} <span>→</span></button>
+            </form>
+            <p class="auth-switch">Already have an account? <a routerLink="/login">Sign in</a></p>
+            <p class="secure-note">▣ &nbsp; Your financial information is protected.</p>
+        </div>
+    </section>
+</main>

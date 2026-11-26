@@ -1,0 +1,110 @@
+<div class="page-heading">
+    <div><span class="eyebrow">BENEFICIARY PLANNING</span>
+        <h1>Nominees &amp; beneficiaries</h1>
+        <p class="muted">Maintain nominee details and the allocation percentage assigned to each beneficiary.</p>
+    </div>
+    <button class="primary-btn" type="button" (click)="openAdd()">＋ Add nominee</button>
+</div>
+@if (message()) { <div class="alert-success">{{ message() }}</div> }
+@if (error()) { <div class="alert-error">{{ error() }}</div> }
+@if (loading()) { <section class="content-card empty-state">Loading nominee details…</section> }
+@else {
+<section class="summary-grid">
+    <article class="content-card summary-card"><span class="muted">Total nominees</span><strong>{{ nominees().length
+            }}</strong><small>People listed as nominees</small></article>
+    <article class="content-card summary-card"><span class="muted">Combined allocation</span><strong>{{ totalAllocation
+            | number:'1.0-2' }}%</strong><small>Sum of the entered allocation percentages</small></article>
+</section>
+@if (showForm()) {
+<section class="content-card form-card">
+    <div class="card-heading">
+        <div>
+            <h3>{{ editingId() ? 'Edit nominee' : 'Add nominee' }}</h3>
+            <p class="muted">Fields marked * are required by the API.</p>
+        </div><button class="icon-btn" type="button" aria-label="Close form" (click)="closeForm()">✕</button>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
+        <div><label for="nominee-name">Full name *</label><input id="nominee-name" formControlName="fullName"
+                maxlength="120" placeholder="Nominee's full name">@if (form.controls.fullName.touched &&
+            form.controls.fullName.invalid) { <small class="field-error">Enter a name.</small> }</div>
+        <div><label for="nominee-relationship">Relationship *</label><select id="nominee-relationship"
+                formControlName="relationship">@for (item of relationships; track item.value) { <option
+                    [value]="item.value">{{ item.label }}</option> }</select></div>
+        <div><label for="nominee-dob">Date of birth *</label><input id="nominee-dob" type="date"
+                formControlName="dateOfBirth">@if (form.controls.dateOfBirth.touched &&
+            form.controls.dateOfBirth.invalid) { <small class="field-error">Date of birth is required.</small> }</div>
+        <div><label for="nominee-allocation">Allocation percentage *</label>
+            <div class="percentage-input"><input id="nominee-allocation" type="number" min="0.01" max="100" step="0.01"
+                    formControlName="allocationPercentage"><span>%</span></div>@if
+            (form.controls.allocationPercentage.touched && form.controls.allocationPercentage.invalid) { <small
+                class="field-error">Enter a value from 0.01 to 100.</small> }
+        </div>
+        <div><label for="nominee-email">Email <span class="optional-label">Optional</span></label><input
+                id="nominee-email" type="email" formControlName="email" placeholder="name@example.com">@if
+            (form.controls.email.touched && form.controls.email.invalid) { <small class="field-error">Enter a valid
+                email address.</small> }</div>
+        <div><label for="nominee-phone">Phone <span class="optional-label">Optional</span></label><input
+                id="nominee-phone" type="tel" formControlName="phone" placeholder="Phone number"></div>
+        <div><label for="nominee-guardian">Guardian name <span class="optional-label">Optional</span></label><input
+                id="nominee-guardian" formControlName="guardianName" placeholder="If applicable"></div>
+        <div class="full-width"><label for="nominee-notes">Notes <span
+                    class="optional-label">Optional</span></label><textarea id="nominee-notes" rows="3"
+                formControlName="notes" maxlength="1000" placeholder="Additional nominee information"></textarea></div>
+        <div class="form-actions full-width"><button class="primary-btn" type="submit"
+                [disabled]="form.invalid || saving()">{{ saving() ? 'Saving…' : (editingId() ? 'Update nominee' : 'Add
+                nominee') }}</button><button class="outline-btn" type="button" (click)="closeForm()">Cancel</button>
+        </div>
+    </form>
+</section>
+}
+<section class="content-card table-card">
+    <div class="card-heading">
+        <div>
+            <h3>Your nominees</h3>
+            <p class="muted">Review and maintain the people and allocations recorded on your account.</p>
+        </div><button class="outline-btn" type="button" (click)="load()">↻ Refresh</button>
+    </div>
+    @if (!nominees().length) {
+    <div class="empty-state"><span class="empty-icon">♧</span><strong>No nominees added yet</strong>
+        <p>Add a nominee to record their details and intended allocation.</p><button class="primary-btn" type="button"
+            (click)="openAdd()">Add your first nominee</button>
+    </div>
+    } @else {
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>NOMINEE</th>
+                    <th>RELATIONSHIP</th>
+                    <th>DATE OF BIRTH</th>
+                    <th>ALLOCATION</th>
+                    <th>CONTACT</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (nominee of nominees(); track trackNominee($index, nominee)) {
+                <tr>
+                    <td><strong>{{ nominee.fullName }}</strong>@if (nominee.guardianName) { <small
+                            class="sub-detail">Guardian: {{ nominee.guardianName }}</small> }</td>
+                    <td>{{ relationshipLabel(nominee.relationship) }}</td>
+                    <td>{{ nominee.dateOfBirth | date:'mediumDate' }}</td>
+                    <td><span class="allocation-pill">{{ nominee.allocationPercentage | number:'1.0-2' }}%</span></td>
+                    <td>{{ nominee.email || nominee.phone || '—' }}</td>
+                    <td>
+                        <div class="row-actions"><button type="button" (click)="edit(nominee)">Edit</button><button
+                                type="button" class="danger-link"
+                                [disabled]="deletingId() === (nominee.id ?? nominee.nomineeId)"
+                                (click)="remove(nominee)">{{ deletingId() === (nominee.id ?? nominee.nomineeId) ?
+                                'Removing…' : 'Remove' }}</button></div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <p class="allocation-note">Allocation total is displayed for reference. Confirm the applicable allocation
+        requirements for your financial products separately.</p>
+    }
+</section>
+}
