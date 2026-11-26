@@ -2,6 +2,8 @@ package com.example.customer_service.controller;
 
 import com.example.customer_service.dto.asset_liabilities.*;
 import com.example.customer_service.service.AssetLiabilityService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +32,29 @@ public class AssetLiabilityController {
     }
 
     @PutMapping("/assets/{id}")
-    public ResponseEntity<AssetResponse> updateAsset(@PathVariable UUID id, @Valid @RequestBody AssetRequest request) {
+    public ResponseEntity<AssetResponse> updateAsset(
+            @Parameter(
+                    name = "id",
+                    description = "Enter the Asset UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID id,
+            @Valid @RequestBody AssetRequest request) {
         return ResponseEntity.ok(service.updateAsset(id, request));
     }
 
     @DeleteMapping("/assets/{id}")
-    public ResponseEntity<Void> deleteAsset(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteAsset(
+            @Parameter(
+                    name = "id",
+                    description = "Enter the Asset UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID id) {
         service.deleteAsset(id);
         return ResponseEntity.noContent().build();
     }
@@ -51,12 +70,28 @@ public class AssetLiabilityController {
     }
 
     @PutMapping("/liabilities/{id}")
-    public ResponseEntity<LiabilityResponse> updateLiability(@PathVariable UUID id, @Valid @RequestBody LiabilityRequest request) {
+    public ResponseEntity<LiabilityResponse> updateLiability(
+            @Parameter(
+                    name = "id",
+                    description = "Enter the Liability UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID id, @Valid @RequestBody LiabilityRequest request) {
         return ResponseEntity.ok(service.updateLiability(id, request));
     }
 
     @DeleteMapping("/liabilities/{id}")
-    public ResponseEntity<Void> deleteLiability(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteLiability(
+            @Parameter(
+                    name = "id",
+                    description = "Enter the Liability UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID id) {
         service.deleteLiability(id);
         return ResponseEntity.noContent().build();
     }

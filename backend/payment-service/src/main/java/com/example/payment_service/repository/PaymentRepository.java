@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PaymentRepository extends JpaRepository<Payment, UUID> {
-    List<Payment> findAllByIdentityUserIdOrderByCreatedAtDesc(UUID identityUserId);
+    List<Payment> findAllByIdentityUserIdOrderByCreatedAtDesc(Long identityUserId);
 
-    Optional<Payment> findByIdAndIdentityUserId(UUID id, UUID identityUserId);
+    Optional<Payment> findByIdAndIdentityUserId(UUID id, Long identityUserId);
 
-    Optional<Payment> findByPaymentReferenceAndIdentityUserId(String paymentReference, UUID identityUserId);
+    Optional<Payment> findByPaymentReferenceAndIdentityUserId(String paymentReference, Long identityUserId);
 
     List<Payment> findAllByIdentityUserIdAndStatusOrderByCreatedAtDesc(
-            UUID identityUserId, PaymentStatus status);
+            Long identityUserId, PaymentStatus status);
 
     boolean existsByPaymentReference(String paymentReference);
 }

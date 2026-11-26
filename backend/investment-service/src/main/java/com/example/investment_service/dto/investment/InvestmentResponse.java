@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public record InvestmentResponse(
         UUID id,
-        UUID identityUserId,
+        Long identityUserId,
         UUID providerProductId,
         String productNameSnapshot,
         InvestmentProductType productType,

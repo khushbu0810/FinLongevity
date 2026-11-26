@@ -21,7 +21,7 @@ public class Payment {
     private UUID id;
 
     @Column(name = "identity_user_id", nullable = false)
-    private UUID identityUserId;
+    private Long identityUserId;
 
     @Column(name = "payment_reference", nullable = false, unique = true, length = 80)
     private String paymentReference;

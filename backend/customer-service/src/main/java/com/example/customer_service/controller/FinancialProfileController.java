@@ -6,6 +6,8 @@ import com.example.customer_service.dto.income.EmploymentResponse;
 import com.example.customer_service.dto.income.IncomeSourceRequest;
 import com.example.customer_service.dto.income.IncomeSourceResponse;
 import com.example.customer_service.service.FinancialProfileService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,14 +48,30 @@ public class FinancialProfileController {
     }
 
     @PutMapping("/income-sources/{id}")
-    public IncomeSourceResponse updateIncome(@PathVariable UUID id,
-                                             @Valid @RequestBody IncomeSourceRequest request) {
+    public IncomeSourceResponse updateIncome(
+            @Parameter(
+                    name = "id",
+                    description = "Enter the Income UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID id,
+            @Valid @RequestBody IncomeSourceRequest request) {
         return service.updateIncome(id, request);
     }
 
     @DeleteMapping("/income-sources/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteIncome(@PathVariable UUID id) {
+    public void deleteIncome(
+            @Parameter(
+                    name = "id",
+                    description = "Enter the Income UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID id) {
         service.deleteIncome(id);
     }
 }

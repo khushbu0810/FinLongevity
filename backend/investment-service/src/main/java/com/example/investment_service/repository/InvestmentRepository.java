@@ -9,13 +9,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface InvestmentRepository extends JpaRepository<Investment, UUID> {
-    List<Investment> findAllByIdentityUserIdOrderByCreatedAtDesc(UUID identityUserId);
+    List<Investment> findAllByIdentityUserIdOrderByCreatedAtDesc(Long identityUserId);
 
-    Optional<Investment> findByIdAndIdentityUserId(UUID id, UUID identityUserId);
+    Optional<Investment> findByIdAndIdentityUserId(UUID id, Long identityUserId);
 
     List<Investment> findAllByIdentityUserIdAndStatusOrderByCreatedAtDesc(
-            UUID identityUserId, InvestmentStatus status);
+            Long identityUserId, InvestmentStatus status);
 
     boolean existsByIdentityUserIdAndProviderProductIdAndStatus(
-            UUID identityUserId, UUID providerProductId, InvestmentStatus status);
+            Long identityUserId, UUID providerProductId, InvestmentStatus status);
 }

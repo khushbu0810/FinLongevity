@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public interface InvestmentTransactionRepository extends JpaRepository<InvestmentTransaction, UUID> {
     List<InvestmentTransaction> findAllByInvestmentIdAndIdentityUserIdOrderByCreatedAtDesc(
-            UUID investmentId, UUID identityUserId);
+            UUID investmentId, Long identityUserId);
 
-    Optional<InvestmentTransaction> findByIdAndIdentityUserId(UUID id, UUID identityUserId);
+    Optional<InvestmentTransaction> findByIdAndIdentityUserId(UUID id, Long identityUserId);
 
-    List<InvestmentTransaction> findAllByIdentityUserIdOrderByCreatedAtDesc(UUID identityUserId);
+    List<InvestmentTransaction> findAllByIdentityUserIdOrderByCreatedAtDesc(Long identityUserId);
 }

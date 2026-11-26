@@ -33,7 +33,7 @@ public class InvestmentService {
         this.transactionRepository = transactionRepository;
     }
 
-    public InvestmentResponse createInvestment(UUID userId, InvestmentRequest request) {
+    public InvestmentResponse createInvestment(Long userId, InvestmentRequest request) {
         Investment investment = new Investment();
         investment.setIdentityUserId(userId);
         investment.setProviderProductId(request.providerProductId());
@@ -62,17 +62,17 @@ public class InvestmentService {
     }
 
     @Transactional(readOnly = true)
-    public List<InvestmentResponse> getMyInvestments(UUID userId) {
+    public List<InvestmentResponse> getMyInvestments(Long userId) {
         return investmentRepository.findAllByIdentityUserIdOrderByCreatedAtDesc(userId)
                 .stream().map(this::toInvestmentResponse).toList();
     }
 
     @Transactional(readOnly = true)
-    public InvestmentResponse getMyInvestment(UUID userId, UUID investmentId) {
+    public InvestmentResponse getMyInvestment(Long userId, UUID investmentId) {
         return toInvestmentResponse(findOwnedInvestment(userId, investmentId));
     }
 
-    public InvestmentResponse cancelDraft(UUID userId, UUID investmentId) {
+    public InvestmentResponse cancelDraft(Long userId, UUID investmentId) {
         Investment investment = findOwnedInvestment(userId, investmentId);
         if (investment.getStatus() != InvestmentStatus.DRAFT) {
             throw new ResponseStatusException(
@@ -93,7 +93,7 @@ public class InvestmentService {
     }
 
     public InvestmentTransactionResponse addTransaction(
-            UUID userId, UUID investmentId, InvestmentTransactionRequest request) {
+            Long userId, UUID investmentId, InvestmentTransactionRequest request) {
         Investment investment = findOwnedInvestment(userId, investmentId);
 
         if (investment.getStatus() == InvestmentStatus.CANCELLED
@@ -119,14 +119,14 @@ public class InvestmentService {
     }
 
     @Transactional(readOnly = true)
-    public List<InvestmentTransactionResponse> getMyTransactions(UUID userId, UUID investmentId) {
+    public List<InvestmentTransactionResponse> getMyTransactions(Long userId, UUID investmentId) {
         findOwnedInvestment(userId, investmentId);
         return transactionRepository
                 .findAllByInvestmentIdAndIdentityUserIdOrderByCreatedAtDesc(investmentId, userId)
                 .stream().map(this::toTransactionResponse).toList();
     }
 
-    private Investment findOwnedInvestment(UUID userId, UUID investmentId) {
+    private Investment findOwnedInvestment(Long userId, UUID investmentId) {
         return investmentRepository.findByIdAndIdentityUserId(investmentId, userId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Investment not found"));

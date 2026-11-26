@@ -26,7 +26,7 @@ public class InvestmentTransaction {
     private Investment investment;
 
     @Column(name = "identity_user_id", nullable = false)
-    private UUID identityUserId;
+    private Long identityUserId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type", nullable = false, length = 40)

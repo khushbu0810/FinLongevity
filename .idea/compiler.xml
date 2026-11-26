@@ -23,10 +23,11 @@
       <module name="api-gateway" options="" />
       <module name="backend" options="" />
       <module name="config-server" options="" />
-      <module name="customer-service" options="" />
+      <module name="customer-service" options="-parameters" />
       <module name="eureka-discovery-server" options="" />
       <module name="identity-service" options="" />
-      <module name="investment-service" options="" />
+      <module name="investment-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
       <module name="provider-product-service" options="-parameters" />
     </option>
   </component>

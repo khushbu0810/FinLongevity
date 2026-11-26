@@ -5,6 +5,8 @@ import com.example.customer_service.dto.household.HouseholdMemberResponse;
 import com.example.customer_service.dto.household.HouseholdRequest;
 import com.example.customer_service.dto.household.HouseholdResponse;
 import com.example.customer_service.service.HouseholdService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,13 +57,28 @@ public class HouseholdController {
 
     @PutMapping("/members/{memberId}")
     public ResponseEntity<HouseholdMemberResponse> updateMember(
+            @Parameter(
+                    name = "memberId",
+                    description = "Enter the member UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
             @PathVariable UUID memberId,
             @Valid @RequestBody HouseholdMemberRequest request) {
         return ResponseEntity.ok(householdService.updateMember(memberId, request));
     }
 
     @DeleteMapping("/members/{memberId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable UUID memberId) {
+    public ResponseEntity<Void> deleteMember(
+            @Parameter(
+                    name = "memberId",
+                    description = "Enter the member UUID",
+                    required = true,
+                    in = ParameterIn.PATH,
+                    example = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            )
+            @PathVariable UUID memberId) {
         householdService.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }

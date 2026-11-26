@@ -27,7 +27,7 @@ public class PaymentService {
         this.eventRepository = eventRepository;
     }
 
-    public PaymentResponse createPayment(UUID userId, PaymentRequest request) {
+    public PaymentResponse createPayment(Long userId, PaymentRequest request) {
         Payment payment = new Payment();
         payment.setIdentityUserId(userId);
         payment.setPaymentReference("PAY-" + UUID.randomUUID());
@@ -45,7 +45,7 @@ public class PaymentService {
     }
 
     public PaymentResponse processMockPayment(
-            UUID userId, UUID paymentId, MockPaymentOutcome outcome) {
+            Long userId, UUID paymentId, MockPaymentOutcome outcome) {
         Payment payment = findOwnedPayment(userId, paymentId);
 
         if (payment.getStatus() != PaymentStatus.CREATED) {
@@ -82,24 +82,24 @@ public class PaymentService {
     }
 
     @Transactional(readOnly = true)
-    public List<PaymentResponse> getMyPayments(UUID userId) {
+    public List<PaymentResponse> getMyPayments(Long userId) {
         return paymentRepository.findAllByIdentityUserIdOrderByCreatedAtDesc(userId)
                 .stream().map(this::toResponse).toList();
     }
 
     @Transactional(readOnly = true)
-    public PaymentResponse getMyPayment(UUID userId, UUID paymentId) {
+    public PaymentResponse getMyPayment(Long userId, UUID paymentId) {
         return toResponse(findOwnedPayment(userId, paymentId));
     }
 
     @Transactional(readOnly = true)
-    public List<PaymentEventResponse> getPaymentEvents(UUID userId, UUID paymentId) {
+    public List<PaymentEventResponse> getPaymentEvents(Long userId, UUID paymentId) {
         findOwnedPayment(userId, paymentId);
         return eventRepository.findAllByPaymentIdOrderByCreatedAtDesc(paymentId)
                 .stream().map(this::toEventResponse).toList();
     }
 
-    private Payment findOwnedPayment(UUID userId, UUID paymentId) {
+    private Payment findOwnedPayment(Long userId, UUID paymentId) {
         return paymentRepository.findByIdAndIdentityUserId(paymentId, userId)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Payment not found"));

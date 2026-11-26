@@ -21,7 +21,7 @@ public class Investment {
     private UUID id;
 
     @Column(name = "identity_user_id", nullable = false)
-    private UUID identityUserId;
+    private Long identityUserId;
 
     @Column(name = "provider_product_id", nullable = false)
     private UUID providerProductId;

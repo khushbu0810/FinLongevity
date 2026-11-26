@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public record PaymentResponse(
         UUID id,
-        UUID identityUserId,
+        Long identityUserId,
         String paymentReference,
         String businessReference,
         PaymentBusinessType businessType,
