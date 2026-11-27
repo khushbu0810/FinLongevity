@@ -6,6 +6,38 @@
   <component name="ChangeListManager">
     <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="changes from UUID to long in payment and investment repos... for authentication header">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/java/com/example/api_gateway/config/JwtGatewayFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/java/com/example/api_gateway/config/JwtGatewayFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/GatewayAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/GatewayAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/register/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/register/register.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/assets-component/assets-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/assets-component/assets-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/catalogue-component/catalogue-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/catalogue-component/catalogue-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/dashboard/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/expense-component/expense-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/expense-component/expense-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/income-component/income-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/income-component/income-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/liabilities-component/liabilities-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/liabilities-component/liabilities-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/nominees-component/nominees-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/nominees-component/nominees-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/services/auth-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/services/auth-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,12 +162,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EurekaDiscoveryServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.eureka_discovery_server.EurekaDiscoveryServerApplication" />
-      <module name="eureka-discovery-server" />
+    <configuration name="IdentityServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.identity_service.IdentityServiceApplication" />
+      <module name="identity-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.eureka_discovery_server.*" />
+          <option name="PATTERN" value="com.example.identity_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -184,10 +216,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ProviderProductServiceApplication" />
+        <item itemvalue="Application.IdentityServiceApplication" />
         <item itemvalue="Application.PaymentServiceApplication" />
         <item itemvalue="Application.InvestmentServiceApplication" />
-        <item itemvalue="Application.EurekaDiscoveryServerApplication" />
+        <item itemvalue="Application.ProviderProductServiceApplication" />
         <item itemvalue="Application.CustomerServiceApplication" />
       </list>
     </recent_temporary>
