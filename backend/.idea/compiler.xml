@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="insurance-service" />
+        <module name="config-server" />
+        <module name="investment-service" />
+        <module name="payment-service" />
+        <module name="customer-service" />
+        <module name="eureka-discovery-server" />
+        <module name="api-gateway" />
+        <module name="identity-service" />
+        <module name="provider-product-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="customer-service" options="-parameters" />
+      <module name="insurance-service" options="-parameters" />
+      <module name="investment-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
+      <module name="provider-product-service" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -4,40 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="changes from UUID to long in payment and investment repos... for authentication header">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/java/com/example/api_gateway/config/JwtGatewayFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/java/com/example/api_gateway/config/JwtGatewayFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/GatewayAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/GatewayAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/login/login.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/register/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/auth/register/register.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/assets-component/assets-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/assets-component/assets-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/catalogue-component/catalogue-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/catalogue-component/catalogue-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/dashboard/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/dashboard/dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/expense-component/expense-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/expense-component/expense-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/household-component/household-component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/income-component/income-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/income-component/income-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/layout/layout.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/liabilities-component/liabilities-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/liabilities-component/liabilities-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/nominees-component/nominees-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/nominees-component/nominees-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/risk-profile-component/risk-profile-component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/services/auth-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/services/auth-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/styles.css" afterDir="false" />
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added cors config and fixed its related issue.">
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/insurance-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/src/test/java/com/example/insurance_service/InsuranceServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,41 +65,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ConfigServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CustomerServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.EurekaDiscoveryServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.IdentityServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.InvestmentServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ProviderProductServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.api-gateway [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.api-gateway [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.backend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.finlongevity-backend [site].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/provider-product-service/src/main/java/com/example/provider_product_service&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ApiGatewayApplication.executor": "Run",
+    "Application.ConfigServerApplication.executor": "Run",
+    "Application.CustomerServiceApplication.executor": "Run",
+    "Application.EurekaDiscoveryServerApplication.executor": "Run",
+    "Application.IdentityServiceApplication.executor": "Run",
+    "Application.InvestmentServiceApplication.executor": "Run",
+    "Application.PaymentServiceApplication.executor": "Run",
+    "Application.ProviderProductServiceApplication.executor": "Run",
+    "Maven.api-gateway [clean].executor": "Run",
+    "Maven.api-gateway [install].executor": "Run",
+    "Maven.backend [clean].executor": "Run",
+    "Maven.finlongevity-backend [clean,install].executor": "Run",
+    "Maven.finlongevity-backend [clean].executor": "Run",
+    "Maven.finlongevity-backend [install].executor": "Run",
+    "Maven.finlongevity-backend [site].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "feature/17-insurance-service",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/projects/FinLongevity/backend/provider-product-service/src/main/java/com/example/provider_product_service",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "to.speed.mode.migration.done": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service" />
@@ -134,6 +107,9 @@
       <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service\dto" />
       <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service\model\payment" />
       <recent name="C:\projects\FinLongevity\backend\investment-service\src\main\java\com\example\investment_service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.payment_service.dto" />

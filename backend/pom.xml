@@ -17,6 +17,7 @@
         <module>provider-product-service</module>
         <module>investment-service</module>
         <module>payment-service</module>
+        <module>insurance-service</module>
     </modules>
 
     <properties>
