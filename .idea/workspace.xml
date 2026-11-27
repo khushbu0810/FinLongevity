@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added cors config and fixed its related issue.">
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/insurance-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/insurance-service/src/test/java/com/example/insurance_service/InsuranceServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/GoalMemberRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/GoalMemberRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,10 +89,10 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/17-insurance-service",
+    "git-widget-placeholder": "feature/18-goal-service",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/FinLongevity/backend/provider-product-service/src/main/java/com/example/provider_product_service",
+    "last_opened_file_path": "C:/projects/FinLongevity/backend/goal-service/src/main/java/com/example/goal_service",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -102,21 +102,22 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service" />
+      <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service\dto" />
+      <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service\model" />
       <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service" />
       <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service" />
-      <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service\dto" />
-      <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service\model\payment" />
-      <recent name="C:\projects\FinLongevity\backend\investment-service\src\main\java\com\example\investment_service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\projects\FinLongevity\backend" />
+      <recent name="C:\projects\FinLongevity\backend\api-gateway" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.goal_service.dto" />
       <recent name="com.example.payment_service.dto" />
       <recent name="com.example.investment_service.dto.transaction" />
       <recent name="com.example.customer_service.service" />
       <recent name="com.example.customer_service.controller" />
-      <recent name="com.example.customer_service.repository" />
     </key>
   </component>
   <component name="RunAnythingCache">

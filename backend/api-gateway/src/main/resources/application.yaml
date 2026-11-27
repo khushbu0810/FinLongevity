@@ -36,6 +36,10 @@ spring:
               uri: lb://insurance-service
               predicates:
                 - Path=/api/insurance/**
+            - id: goal-service
+              uri: lb://goal-service
+              predicates:
+                - Path=/api/goal/**
 
             #SWAGGER DOCUMENTATION ROUTES
             - id: identity-swagger
@@ -72,6 +76,12 @@ spring:
               uri: lb://insurance-service
               predicates:
                 - Path=/insurance/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: goal-swagger
+              uri: lb://goal-service
+              predicates:
+                - Path=/goal/v3/api-docs
               filters:
                 - StripPrefix=1
 #    CORS -------------
@@ -119,6 +129,9 @@ springdoc:
 
       - name: Insurance Service
         url: /insurance/v3/api-docs
+
+      - name: Goal Service
+        url: /goal/v3/api-docs
 
     urls-primary-name: Identity Service
     disable-swagger-default-url: true
