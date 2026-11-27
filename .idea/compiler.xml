@@ -9,23 +9,27 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="insurance-service" />
+        <module name="core" />
         <module name="investment-service" />
         <module name="payment-service" />
         <module name="customer-service" />
         <module name="goal-service" />
         <module name="eureka-discovery-server" />
-        <module name="insurance-service (1)" />
         <module name="api-gateway" />
         <module name="identity-service" />
         <module name="provider-product-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="insurance-service (1)" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="" />
       <module name="backend" options="" />
       <module name="config-server" options="" />
+      <module name="core" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="eureka-discovery-server" options="" />
       <module name="goal-service" options="-parameters" />

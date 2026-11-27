@@ -5,11 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added cors config and fixed its related issue.">
-      <change beforePath="$PROJECT_DIR$/backend/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/GoalMemberRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/GoalMemberRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/GoalServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/GoalServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/repository/FinancialGoalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/repository/FinancialGoalRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/repository/GoalContributionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/repository/GoalContributionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/payment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +46,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/17-insurance-service" />
+        <entry key="$PROJECT_DIR$" value="feature/18-goal-service" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,10 +80,12 @@
     "Application.ConfigServerApplication.executor": "Run",
     "Application.CustomerServiceApplication.executor": "Run",
     "Application.EurekaDiscoveryServerApplication.executor": "Run",
+    "Application.GoalServiceApplication.executor": "Run",
     "Application.IdentityServiceApplication.executor": "Run",
     "Application.InvestmentServiceApplication.executor": "Run",
     "Application.PaymentServiceApplication.executor": "Run",
     "Application.ProviderProductServiceApplication.executor": "Run",
+    "Docker.backend: Compose Deployment.executor": "Run",
     "Maven.api-gateway [clean].executor": "Run",
     "Maven.api-gateway [install].executor": "Run",
     "Maven.backend [clean].executor": "Run",
@@ -89,10 +100,10 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/18-goal-service",
+    "git-widget-placeholder": "develop",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/FinLongevity/backend/goal-service/src/main/java/com/example/goal_service",
+    "last_opened_file_path": "C:/projects/FinLongevity/backend/payment-service/src/main/java/com/example/payment_service",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -102,22 +113,22 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service" />
       <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service" />
       <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service\dto" />
       <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service\model" />
       <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service" />
-      <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\projects\FinLongevity\backend" />
       <recent name="C:\projects\FinLongevity\backend\api-gateway" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.goal_service.events" />
       <recent name="com.example.goal_service.dto" />
       <recent name="com.example.payment_service.dto" />
       <recent name="com.example.investment_service.dto.transaction" />
       <recent name="com.example.customer_service.service" />
-      <recent name="com.example.customer_service.controller" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -126,12 +137,38 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.PaymentServiceApplication">
-    <configuration name="CustomerServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.customer_service.CustomerServiceApplication" />
-      <module name="customer-service" />
+    <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.api_gateway.ApiGatewayApplication" />
+      <module name="api-gateway" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.customer_service.*" />
+          <option name="PATTERN" value="com.example.api_gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConfigServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.config_server.ConfigServerApplication" />
+      <module name="config-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.config_server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GoalServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.goal_service.GoalServiceApplication" />
+      <module name="goal-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.goal_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -152,19 +189,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InvestmentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.investment_service.InvestmentServiceApplication" />
-      <module name="investment-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.investment_service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="PaymentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.payment_service.PaymentServiceApplication" />
       <module name="payment-service" />
@@ -178,26 +202,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProviderProductServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.provider_product_service.ProviderProductServiceApplication" />
-      <module name="provider-product-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.provider_product_service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.IdentityServiceApplication" />
+        <item itemvalue="Application.GoalServiceApplication" />
         <item itemvalue="Application.PaymentServiceApplication" />
-        <item itemvalue="Application.InvestmentServiceApplication" />
-        <item itemvalue="Application.ProviderProductServiceApplication" />
-        <item itemvalue="Application.CustomerServiceApplication" />
+        <item itemvalue="Application.IdentityServiceApplication" />
+        <item itemvalue="Application.ConfigServerApplication" />
+        <item itemvalue="Application.ApiGatewayApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -352,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1795667760583</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="added goal service">
+      <option name="closed" value="true" />
+      <created>1795754001233</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1795754001233</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -383,6 +408,7 @@
     <MESSAGE value="added swagger in customer service" />
     <MESSAGE value="added swagger in customer service all services and modify the code related to swagger only" />
     <MESSAGE value="changes from UUID to long in payment and investment repos... for authentication header" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes from UUID to long in payment and investment repos... for authentication header" />
+    <MESSAGE value="added goal service" />
+    <option name="LAST_COMMIT_MESSAGE" value="added goal service" />
   </component>
 </project>

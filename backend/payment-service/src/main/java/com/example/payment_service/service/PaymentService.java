@@ -1,12 +1,16 @@
 package com.example.payment_service.service;
 
+import com.example.core.events.PaymentStatusEvent;
 import com.example.payment_service.dto.*;
+import com.example.payment_service.kafka.PaymentStatusEventPublisher;
 import com.example.payment_service.model.*;
 import com.example.payment_service.repository.PaymentEventRepository;
 import com.example.payment_service.repository.PaymentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
@@ -20,11 +24,51 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentEventRepository eventRepository;
+    private final PaymentStatusEventPublisher eventPublisher;
 
-    public PaymentService(PaymentRepository paymentRepository,
-                          PaymentEventRepository eventRepository) {
+    public PaymentService(
+            PaymentRepository paymentRepository,
+            PaymentEventRepository eventRepository,
+            PaymentStatusEventPublisher eventPublisher
+    ) {
         this.paymentRepository = paymentRepository;
         this.eventRepository = eventRepository;
+        this.eventPublisher = eventPublisher;
+    }
+
+    private void publishPaymentStatusEvent(Payment payment) {
+
+        // Only goal contributions are handled in this integration.
+        if (payment.getBusinessType() != PaymentBusinessType.GOAL_CONTRIBUTION) {
+            return;
+        }
+
+        PaymentStatusEvent event = new PaymentStatusEvent(
+                UUID.randomUUID(),
+                payment.getId(),
+                payment.getIdentityUserId(),
+                payment.getBusinessReference(),
+                payment.getBusinessType().name(),
+                payment.getStatus().name(),
+                payment.getAmount(),
+                payment.getCurrency(),
+                Instant.now()
+        );
+
+        Runnable publishAction = () -> eventPublisher.publish(event);
+
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(
+                    new TransactionSynchronization() {
+                        @Override
+                        public void afterCommit() {
+                            publishAction.run();
+                        }
+                    }
+            );
+        } else {
+            publishAction.run();
+        }
     }
 
     public PaymentResponse createPayment(Long userId, PaymentRequest request) {
@@ -78,7 +122,11 @@ public class PaymentService {
                     "Mock payment marked failed; no real money was moved");
         }
 
-        return toResponse(paymentRepository.save(payment));
+        Payment savedPayment = paymentRepository.save(payment);
+        if (savedPayment.getStatus() == PaymentStatus.SUCCESS || savedPayment.getStatus() == PaymentStatus.FAILED) {
+            publishPaymentStatusEvent(savedPayment);
+        }
+        return toResponse(savedPayment);
     }
 
     @Transactional(readOnly = true)

@@ -20,6 +20,7 @@
         <option value="$PROJECT_DIR$/backend/insurance-service/insurance-service/pom.xml" />
         <option value="$PROJECT_DIR$/backend/insurance-service/pom.xml" />
         <option value="$PROJECT_DIR$/backend/goal-service/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/core/pom.xml" />
       </list>
     </option>
   </component>
