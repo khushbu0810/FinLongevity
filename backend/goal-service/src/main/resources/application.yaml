@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: goal-service
+  config:
+    import: configserver:http://localhost:8012
+
+  # OpenAPI documentation
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+      enabled: true
+    swagger-ui:
+      path: /swagger-ui.html
+      enabled: true
