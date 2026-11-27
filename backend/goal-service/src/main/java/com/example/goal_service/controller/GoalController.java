@@ -74,4 +74,14 @@ public class GoalController {
                                                            @PathVariable UUID goalId) {
         return goalService.getContributions(userId, goalId);
     }
+
+
+    @GetMapping("/{goalId}/analytics")
+    public GroupGoalAnalyticsResponse getGroupGoalAnalytics(
+            @RequestHeader("X-Authenticated-User-Id") Long userId,
+            @PathVariable UUID goalId) {
+
+        return goalService.getGroupGoalAnalytics(userId, goalId);
+    }
+
 }

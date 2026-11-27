@@ -13,3 +13,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true

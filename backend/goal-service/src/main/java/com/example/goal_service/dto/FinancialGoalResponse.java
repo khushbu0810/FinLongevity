@@ -14,6 +14,8 @@ public record FinancialGoalResponse(
         GoalType goalType,
         BigDecimal targetAmount,
         BigDecimal currentAmount,
+        BigDecimal remainingAmount,
+        BigDecimal progressPercentage,
         String currency,
         LocalDate targetDate,
         GoalStatus status,
