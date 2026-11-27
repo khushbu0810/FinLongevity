@@ -1,3 +1,7 @@
+if exceeds memory:   
+
+-Xms128m -Xmx512m -XX:MaxMetaspaceSize=192m -XX:ReservedCodeCacheSize=64m -XX:+UseSerialGC
+
 # FinLongevity – Microservices Setup
 
 ## Application Details
@@ -12,8 +16,12 @@
 | Provider Product service | 8083 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
 | Investment service       | 8084 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
 | Payment service          | 8085 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+| Insurance service        | 8086 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+| Goal service             | 8087 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
+| Financial engine service | 8088 | http://localhost:8083/actuator/health          | Initial service health endpoint  |
 
 
+[9] registers on eureka discovery service
 
 
 ## SWAGGER
