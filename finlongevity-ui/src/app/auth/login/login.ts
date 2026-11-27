@@ -22,14 +22,30 @@ export class Login {
     password: ['', Validators.required]
   });
   submit(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    this.loading.set(true); this.error.set('');
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    this.loading.set(true);
+    this.error.set('');
+
     this.auth.login(this.form.getRawValue()).subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
-        this.router.navigateByUrl(returnUrl);
+        const returnUrl =
+          this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+
+        this.router.navigateByUrl(returnUrl).then(() => {
+          this.loading.set(false);
+        });
       },
-      error: err => { this.error.set(err?.error?.message || 'Unable to sign in. Check your credentials and try again.'); this.loading.set(false); }
+      error: err => {
+        this.error.set(
+          err?.error?.message ||
+          'Unable to sign in. Check your credentials and try again.'
+        );
+        this.loading.set(false);
+      }
     });
   }
 }

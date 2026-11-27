@@ -1,40 +1,223 @@
-<div class="page-heading">
-    <div><span class="eyebrow">FINANCIAL HEALTH</span>
-        <h1>Employment details</h1>
-        <p class="muted">Record your current employment status and professional details.</p>
-    </div>
-</div>
-@if (message()) { <div class="alert-success">{{ message() }}</div> }
-@if (error()) { <div class="alert-error">{{ error() }}</div> }
+<!-- LOADING -->
+@if (loading()) {
 <section class="content-card">
+    <p class="muted">Loading employment details...</p>
+</section>
+}
+
+<!-- SUCCESS -->
+@if (message()) {
+<div class="alert-success">
+    {{ message() }}
+</div>
+}
+
+<!-- ERROR -->
+@if (error()) {
+<div class="alert-error">
+    {{ error() }}
+    <button type="button" class="outline-btn" (click)="loadEmployment()">
+        Retry
+    </button>
+</div>
+}
+
+<!-- EXISTING EMPLOYMENT -->
+@if (employment() && !showForm() && !loading()) {
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">FINANCIAL HEALTH</span>
+        <h1>Employment details</h1>
+        <p class="muted">
+            Manage your professional information.
+        </p>
+    </div>
+
+    <button type="button" class="primary-btn" (click)="editEmployment()">
+        ✎ Edit employment
+    </button>
+</div>
+
+<section class="content-card">
+
     <div class="card-heading">
         <div>
             <h3>Employment information</h3>
-            <p class="muted">Your employment details help build a more complete financial profile.</p>
-        </div><span class="status-pill" [class.inactive]="!form.controls.currentlyEmployed.value">{{
-            form.controls.currentlyEmployed.value ? 'Currently employed' : 'Not currently employed' }}</span>
+            <p class="muted">Your saved employment details.</p>
+        </div>
+
+        <span class="status-pill" [class.inactive]="!employment()?.currentlyEmployed">
+            {{ employment()?.currentlyEmployed
+            ? 'Currently employed'
+            : 'Not currently employed' }}
+        </span>
     </div>
+
+    <div class="form-grid">
+
+        <div>
+            <label>Employment type</label>
+            <input [value]="label(employment()?.employmentType || '')" disabled>
+        </div>
+
+        <div>
+            <label>Employer / organization</label>
+            <input [value]="employment()?.employerName || '—'" disabled>
+        </div>
+
+        <div>
+            <label>Designation</label>
+            <input [value]="employment()?.designation || '—'" disabled>
+        </div>
+
+        <div>
+            <label>Employment start date</label>
+            <input [value]="employment()?.employmentStartDate || '—'" disabled>
+        </div>
+
+        <div>
+            <label>Employment end date</label>
+            <input [value]="employment()?.currentlyEmployed
+            ? 'Currently employed'
+            : (employment()?.employmentEndDate || '—')" disabled>
+        </div>
+
+    </div>
+</section>
+}
+
+<!-- WELCOME POPUP -->
+@if (showWelcome() && !employment() && !loading()) {
+
+<div class="profile-modal-overlay">
+
+    <div class="profile-modal">
+
+        <div class="profile-modal-icon">✦</div>
+
+        <span class="eyebrow">FINANCIAL HEALTH</span>
+
+        <h1>Let's add your employment!</h1>
+
+        <p class="muted">
+            Tell us about your professional background and
+            employment status.
+
+            This helps FinLongevity understand your income
+            stability and financial position.
+        </p>
+
+        <div class="profile-benefits">
+            <div>✓ Record your employment type</div>
+            <div>✓ Add your employer and designation</div>
+            <div>✓ Track your employment history</div>
+        </div>
+
+        <button type="button" class="primary-btn full-btn" (click)="startEmploymentCreation()">
+            Create employment details →
+        </button>
+
+    </div>
+</div>
+}
+
+<!-- CREATE / EDIT FORM -->
+@if (showForm()) {
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">FINANCIAL HEALTH</span>
+
+        <h1>
+            {{ employment()
+            ? 'Edit employment details'
+            : 'Create your employment' }}
+        </h1>
+
+        <p class="muted">
+            Record your current employment status and professional details.
+        </p>
+    </div>
+</div>
+
+<section class="content-card">
+
+    <div class="card-heading">
+        <h3>Employment information</h3>
+        <p class="muted">Fields marked with * are required.</p>
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
-        <div><label>Employment type *</label><select formControlName="employmentType">
-                <option value="">Select employment type</option>@for (v of employmentTypes; track v) { <option
-                    [value]="v">{{ label(v) }}</option> }
-            </select></div>
-        <div><label>Employer / organization</label><input formControlName="employerName" maxlength="150"
-                placeholder="Organization name"></div>
-        <div><label>Designation</label><input formControlName="designation" maxlength="120"
-                placeholder="Your job title"></div>
-        <div><label>Employment start date</label><input type="date" formControlName="employmentStartDate"></div>
-        <div><label>Employment end date</label><input type="date" formControlName="employmentEndDate"
-                [disabled]="form.controls.currentlyEmployed.value"></div>
-        <div class="check-field"><label><input type="checkbox" formControlName="currentlyEmployed"
-                    (change)="employmentStatusChanged()"> I am currently employed</label></div>
-        <div class="form-actions"><button class="primary-btn" type="submit" [disabled]="form.invalid || saving()">{{
-                saving() ? 'Saving…' : 'Save employment details' }}</button></div>
+
+        <div>
+            <label>Employment type *</label>
+
+            <select formControlName="employmentType">
+                <option value="">Select employment type</option>
+
+                @for (type of employmentTypes; track type) {
+                <option [value]="type">
+                    {{ label(type) }}
+                </option>
+                }
+            </select>
+
+            @if (
+            form.controls.employmentType.touched &&
+            form.controls.employmentType.invalid
+            ) {
+            <small class="field-error">
+                Please select an employment type.
+            </small>
+            }
+        </div>
+
+        <div>
+            <label>Employer / organization</label>
+            <input formControlName="employerName" maxlength="150" placeholder="Organization name">
+        </div>
+
+        <div>
+            <label>Designation</label>
+            <input formControlName="designation" maxlength="120" placeholder="Your job title">
+        </div>
+
+        <div>
+            <label>Employment start date</label>
+            <input type="date" formControlName="employmentStartDate">
+        </div>
+
+        <div>
+            <label>Employment end date</label>
+            <input type="date" formControlName="employmentEndDate" [disabled]="form.controls.currentlyEmployed.value">
+        </div>
+
+        <div class="check-field">
+            <label>
+                <input type="checkbox" formControlName="currentlyEmployed" (change)="employmentStatusChanged()">
+                I am currently employed
+            </label>
+        </div>
+
+        <div class="form-actions">
+
+            <button type="button" class="outline-btn" [disabled]="saving()" (click)="cancelForm()">
+                Cancel
+            </button>
+
+            <button type="submit" class="primary-btn" [disabled]="form.invalid || saving()">
+
+                {{ saving()
+                ? 'Saving...'
+                : employment()
+                ? 'Save changes'
+                : 'Create employment' }}
+
+            </button>
+
+        </div>
+
     </form>
 </section>
-<section class="content-card employment-note"><span class="metric-icon blue">i</span>
-    <div><strong>About this information</strong>
-        <p>The employment endpoint accepts one employment record for your customer profile. Saving updates the record
-            through <code>PUT /api/customers/me/employment</code>.</p>
-    </div>
-</section>
+}

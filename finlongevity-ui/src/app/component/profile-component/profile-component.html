@@ -1,32 +1,285 @@
-<div class="page-heading">
-    <div><span class="eyebrow">YOUR ACCOUNT</span>
-        <h1>Personal profile</h1>
-        <p class="muted">Keep your personal details accurate and up to date.</p>
-    </div>
+<!-- LOADING STATE -->
+@if (loading()) {
+<div class="content-card">
+    <p class="muted">Loading your profile...</p>
 </div>
-@if (message()) { <div class="alert-success">{{ message() }}</div> }
-@if (error()) { <div class="alert-error">{{ error() }}</div> }
+}
+
+<!-- SUCCESS MESSAGE -->
+@if (message()) {
+<div class="alert-success">
+    {{ message() }}
+</div>
+}
+
+<!-- ERROR MESSAGE -->
+@if (error()) {
+<div class="alert-error">
+    {{ error() }}
+</div>
+}
+
+<!-- EXISTING CUSTOMER PROFILE -->
+@if (profile() && !showForm() && !loading()) {
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">YOUR ACCOUNT</span>
+        <h1>Personal profile</h1>
+        <p class="muted">
+            Manage your personal information.
+        </p>
+    </div>
+
+    <button type="button" class="primary-btn" (click)="editProfile()">
+        ✎ Edit profile
+    </button>
+</div>
+
 <section class="content-card">
+
     <div class="card-heading">
         <div>
             <h3>Personal information</h3>
-            <p class="muted">This information helps personalize your financial overview.</p>
+            <p class="muted">
+                Your saved profile details.
+            </p>
         </div>
     </div>
-    <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
-        <div><label>First name *</label><input formControlName="firstName" placeholder="First name"></div>
-        <div><label>Last name *</label><input formControlName="lastName" placeholder="Last name"></div>
-        <div><label>Email address</label><input [value]="profile()?.email || ''" disabled></div>
-        <div><label>Phone number</label><input formControlName="phone" placeholder="+91 98765 43210"></div>
-        <div><label>Date of birth</label><input type="date" formControlName="dateOfBirth"></div>
-        <div><label>Gender</label><select formControlName="gender">
-                <option value="">Select</option>
-                <option>Female</option>
-                <option>Male</option>
-                <option>Other</option>
-                <option>Prefer not to say</option>
-            </select></div>
-        <div class="form-actions"><button class="primary-btn" type="submit" [disabled]="form.invalid || saving()">{{
-                saving() ? 'Saving…' : 'Save changes' }}</button></div>
-    </form>
+
+    <div class="form-grid">
+
+        <div>
+            <label>First name</label>
+            <input [value]="profile()?.firstName || ''" disabled>
+        </div>
+
+        <div>
+            <label>Last name</label>
+            <input [value]="profile()?.lastName || ''" disabled>
+        </div>
+
+        <div>
+            <label>Email address</label>
+            <input [value]="profile()?.email || ''" disabled>
+        </div>
+
+        <div>
+            <label>Phone number</label>
+            <input [value]="profile()?.phone || ''" disabled>
+        </div>
+
+        <div>
+            <label>Date of birth</label>
+            <input [value]="profile()?.dateOfBirth || ''" disabled>
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <input [value]="profile()?.gender || ''" disabled>
+        </div>
+
+    </div>
+
 </section>
+}
+
+<!-- WELCOME POPUP FOR NEW CUSTOMERS -->
+@if (showWelcome() && !profile() && !loading()) {
+
+<div class="profile-modal-overlay">
+
+    <div class="profile-modal">
+
+        <div class="profile-modal-icon">
+            ✦
+        </div>
+
+        <span class="eyebrow">
+            WELCOME TO FINLONGEVITY
+        </span>
+
+        <h1>Let's get to know you!</h1>
+
+        <p class="muted">
+            Your financial journey starts here.
+
+            Create your personal profile to personalize
+            your financial dashboard and manage your
+            financial information in one place.
+        </p>
+
+        <div class="profile-benefits">
+
+            <div>
+                <span>✓</span>
+                Personalize your financial dashboard
+            </div>
+
+            <div>
+                <span>✓</span>
+                Organize your personal information
+            </div>
+
+            <div>
+                <span>✓</span>
+                Build your financial picture
+            </div>
+
+        </div>
+
+        <button type="button" class="primary-btn full-btn" (click)="startProfileCreation()">
+
+            Create my profile →
+        </button>
+
+    </div>
+
+</div>
+}
+
+<!-- CREATE / EDIT PROFILE FORM -->
+@if (showForm()) {
+
+<div class="page-heading">
+
+    <div>
+        <span class="eyebrow">YOUR ACCOUNT</span>
+
+        <h1>
+            {{ profile() ? 'Edit your profile' : 'Create your profile' }}
+        </h1>
+
+        <p class="muted">
+            {{
+            profile()
+            ? 'Update your personal information.'
+            : 'Tell us a little about yourself to personalize your financial experience.'
+            }}
+        </p>
+    </div>
+
+</div>
+
+<section class="content-card">
+
+    <div class="card-heading">
+
+        <div>
+            <h3>Personal information</h3>
+
+            <p class="muted">
+                Fields marked with * are required.
+            </p>
+        </div>
+
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="form-grid">
+
+        <!-- FIRST NAME -->
+        <div>
+            <label>First name *</label>
+
+            <input type="text" formControlName="firstName" placeholder="Enter first name">
+
+            @if (
+            form.controls.firstName.touched &&
+            form.controls.firstName.invalid
+            ) {
+            <small class="field-error">
+                First name is required.
+            </small>
+            }
+        </div>
+
+        <!-- LAST NAME -->
+        <div>
+            <label>Last name *</label>
+
+            <input type="text" formControlName="lastName" placeholder="Enter last name">
+
+            @if (
+            form.controls.lastName.touched &&
+            form.controls.lastName.invalid
+            ) {
+            <small class="field-error">
+                Last name is required.
+            </small>
+            }
+        </div>
+
+        <!-- EMAIL -->
+        <div>
+            <label>Email address</label>
+
+            <input type="email" [value]="profile()?.email || ''" placeholder="Registered email" disabled>
+        </div>
+
+        <!-- PHONE -->
+        <div>
+            <label>Phone number</label>
+
+            <input type="tel" formControlName="phone" placeholder="+91 98765 43210">
+        </div>
+
+        <!-- DATE OF BIRTH -->
+        <div>
+            <label>Date of birth</label>
+
+            <input type="date" formControlName="dateOfBirth">
+        </div>
+
+        <!-- GENDER -->
+        <div>
+            <label>Gender</label>
+
+            <select formControlName="gender">
+
+                <option value="">
+                    Select gender
+                </option>
+
+                <option value="Female">
+                    Female
+                </option>
+
+                <option value="Male">
+                    Male
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+                <option value="Prefer not to say">
+                    Prefer not to say
+                </option>
+
+            </select>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="form-actions">
+
+            <button type="button" class="outline-btn" [disabled]="saving()" (click)="cancelForm()">
+
+                Cancel
+            </button>
+
+            <button type="submit" class="primary-btn" [disabled]="form.invalid || saving()">
+
+                @if (saving()) {
+                Saving...
+                } @else {
+                {{ profile() ? 'Save changes' : 'Create profile' }}
+                }
+
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+}

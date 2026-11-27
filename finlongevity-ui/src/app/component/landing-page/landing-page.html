@@ -1,0 +1,399 @@
+<!-- NAVBAR -->
+<header class="landing-navbar">
+    <a routerLink="/" class="brand">
+        <span class="brand-icon">F</span>
+        <span class="brand-name">
+            finlongevity
+            <small>YOUR FINANCIAL COMPASS</small>
+        </span>
+    </a>
+
+    <nav class="desktop-nav">
+        <button (click)="scrollTo('features')">Features</button>
+        <button (click)="scrollTo('how-it-works')">How it works</button>
+        <button (click)="scrollTo('about')">About</button>
+    </nav>
+
+    <div class="nav-actions">
+        <a routerLink="/login" class="signin-link">Sign in</a>
+        <a routerLink="/register" class="nav-cta">
+            Get started <span>→</span>
+        </a>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-container">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    <span class="pulse-dot"></span>
+                    YOUR FINANCIAL FUTURE STARTS HERE
+                </div>
+
+                <h1>
+                    Your money.
+                    <br>
+                    Your goals.
+                    <br>
+                    <span>Your future.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Take control of your financial journey with
+                    one intelligent platform. Organize your finances,
+                    understand your wealth and plan for a more
+                    confident tomorrow.
+                </p>
+
+                <div class="hero-actions">
+                    <a routerLink="/register" class="primary-cta">
+                        Start your journey <span>→</span>
+                    </a>
+
+                    <button class="secondary-cta" (click)="scrollTo('features')">
+                        Explore platform
+                    </button>
+                </div>
+
+                <div class="hero-trust">
+                    <span>✓</span> Secure account access
+                    <span>✓</span> Your financial data
+                    <span>✓</span> One workspace
+                </div>
+
+            </div>
+
+            <!-- DASHBOARD VISUAL -->
+            <div class="hero-visual">
+
+                <div class="visual-glow"></div>
+
+                <div class="floating-card floating-top">
+                    <span class="floating-icon">↗</span>
+                    <div>
+                        <strong>Financial clarity</strong>
+                        <small>Everything in one place</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-preview">
+
+                    <div class="preview-header">
+                        <div>
+                            <span class="preview-brand-icon">F</span>
+                            <strong>Financial overview</strong>
+                        </div>
+                        <span class="preview-menu">•••</span>
+                    </div>
+
+                    <div class="preview-welcome">
+                        <small>YOUR FINANCIAL SPACE</small>
+                        <h3>Welcome back!</h3>
+                        <p>Your financial journey at a glance.</p>
+                    </div>
+
+                    <div class="preview-stats">
+
+                        <div class="preview-stat">
+                            <span>Assets</span>
+                            <strong>₹ 8,50,000</strong>
+                            <small>Track what you own</small>
+                        </div>
+
+                        <div class="preview-stat">
+                            <span>Liabilities</span>
+                            <strong>₹ 2,10,000</strong>
+                            <small>Manage what you owe</small>
+                        </div>
+
+                    </div>
+
+                    <div class="preview-networth">
+                        <div>
+                            <small>NET WORTH</small>
+                            <h2>₹ 6,40,000</h2>
+                        </div>
+                        <span class="networth-icon">◇</span>
+                    </div>
+
+                    <div class="preview-section-heading">
+                        Financial planning
+                        <span>Explore →</span>
+                    </div>
+
+                    <div class="preview-progress-list">
+                        <div class="preview-progress-item">
+                            <span class="progress-symbol blue">↗</span>
+                            <div>
+                                <strong>Income</strong>
+                                <small>Manage income sources</small>
+                            </div>
+                            <span>→</span>
+                        </div>
+
+                        <div class="preview-progress-item">
+                            <span class="progress-symbol purple">◈</span>
+                            <div>
+                                <strong>Investments</strong>
+                                <small>Plan your wealth</small>
+                            </div>
+                            <span>→</span>
+                        </div>
+
+                        <div class="preview-progress-item">
+                            <span class="progress-symbol teal">⌂</span>
+                            <div>
+                                <strong>Household</strong>
+                                <small>Plan together</small>
+                            </div>
+                            <span>→</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="floating-card floating-bottom">
+                    <span class="floating-icon shield">✓</span>
+                    <div>
+                        <strong>Built for your future</strong>
+                        <small>Plan smarter. Live better.</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="hero-bottom">
+            <span>ONE PLATFORM</span>
+            <span class="bottom-line"></span>
+            <span>EVERY FINANCIAL DECISION</span>
+            <span class="bottom-line"></span>
+            <span>A CLEARER TOMORROW</span>
+        </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features-section" id="features">
+
+        <div class="section-container">
+
+            <div class="section-intro">
+                <span class="eyebrow">THE FINLONGEVITY TOOLKIT</span>
+
+                <h2>
+                    Everything you need to
+                    <span>manage your finances.</span>
+                </h2>
+
+                <p>
+                    From everyday financial management to long-term
+                    wealth planning, bring your complete financial
+                    picture together in one workspace.
+                </p>
+            </div>
+
+            <div class="features-grid">
+
+                @for (feature of features; track feature.title) {
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        {{ feature.icon }}
+                    </div>
+
+                    <h3>{{ feature.title }}</h3>
+
+                    <p>{{ feature.description }}</p>
+
+                    <a routerLink="/register">
+                        Explore feature <span>→</span>
+                    </a>
+
+                </article>
+
+                }
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+
+        <div class="about-container">
+
+            <div class="about-visual">
+
+                <div class="about-main-card">
+
+                    <span class="eyebrow">YOUR FINANCIAL COMPASS</span>
+
+                    <div class="about-circle">
+                        <span>F</span>
+                    </div>
+
+                    <h3>One picture. Better decisions.</h3>
+
+                    <p>
+                        Understand your finances beyond individual
+                        numbers.
+                    </p>
+
+                </div>
+
+                <div class="about-floating">
+                    <span>✦</span>
+                    Financial clarity begins here.
+                </div>
+
+            </div>
+
+            <div class="about-content">
+
+                <span class="eyebrow">A BETTER WAY TO PLAN</span>
+
+                <h2>
+                    Your finances deserve
+                    <span>more than scattered spreadsheets.</span>
+                </h2>
+
+                <p>
+                    FinLongevity brings your financial information
+                    together so you can understand where you stand,
+                    organize your goals and make more informed
+                    financial decisions.
+                </p>
+
+                <div class="about-points">
+                    <div><span>✓</span> A unified financial workspace</div>
+                    <div><span>✓</span> Organized financial information</div>
+                    <div><span>✓</span> Personalized investment preferences</div>
+                    <div><span>✓</span> Household financial planning</div>
+                </div>
+
+                <a routerLink="/register" class="primary-cta">
+                    Discover FinLongevity →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section class="steps-section" id="how-it-works">
+
+        <div class="section-container">
+
+            <div class="section-intro">
+                <span class="eyebrow">YOUR JOURNEY</span>
+
+                <h2>
+                    Four steps towards
+                    <span>financial clarity.</span>
+                </h2>
+
+                <p>
+                    Getting started is simple. Build your financial
+                    picture one step at a time.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+
+                @for (step of steps; track step.number) {
+
+                <article class="step-card">
+
+                    <span class="step-number">{{ step.number }}</span>
+
+                    <div class="step-line"></div>
+
+                    <h3>{{ step.title }}</h3>
+
+                    <p>{{ step.description }}</p>
+
+                </article>
+
+                }
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+
+        <div class="final-cta-content">
+
+            <span class="eyebrow">THE FUTURE STARTS TODAY</span>
+
+            <h2>
+                Make your financial future
+                <span>a little clearer.</span>
+            </h2>
+
+            <p>
+                Start organizing your finances and take the next
+                step towards a more informed financial journey.
+            </p>
+
+            <div class="final-actions">
+
+                <a routerLink="/register" class="primary-cta">
+                    Create your free account →
+                </a>
+
+                <a routerLink="/login" class="final-signin">
+                    Already have an account? Sign in
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="cta-decoration">F</div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="landing-footer">
+
+    <a routerLink="/" class="brand">
+        <span class="brand-icon">F</span>
+
+        <span class="brand-name">
+            finlongevity
+            <small>YOUR FINANCIAL COMPASS</small>
+        </span>
+    </a>
+
+    <p>© 2026 FinLongevity. Your financial compass.</p>
+
+    <div class="footer-links">
+        <a routerLink="/login">Sign in</a>
+        <a routerLink="/register">Get started</a>
+    </div>
+
+</footer>

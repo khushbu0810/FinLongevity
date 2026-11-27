@@ -17,9 +17,17 @@ import { PaymentsComponent } from "./component/payments-component/payments-compo
 import { RiskProfileComponent } from "./component/risk-profile-component/risk-profile-component";
 import { LiabilitiesComponent } from "./component/liabilities-component/liabilities-component";
 import { CatalogueComponent } from "./component/catalogue-component/catalogue-component";
+import { AssetsComponent } from "./component/assets-component/assets-component";
+import { LandingPage } from "./component/landing-page/landing-page";
 
 
 export const routes: Routes = [
+    // PUBLIC LANDING PAGE
+    {
+        path: '',
+        component: LandingPage,
+        pathMatch: 'full'
+    },
     { path: 'login', component: Login, canActivate: [guestGuard] },
     { path: 'register', component: Register, canActivate: [guestGuard] },
     {
@@ -37,7 +45,7 @@ export const routes: Routes = [
 
             {
                 path: 'assets',
-                component: Placeholder,
+                component: AssetsComponent,
                 data: {
                     title: 'Assets',
                     description: 'Keep your financial assets in one place.'

@@ -12,8 +12,9 @@ export class AuthService {
     private readonly baseUrl = `${environment.apiUrl}/api/identity`;
     private readonly currentUserState = signal<UserResponse | null>(this.readUser());
     readonly currentUser = this.currentUserState.asReadonly();
-    readonly isAuthenticated = computed(() => !!this.getToken());
-
+    readonly isAuthenticated = computed(
+        () => !!this.currentUserState() && !!this.getToken()
+    );
     constructor(private readonly http: HttpClient) { }
 
     register(request: RegisterRequest): Observable<UserResponse> {

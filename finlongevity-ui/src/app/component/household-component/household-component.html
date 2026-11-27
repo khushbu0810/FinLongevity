@@ -1,85 +1,412 @@
-<div class="page-heading">
-    <div><span class="eyebrow">FAMILY FINANCIAL PLANNING</span>
-        <h1>Household</h1>
-        <p class="muted">Organise your household and the people included in your financial plan.</p>
-    </div>
-    <button class="primary-btn" type="button" (click)="openAddMember()" [disabled]="!household()">＋ Add member</button>
-</div>
-@if (message()) { <div class="alert-success">{{ message() }}</div> }
-@if (error()) { <div class="alert-error">{{ error() }}</div> }
-@if (loading()) { <section class="content-card empty-state">Loading household information…</section> } @else {
-<section class="content-card household-card">
-    <div class="card-heading">
-        <div>
-            <h3>Household details</h3>
-            <p class="muted">Set a name and reporting currency for your household.</p>
-        </div><span class="status-pill" [class.not-created]="!household()">{{ household() ? 'Configured' : 'Not set up'
-            }}</span>
-    </div>
-    <form [formGroup]="householdForm" (ngSubmit)="saveHousehold()" class="form-grid">
-        <div><label for="household-name">Household name *</label><input id="household-name" formControlName="name"
-                maxlength="120" placeholder="e.g. Sharma Family">@if (householdForm.controls.name.touched &&
-            householdForm.controls.name.invalid) { <small class="field-error">Enter a household name.</small> }</div>
-        <div><label for="household-currency">Reporting currency *</label><input id="household-currency"
-                formControlName="currency" maxlength="3" placeholder="INR" class="currency-input">@if
-            (householdForm.controls.currency.touched && householdForm.controls.currency.invalid) { <small
-                class="field-error">Enter a 3-letter currency code.</small> }</div>
-        <div class="full-width"><label for="household-description">Description</label><textarea
-                id="household-description" rows="2" formControlName="description" maxlength="500"
-                placeholder="Optional household description"></textarea></div>
-        <div class="form-actions full-width"><button class="primary-btn" type="submit"
-                [disabled]="householdForm.invalid || saving()">{{ saving() ? 'Saving…' : (household() ? 'Update
-                household' : 'Create household') }}</button></div>
-    </form>
+<!-- LOADING -->
+@if (loading()) {
+<section class="content-card empty-state">
+    Loading household information...
 </section>
+}
 
-@if (household()) {
-@if (showMemberForm()) {
-<section class="content-card member-form-card">
+<!-- SUCCESS -->
+@if (message()) {
+<div class="alert-success">
+    {{ message() }}
+</div>
+}
+
+<!-- ERROR -->
+@if (error()) {
+<div class="alert-error">
+    {{ error() }}
+
+    <button type="button" class="outline-btn" (click)="load()">
+        Retry
+    </button>
+</div>
+}
+
+<!-- WELCOME POPUP -->
+@if (showWelcome() && !household() && !loading()) {
+
+<div class="profile-modal-overlay">
+
+    <div class="profile-modal">
+
+        <div class="profile-modal-icon">
+            ✦
+        </div>
+
+        <span class="eyebrow">
+            FAMILY FINANCIAL PLANNING
+        </span>
+
+        <h1>Let's plan together!</h1>
+
+        <p class="muted">
+            Create your household to manage your family's
+            financial information in one place.
+
+            Organize family members and build a shared
+            financial picture.
+        </p>
+
+        <div class="profile-benefits">
+
+            <div>✓ Organize your family members</div>
+
+            <div>✓ Manage household financial information</div>
+
+            <div>✓ Plan your family's financial future</div>
+
+        </div>
+
+        <button type="button" class="primary-btn full-btn" (click)="startHouseholdCreation()">
+            Create my household →
+        </button>
+
+    </div>
+</div>
+}
+
+<!-- CREATE / EDIT HOUSEHOLD -->
+@if (showHouseholdForm() && !loading()) {
+
+<div class="page-heading">
+
+    <div>
+        <span class="eyebrow">
+            FAMILY FINANCIAL PLANNING
+        </span>
+
+        <h1>
+            {{ household()
+            ? 'Edit your household'
+            : 'Create your household' }}
+        </h1>
+
+        <p class="muted">
+            {{
+            household()
+            ? 'Update your household information.'
+            : 'Set up your household to start organizing your family finances.'
+            }}
+        </p>
+    </div>
+
+</div>
+
+<section class="content-card household-card">
+
     <div class="card-heading">
         <div>
-            <h3>{{ editingMemberId() ? 'Edit household member' : 'Add household member' }}</h3>
-            <p class="muted">Add the details used for household-level financial planning.</p>
-        </div><button class="icon-btn" type="button" aria-label="Close form" (click)="closeMemberForm()">✕</button>
+            <h3>Household information</h3>
+            <p class="muted">
+                Fields marked with * are required.
+            </p>
+        </div>
     </div>
-    <form [formGroup]="memberForm" (ngSubmit)="saveMember()" class="form-grid">
-        <div><label for="member-name">Full name *</label><input id="member-name" formControlName="fullName"
-                maxlength="120" placeholder="Full name"></div>
-        <div><label for="member-relationship">Relationship *</label><select id="member-relationship"
-                formControlName="relationship">@for (item of relationships; track item.value) { <option
-                    [value]="item.value">{{ item.label }}</option> }</select></div>
-        <div><label for="member-role">Household role *</label><select id="member-role" formControlName="role">@for (role
-                of roles; track role) { <option [value]="role">{{ role }}</option> }</select></div>
-        <div><label for="member-dob">Date of birth</label><input id="member-dob" type="date"
-                formControlName="dateOfBirth"></div>
-        <div><label for="member-email">Email</label><input id="member-email" type="email" formControlName="email"
-                placeholder="name@example.com"></div>
-        <div><label for="member-phone">Phone</label><input id="member-phone" type="tel" formControlName="phone"
-                placeholder="Phone number"></div>
-        <div class="full-width"><label for="member-identity">Identity user ID <span
-                    class="optional-label">Optional</span></label><input id="member-identity"
-                formControlName="identityUserId" placeholder="Existing identity user UUID, if applicable"></div>
-        <div class="form-actions full-width"><button class="primary-btn" type="submit"
-                [disabled]="memberForm.invalid || saving()">{{ saving() ? 'Saving…' : (editingMemberId() ? 'Update
-                member' : 'Add member') }}</button><button class="outline-btn" type="button"
-                (click)="closeMemberForm()">Cancel</button></div>
+
+    <form [formGroup]="householdForm" (ngSubmit)="saveHousehold()" class="form-grid">
+
+        <div>
+            <label for="household-name">
+                Household name *
+            </label>
+
+            <input id="household-name" formControlName="name" maxlength="120" placeholder="e.g. Sharma Family">
+
+            @if (
+            householdForm.controls.name.touched &&
+            householdForm.controls.name.invalid
+            ) {
+            <small class="field-error">
+                Enter a household name.
+            </small>
+            }
+        </div>
+
+        <div>
+            <label for="household-currency">
+                Reporting currency *
+            </label>
+
+            <input id="household-currency" formControlName="currency" maxlength="3" placeholder="INR"
+                class="currency-input">
+
+            @if (
+            householdForm.controls.currency.touched &&
+            householdForm.controls.currency.invalid
+            ) {
+            <small class="field-error">
+                Enter a valid 3-letter currency code.
+            </small>
+            }
+        </div>
+
+        <div class="full-width">
+            <label for="household-description">
+                Description
+            </label>
+
+            <textarea id="household-description" rows="3" formControlName="description" maxlength="500"
+                placeholder="Optional household description">
+        </textarea>
+        </div>
+
+        <div class="form-actions full-width">
+
+            <button type="button" class="outline-btn" [disabled]="saving()" (click)="cancelHouseholdForm()">
+                Cancel
+            </button>
+
+            <button type="submit" class="primary-btn" [disabled]="householdForm.invalid || saving()">
+
+                {{ saving()
+                ? 'Saving...'
+                : household()
+                ? 'Save changes'
+                : 'Create household' }}
+
+            </button>
+
+        </div>
+
     </form>
 </section>
 }
-<section class="content-card table-card">
+
+<!-- EXISTING HOUSEHOLD -->
+@if (household() && !showHouseholdForm() && !loading()) {
+
+<div class="page-heading">
+
+    <div>
+        <span class="eyebrow">
+            FAMILY FINANCIAL PLANNING
+        </span>
+
+        <h1>Household</h1>
+
+        <p class="muted">
+            Organize your household and the people included
+            in your financial plan.
+        </p>
+    </div>
+
+    <div class="row-actions">
+
+        <button type="button" class="outline-btn" (click)="editHousehold()">
+            ✎ Edit household
+        </button>
+
+        <button type="button" class="primary-btn" (click)="openAddMember()">
+            + Add member
+        </button>
+
+    </div>
+
+</div>
+
+<!-- HOUSEHOLD DETAILS -->
+<section class="content-card household-card">
+
     <div class="card-heading">
+
+        <div>
+            <h3>Household information</h3>
+            <p class="muted">
+                Your saved household details.
+            </p>
+        </div>
+
+        <span class="status-pill">
+            Configured
+        </span>
+
+    </div>
+
+    <div class="form-grid">
+
+        <div>
+            <label>Household name</label>
+            <input [value]="household()?.name || ''" disabled>
+        </div>
+
+        <div>
+            <label>Reporting currency</label>
+            <input [value]="household()?.currency || ''" disabled>
+        </div>
+
+        <div class="full-width">
+            <label>Description</label>
+            <textarea rows="2" [value]="household()?.description || '—'" disabled>
+        </textarea>
+        </div>
+
+    </div>
+</section>
+
+<!-- ADD / EDIT MEMBER FORM -->
+@if (showMemberForm()) {
+
+<section class="content-card member-form-card">
+
+    <div class="card-heading">
+
+        <div>
+            <h3>
+                {{ editingMemberId()
+                ? 'Edit household member'
+                : 'Add household member' }}
+            </h3>
+
+            <p class="muted">
+                Add the details used for household-level financial planning.
+            </p>
+        </div>
+
+        <button class="icon-btn" type="button" aria-label="Close form" (click)="closeMemberForm()">
+            ✕
+        </button>
+
+    </div>
+
+    <form [formGroup]="memberForm" (ngSubmit)="saveMember()" class="form-grid">
+
+        <div>
+            <label>Full name *</label>
+
+            <input formControlName="fullName" maxlength="120" placeholder="Full name">
+
+            @if (
+            memberForm.controls.fullName.touched &&
+            memberForm.controls.fullName.invalid
+            ) {
+            <small class="field-error">
+                Full name is required.
+            </small>
+            }
+        </div>
+
+        <div>
+            <label>Relationship *</label>
+
+            <select formControlName="relationship">
+
+                @for (item of relationships; track item.value) {
+                <option [value]="item.value">
+                    {{ item.label }}
+                </option>
+                }
+
+            </select>
+        </div>
+
+        <div>
+            <label>Household role *</label>
+
+            <select formControlName="role">
+
+                @for (role of roles; track role) {
+                <option [value]="role">
+                    {{ role }}
+                </option>
+                }
+
+            </select>
+        </div>
+
+        <div>
+            <label>Date of birth</label>
+
+            <input type="date" formControlName="dateOfBirth">
+        </div>
+
+        <div>
+            <label>Email</label>
+
+            <input type="email" formControlName="email" placeholder="name@example.com">
+        </div>
+
+        <div>
+            <label>Phone</label>
+
+            <input type="tel" formControlName="phone" placeholder="Phone number">
+        </div>
+
+        <div class="full-width">
+            <label>
+                Identity user ID
+                <span class="optional-label">Optional</span>
+            </label>
+
+            <input formControlName="identityUserId" placeholder="Existing identity user UUID, if applicable">
+        </div>
+
+        <div class="form-actions full-width">
+
+            <button type="button" class="outline-btn" [disabled]="saving()" (click)="closeMemberForm()">
+                Cancel
+            </button>
+
+            <button type="submit" class="primary-btn" [disabled]="memberForm.invalid || saving()">
+
+                {{ saving()
+                ? 'Saving...'
+                : editingMemberId()
+                ? 'Update member'
+                : 'Add member' }}
+
+            </button>
+
+        </div>
+
+    </form>
+</section>
+}
+
+<!-- HOUSEHOLD MEMBERS -->
+<section class="content-card table-card">
+
+    <div class="card-heading">
+
         <div>
             <h3>Household members</h3>
-            <p class="muted">{{ members().length }} member(s) in this household.</p>
-        </div><button class="outline-btn" type="button" (click)="load()">↻ Refresh</button>
+
+            <p class="muted">
+                {{ members().length }} member(s) in this household.
+            </p>
+        </div>
+
+        <button class="outline-btn" type="button" (click)="load()">
+            ↻ Refresh
+        </button>
+
     </div>
-    @if (!members().length) { <div class="empty-state"><span class="empty-icon">⌂</span><strong>No household members
-            yet</strong>
-        <p>Add family members to organise your household financial plan.</p><button class="primary-btn" type="button"
-            (click)="openAddMember()">Add first member</button>
-    </div> }
-    @else { <div class="table-wrap">
+
+    @if (!members().length) {
+
+    <div class="empty-state">
+
+        <span class="empty-icon">⌂</span>
+
+        <strong>No household members yet</strong>
+
+        <p>
+            Add family members to organize your household
+            financial plan.
+        </p>
+
+        <button class="primary-btn" type="button" (click)="openAddMember()">
+            Add first member
+        </button>
+
+    </div>
+
+    } @else {
+
+    <div class="table-wrap">
+
         <table>
+
             <thead>
                 <tr>
                     <th>MEMBER</th>
@@ -87,28 +414,72 @@
                     <th>ROLE</th>
                     <th>DATE OF BIRTH</th>
                     <th>CONTACT</th>
-                    <th></th>
+                    <th>ACTIONS</th>
                 </tr>
             </thead>
+
             <tbody>
-                @for (member of members(); track member.id) { <tr>
-                    <td><strong>{{ member.fullName }}</strong></td>
-                    <td>{{ relationshipLabel(member.relationship) }}</td>
-                    <td><span class="role-pill">{{ member.role }}</span></td>
-                    <td>{{ member.dateOfBirth ? (member.dateOfBirth | date:'mediumDate') : '—' }}</td>
-                    <td>{{ member.email || member.phone || '—' }}</td>
+
+                @for (member of members(); track member.id) {
+
+                <tr>
+
                     <td>
-                        <div class="row-actions"><button type="button" (click)="editMember(member)">Edit</button><button
-                                type="button" class="danger-link" [disabled]="deletingId() === member.id"
-                                (click)="deleteMember(member)">{{ deletingId() === member.id ? 'Removing…' : 'Remove'
-                                }}</button></div>
+                        <strong>{{ member.fullName }}</strong>
                     </td>
-                </tr> }
+
+                    <td>
+                        {{ relationshipLabel(member.relationship) }}
+                    </td>
+
+                    <td>
+                        <span class="role-pill">
+                            {{ member.role }}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{
+                        member.dateOfBirth
+                        ? (member.dateOfBirth | date:'mediumDate')
+                        : '—'
+                        }}
+                    </td>
+
+                    <td>
+                        {{ member.email || member.phone || '—' }}
+                    </td>
+
+                    <td>
+
+                        <div class="row-actions">
+
+                            <button type="button" (click)="editMember(member)">
+                                Edit
+                            </button>
+
+                            <button type="button" class="danger-link" [disabled]="deletingId() === member.id"
+                                (click)="deleteMember(member)">
+
+                                {{ deletingId() === member.id
+                                ? 'Removing...'
+                                : 'Remove' }}
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+                }
+
             </tbody>
+
         </table>
-    </div> }
+
+    </div>
+    }
+
 </section>
-} @else { <section class="content-card setup-note"><strong>Create your household to continue</strong>
-    <p class="muted">Once the household is saved, you can add and manage its members.</p>
-</section> }
-}F
+}
