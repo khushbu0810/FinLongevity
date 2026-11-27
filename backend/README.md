@@ -534,3 +534,11 @@ It will reference products using their IDs from Provider & Product Service rathe
 ## Payment service
 payment : created -> initiated 
 then either success or fails
+
+## kafka
+When a user contributes ₹5,000 to a goal:
+1. Goal Service saves the contribution.
+2. Payment Client sends a request to Payment Service to create a payment of ₹5,000.
+3. Payment Service creates the payment and returns a Payment ID.
+4. Payment Client gives that Payment ID back to Goal Service.
+5. Goal Service stores the Payment ID against the contribution.

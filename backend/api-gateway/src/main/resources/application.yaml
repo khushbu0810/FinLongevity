@@ -39,7 +39,7 @@ spring:
             - id: goal-service
               uri: lb://goal-service
               predicates:
-                - Path=/api/goal/**
+                - Path=/api/goals/**
 
             #SWAGGER DOCUMENTATION ROUTES
             - id: identity-swagger

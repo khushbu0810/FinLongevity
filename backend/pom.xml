@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>core</module>
         <module>eureka-discovery-server</module>
         <module>config-server</module>
         <module>api-gateway</module>
