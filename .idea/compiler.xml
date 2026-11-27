@@ -15,6 +15,7 @@
         <module name="customer-service" />
         <module name="goal-service" />
         <module name="eureka-discovery-server" />
+        <module name="financial-engine-service" />
         <module name="api-gateway" />
         <module name="identity-service" />
         <module name="provider-product-service" />
@@ -32,6 +33,7 @@
       <module name="core" options="-parameters" />
       <module name="customer-service" options="-parameters" />
       <module name="eureka-discovery-server" options="" />
+      <module name="financial-engine-service" options="-parameters" />
       <module name="goal-service" options="-parameters" />
       <module name="identity-service" options="" />
       <module name="insurance-service" options="-parameters" />
