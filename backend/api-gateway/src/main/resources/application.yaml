@@ -40,6 +40,10 @@ spring:
               uri: lb://goal-service
               predicates:
                 - Path=/api/goals/**
+            - id: financial-engine-service
+              uri: lb://financial-engine-service
+              predicates:
+                - Path=/api/financial-engine/**
 
             #SWAGGER DOCUMENTATION ROUTES
             - id: identity-swagger
@@ -82,6 +86,12 @@ spring:
               uri: lb://goal-service
               predicates:
                 - Path=/goal/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: engine-swagger
+              uri: lb://financial-engine-service
+              predicates:
+                - Path=/financial-engine/v3/api-docs
               filters:
                 - StripPrefix=1
 #    CORS -------------
@@ -132,6 +142,9 @@ springdoc:
 
       - name: Goal Service
         url: /goal/v3/api-docs
+
+      - name: Financial Engine Service
+        url: /financial-engine/v3/api-docs
 
     urls-primary-name: Identity Service
     disable-swagger-default-url: true

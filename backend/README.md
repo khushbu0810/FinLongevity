@@ -542,3 +542,119 @@ When a user contributes ₹5,000 to a goal:
 3. Payment Service creates the payment and returns a Payment ID.
 4. Payment Client gives that Payment ID back to Goal Service.
 5. Goal Service stores the Payment ID against the contribution.
+
+
+# Financiall engine
+
+Module -	What it calculates
+
+Cash Flow Analyzer - Income minus expenses
+
+Net Worth Analyzer - Assets minus liabilities
+
+Emergency Fund Analyzer - Months of expense coverage
+
+Financial Runway - How long savings can sustain expenses
+
+Savings & Investment Analyzer - Savings rate and investment growth
+
+Retirement Projection - Projected retirement corpus
+
+Goal Feasibility - Whether goals are financially achievable
+
+Longevity Scoring - Overall financial sustainability score
+
+Scenario Simulator - Future financial outcomes
+
+
+
+### Financial Longevity Engine
+
+Customer Financial Data
+[ Income · Expenses · Assets · Liabilities · Risk Profile · Goals ]
+
+
+Financial Longevity Engine
+[ Cash Flow · Net Worth · Sustainability · Forecasting · Risk Analysis ]
+
+
+Longevity Score
+[ Financial health indicator ]
+
+
+Retirement Forecast
+[ Future wealth projection ]
+
+
+Financial Runway
+[ Months of expense coverage ]
+
+
+Scenario Analysis
+[ Best, expected and worst cases ]
+
+
+
+Calculations implemented
+1. Monthly surplus = Income − Expenses − Debt Payments
+2. Savings rate = (Monthly Surplus / Monthly Income) × 100
+3. Net worth = Total Assets − Total Liabilities
+4. Emergency fund coverage = Liquid Assets / Monthly Expenses
+5. Financial runway = Liquid Assets / (Monthly Expenses + Debt Payments)
+
+
+## Longevity scoring model
+Maximum score
+100
+
+Savings rate
+30 points
+
+
+Emergency fund
+30 points
+
+
+Debt payment burden
+20 points
+
+
+Positive net worth
+20 points
+
+Health bands:
+Score	Financial health
+0–24	Critical
+25–44	Needs improvement
+45–64	Fair
+65–84	Good
+85–100	Excellent
+
+
+
+
+Install
+Merge the dto, engine, service and exception packages into the existing project.
+
+Score model (100 points)
+Savings rate: 0–30 points (<=0: 0; 0–10%: 10; 10–20%: 20; >=20%: 30).
+Emergency fund: 0–30 points (<1 month: 5; 1–3: 15; 3–6: 24; >=6: 30; absent/zero: 0).
+Debt payment burden: 0–20 points (<=10% of income: 20; <=20%: 15; <=35%: 8; >35%: 0; income <=0: 0).
+Positive net worth: 20 points; zero/negative: 0.
+Health bands:
+
+0–24 CRITICAL
+25–44 NEEDS_IMPROVEMENT
+45–64 FAIR
+65–84 GOOD
+85–100 EXCELLENT
+
+
+
+## Retirement calculation assumptions
+- Annual expected return is treated as a nominal annual rate divided by 12 for monthly compounding.
+- Monthly contributions are added at each month-end after that month's growth.
+- Contribution amount increases by the configured annual growth rate after each projected year.
+- Retirement expense inflation is applied once per projected year.
+- Required retirement corpus uses an illustrative 25x annual-expense heuristic. This is not a guarantee or personalized retirement recommendation.
+- The `yearsToProject` should normally equal `retirementAge - currentAge`; the service layer in a later layer should validate this consistency.

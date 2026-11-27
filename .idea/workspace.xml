@@ -4,18 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="goal --- payment kafka configuration">
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="added goal contribution and analytics">
+      <change afterPath="$PROJECT_DIR$/backend/config-server/src/main/resources/config-repo/financial-engine-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/FinancialEngineServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/client/CustomerServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/config/CustomerServiceProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/config/OpenApiConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/config/RestClientConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/controller/FinancialEngineController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/CashFlowAnalysisResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/CustomerFinancialDataResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/FinancialAnalysisRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/FinancialAnalysisResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/FinancialEngineAnalysisResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/FinancialProjectionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/FinancialSnapshotAnalysisResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/FinancialSnapshotRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/LongevityScoreResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/NetWorthAnalysisResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/engine/CashFlowCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/engine/FinancialRunwayCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/engine/FinancialSnapshotCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/engine/LongevityScoreCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/engine/NetWorthCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/entity/FinancialAnalysis.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/entity/FinancialProjection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/enums/AnalysisStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/enums/AnalysisType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/enums/FinancialHealthBand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/enums/ProjectionPeriodType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/enums/ScenarioType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/exception/CustomerServiceUnavailableException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/exception/ResourceNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/repository/FinancialAnalysisRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/repository/FinancialProjectionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/FinancialAnalysisPersistenceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/FinancialAnalysisQueryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/FinancialEngineOrchestrationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/controller/GoalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/controller/GoalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/FinancialGoalResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/FinancialGoalResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/identity-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/identity-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,10 +133,10 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/19-kafka-goal-payment",
+    "git-widget-placeholder": "feature/20-financial-engine",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/FinLongevity/backend/payment-service/src/main/java/com/example/payment_service",
+    "last_opened_file_path": "C:/projects/FinLongevity/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -110,22 +146,22 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service" />
-      <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service" />
-      <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service\dto" />
-      <recent name="C:\projects\FinLongevity\backend\goal-service\src\main\java\com\example\goal_service\model" />
-      <recent name="C:\projects\FinLongevity\backend\provider-product-service\src\main\java\com\example\provider_product_service" />
+      <recent name="C:\projects\FinLongevity\backend\financial-engine-service\src\main\java\com\example\financial_engine_service\service" />
+      <recent name="C:\projects\FinLongevity\backend\financial-engine-service\src\main\java\com\example\financial_engine_service\dto\retirement" />
+      <recent name="C:\projects\FinLongevity\backend\financial-engine-service\src\main\java\com\example\financial_engine_service" />
+      <recent name="C:\projects\FinLongevity\backend\financial-engine-service\src\main\java\com\example\financial_engine_service\dto" />
+      <recent name="C:\projects\FinLongevity\backend\financial-engine-service\src\main\java\com\example\financial_engine_service\config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\projects\FinLongevity\backend" />
       <recent name="C:\projects\FinLongevity\backend\api-gateway" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.example.goal_service.events" />
-      <recent name="com.example.goal_service.dto" />
-      <recent name="com.example.payment_service.dto" />
-      <recent name="com.example.investment_service.dto.transaction" />
-      <recent name="com.example.customer_service.service" />
+      <recent name="com.example.financial_engine_service.controller" />
+      <recent name="com.example.financial_engine_service.dto" />
+      <recent name="com.example.financial_engine_service.service" />
+      <recent name="com.example.financial_engine_service.repository" />
+      <recent name="com.example.financial_engine_service.dto.retirement" />
     </key>
   </component>
   <component name="RunAnythingCache">
