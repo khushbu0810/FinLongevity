@@ -19,6 +19,9 @@ import { LiabilitiesComponent } from "./component/liabilities-component/liabilit
 import { CatalogueComponent } from "./component/catalogue-component/catalogue-component";
 import { AssetsComponent } from "./component/assets-component/assets-component";
 import { LandingPage } from "./component/landing-page/landing-page";
+import { FinancialEngineComponent } from "./component/financial-engine-component/financial-engine-component";
+import { InsuranceComponent } from "./component/insurance-component/insurance-component";
+import { GoalComponent } from "./component/goal-component/goal-component";
 
 
 export const routes: Routes = [
@@ -105,6 +108,30 @@ export const routes: Routes = [
                 data: {
                     title: 'Product catalogue',
                     description: 'Explore providers and their financial products.'
+                }
+            },
+            {
+                path: 'goals',
+                component: GoalComponent,
+                data: {
+                    title: 'Goals',
+                    description: 'Create financial goals, track progress, manage contributions and monitor group goals.'
+                }
+            },
+            {
+                path: 'insurance',
+                component: InsuranceComponent,
+                data: {
+                    title: 'Insurance',
+                    description: 'Manage insurance applications, track application decisions and view active policies.'
+                }
+            },
+            {
+                path: 'financial-engine',
+                component: FinancialEngineComponent,
+                data: {
+                    title: 'Financial Engine',
+                    description: 'Analyze financial health, track longevity scores and plan retirement projections.'
                 }
             }
         ]

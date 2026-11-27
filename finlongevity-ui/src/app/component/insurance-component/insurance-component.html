@@ -1,0 +1,280 @@
+<section class="page-heading">
+    <div>
+        <span class="eyebrow">PROTECTION PLANNING</span>
+        <h1>Insurance</h1>
+        <p>Manage insurance applications and review your issued policies.</p>
+    </div>
+    <button class="primary-btn" (click)="openCreate()">＋ New application</button>
+</section>
+
+@if(message()) {
+<div class="alert success-alert">{{message()}}</div>
+}
+
+@if(error()) {
+<div class="alert error-alert">{{error()}}</div>
+}
+
+<section class="insurance-summary">
+    <article>
+        <span>Applications</span>
+        <strong>{{applications().length}}</strong>
+        <small>All application statuses</small>
+    </article>
+    <article>
+        <span>Active policies</span>
+        <strong>{{activePoliciesCount}}</strong>
+        <small>Policies currently active</small>
+    </article>
+    <article>
+        <span>Total coverage · INR</span>
+        <strong>{{totalCoverageInr | currency:'INR':'symbol':'1.0-0'}}</strong>
+        <small>Coverage across INR policies</small>
+    </article>
+</section>
+
+<section class="insurance-panel">
+    <div class="tabs">
+        <button [class.active]="activeTab()==='APPLICATIONS'" (click)="activeTab.set('APPLICATIONS')">
+            Applications <span>{{applications().length}}</span>
+        </button>
+
+        <button [class.active]="activeTab()==='POLICIES'" (click)="activeTab.set('POLICIES')">
+            My policies <span>{{policies().length}}</span>
+        </button>
+    </div>
+
+    @if(loading()) {
+    <div class="empty-state">Loading insurance information…</div>
+    } @else if(activeTab()==='APPLICATIONS') {
+
+    @if(!applications().length) {
+    <div class="empty-state">
+        <strong>No insurance applications yet</strong>
+        <p>Start an application for a product from your insurance provider.</p>
+        <button class="primary-btn" (click)="openCreate()">Create application</button>
+    </div>
+    } @else {
+    <div class="record-list">
+        @for(a of applications(); track a.id) {
+        <article class="application-row">
+            <div class="product-symbol">✚</div>
+
+            <div class="record-main">
+                <strong>{{a.productNameSnapshot}}</strong>
+                <small>{{label(a.insuranceType)}} · {{a.applicantName}}</small>
+                <small>Created {{a.createdAt | date:'mediumDate'}}</small>
+            </div>
+
+            <div class="record-amount">
+                <strong>{{a.coverageAmount | currency:a.currency:'symbol':'1.0-0'}}</strong>
+                <span class="status-pill" [class.positive]="statusClass(a.status)==='positive'"
+                    [class.negative]="statusClass(a.status)==='negative'">
+                    {{label(a.status)}}
+                </span>
+            </div>
+
+            <div class="row-actions">
+                <button (click)="viewApplication(a)">Details</button>
+
+                @if(a.status==='DRAFT') {
+                <button [disabled]="submittingId()===a.id" (click)="submit(a)">
+                    {{submittingId()===a.id ? 'Submitting…' : 'Submit'}}
+                </button>
+                }
+            </div>
+        </article>
+        }
+    </div>
+    }
+
+    } @else {
+
+    @if(!policies().length) {
+    <div class="empty-state">
+        <strong>No policies issued yet</strong>
+        <p>Approved applications that result in policies will appear here.</p>
+    </div>
+    } @else {
+    <div class="record-list">
+        @for(p of policies(); track p.id) {
+        <article class="application-row">
+            <div class="product-symbol">▣</div>
+
+            <div class="record-main">
+                <strong>{{p.policyNumber}}</strong>
+                <small>Policy · {{label(p.premiumFrequency)}} premium</small>
+                <small>
+                    {{p.startDate | date:'mediumDate'}}
+                    –
+                    {{p.endDate | date:'mediumDate'}}
+                </small>
+            </div>
+
+            <div class="record-amount">
+                <strong>{{p.coverageAmount | currency:p.currency:'symbol':'1.0-0'}}</strong>
+                <span class="status-pill" [class.positive]="statusClass(p.status)==='positive'"
+                    [class.negative]="statusClass(p.status)==='negative'">
+                    {{label(p.status)}}
+                </span>
+            </div>
+
+            <div class="row-actions">
+                <button (click)="viewPolicy(p)">Details</button>
+            </div>
+        </article>
+        }
+    </div>
+    }
+    }
+</section>
+
+@if(showForm()) {
+<div class="modal-backdrop" (click)="showForm.set(false)">
+    <section class="modal-card" (click)="$event.stopPropagation()">
+        <div class="modal-heading">
+            <div>
+                <span class="eyebrow">NEW APPLICATION</span>
+                <h2>Insurance application</h2>
+                <p>Enter the product and applicant details requested by the Insurance Service.</p>
+            </div>
+            <button class="icon-btn" (click)="showForm.set(false)">✕</button>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="create()" class="form-grid">
+            <label class="full">
+                Provider product UUID
+                <input formControlName="providerProductId" placeholder="UUID from the insurance catalogue" />
+            </label>
+
+            <label class="full">
+                Product name
+                <input formControlName="productNameSnapshot" maxlength="180" />
+            </label>
+
+            <label>
+                Insurance type
+                <select formControlName="insuranceType">
+                    @for(t of types; track t) {
+                    <option [value]="t">{{label(t)}}</option>
+                    }
+                </select>
+            </label>
+
+            <label>
+                Coverage amount
+                <input type="number" min="0.01" step="0.01" formControlName="coverageAmount" />
+            </label>
+
+            <label>
+                Applicant full name
+                <input formControlName="applicantName" maxlength="150" />
+            </label>
+
+            <label>
+                Date of birth
+                <input type="date" formControlName="applicantDateOfBirth" />
+            </label>
+
+            <label>
+                Currency
+                <input maxlength="3" formControlName="currency" />
+            </label>
+
+            <div class="form-actions full">
+                <button type="button" class="secondary-btn" (click)="showForm.set(false)">
+                    Cancel
+                </button>
+                <button class="primary-btn" type="submit" [disabled]="saving()">
+                    {{saving() ? 'Saving…' : 'Create application'}}
+                </button>
+            </div>
+        </form>
+    </section>
+</div>
+}
+
+@if(selectedApplication(); as a) {
+<div class="drawer-backdrop" (click)="closeDetails()">
+    <aside class="detail-drawer" (click)="$event.stopPropagation()">
+        <div class="drawer-heading">
+            <div>
+                <span class="eyebrow">APPLICATION</span>
+                <h2>{{a.productNameSnapshot}}</h2>
+                <span class="status-pill" [class.positive]="statusClass(a.status)==='positive'"
+                    [class.negative]="statusClass(a.status)==='negative'">
+                    {{label(a.status)}}
+                </span>
+            </div>
+            <button class="icon-btn" (click)="closeDetails()">✕</button>
+        </div>
+
+        <div class="detail-grid">
+            <div><small>Applicant</small><strong>{{a.applicantName}}</strong></div>
+            <div><small>Date of birth</small><strong>{{a.applicantDateOfBirth | date:'mediumDate'}}</strong></div>
+            <div><small>Insurance type</small><strong>{{label(a.insuranceType)}}</strong></div>
+            <div><small>Coverage</small><strong>{{a.coverageAmount | currency:a.currency:'symbol':'1.0-0'}}</strong>
+            </div>
+            <div>
+                <small>Submitted</small>
+                <strong>{{a.submittedAt ? (a.submittedAt | date:'medium') : 'Not submitted'}}</strong>
+            </div>
+            <div>
+                <small>Decision date</small>
+                <strong>{{a.decisionAt ? (a.decisionAt | date:'medium') : 'Pending'}}</strong>
+            </div>
+        </div>
+
+        @if(a.decisionNote) {
+        <div class="decision-note">
+            <small>Decision note</small>
+            <p>{{a.decisionNote}}</p>
+        </div>
+        }
+
+        @if(a.status==='DRAFT') {
+        <button class="primary-btn submit-wide" [disabled]="submittingId()===a.id" (click)="submit(a)">
+            {{submittingId()===a.id ? 'Submitting…' : 'Submit application'}}
+        </button>
+        }
+
+        <p class="muted">Application ID: {{a.id}}</p>
+    </aside>
+</div>
+}
+
+@if(selectedPolicy(); as p) {
+<div class="drawer-backdrop" (click)="closeDetails()">
+    <aside class="detail-drawer" (click)="$event.stopPropagation()">
+        <div class="drawer-heading">
+            <div>
+                <span class="eyebrow">INSURANCE POLICY</span>
+                <h2>{{p.policyNumber}}</h2>
+                <span class="status-pill" [class.positive]="statusClass(p.status)==='positive'"
+                    [class.negative]="statusClass(p.status)==='negative'">
+                    {{label(p.status)}}
+                </span>
+            </div>
+            <button class="icon-btn" (click)="closeDetails()">✕</button>
+        </div>
+
+        <div class="detail-grid">
+            <div>
+                <small>Coverage amount</small>
+                <strong>{{p.coverageAmount | currency:p.currency:'symbol':'1.0-0'}}</strong>
+            </div>
+            <div>
+                <small>Premium</small>
+                <strong>{{p.premiumAmount | currency:p.currency:'symbol':'1.2-2'}}</strong>
+            </div>
+            <div><small>Frequency</small><strong>{{label(p.premiumFrequency)}}</strong></div>
+            <div><small>Next premium due</small><strong>{{p.nextPremiumDueDate | date:'mediumDate'}}</strong></div>
+            <div><small>Start date</small><strong>{{p.startDate | date:'mediumDate'}}</strong></div>
+            <div><small>End date</small><strong>{{p.endDate | date:'mediumDate'}}</strong></div>
+        </div>
+
+        <p class="muted">Policy ID: {{p.id}}</p>
+        <p class="muted">Application ID: {{p.applicationId}}</p>
+    </aside>
+</div>
+}

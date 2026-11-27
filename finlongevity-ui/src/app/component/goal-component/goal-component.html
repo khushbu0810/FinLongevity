@@ -1,0 +1,190 @@
+<section class="page-heading">
+    <div><span class="eyebrow">WEALTH PLANNING</span>
+        <h1>Financial goals</h1>
+        <p>Turn your financial priorities into measurable milestones.</p>
+    </div>
+    <button class="primary-btn" (click)="openCreate()">＋ Create goal</button>
+</section>
+@if (message()) { <div class="alert success-alert">{{message()}}</div> }
+@if (error()) { <div class="alert error-alert">{{error()}}</div> }
+<section class="goal-overview">
+    <article class="overview-card"><span>Active goals</span><strong>{{activeCount}}</strong><small>Goals currently in
+            progress</small></article>
+    <article class="overview-card"><span>Total target · INR goals</span><strong>{{totalTarget |
+            currency:'INR':'symbol':'1.0-0'}}</strong><small>Across non-cancelled goals</small></article>
+    <article class="overview-card"><span>Saved so far · INR goals</span><strong>{{totalSaved |
+            currency:'INR':'symbol':'1.0-0'}}</strong><small>Based on backend goal balances</small></article>
+</section>
+<section class="goals-panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Your goals</h2>
+            <p>Track progress, contributions and target dates.</p>
+        </div><select [value]="filter()" (change)="filter.set($any($event.target).value)">
+            <option value="ALL">All goals</option>
+            <option value="ACTIVE">Active</option>
+            <option value="PAUSED">Paused</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="CANCELLED">Cancelled</option>
+        </select>
+    </div>
+    @if (loading()) { <div class="empty-state">Loading your financial goals…</div> }
+    @else if (!filteredGoals.length) { <div class="empty-state">
+        <div class="empty-icon">◎</div><strong>No goals found</strong>
+        <p>Create a financial goal to start tracking your progress.</p><button class="primary-btn"
+            (click)="openCreate()">Create your first goal</button>
+    </div> }
+    @else { <div class="goal-grid">
+        @for (g of filteredGoals; track g.id) {
+        <article class="goal-card">
+            <div class="goal-card-top"><span class="goal-type">{{label(g.goalType)}}</span><span class="status-pill"
+                    [class.positive]="g.status==='ACTIVE'||g.status==='COMPLETED'"
+                    [class.negative]="g.status==='CANCELLED'">{{label(g.status)}}</span></div>
+            <h3>{{g.name}}</h3>
+            <p class="goal-description">{{g.description || 'A financial milestone you are working towards.'}}</p>
+            <div class="goal-numbers">
+                <div><small>Current amount</small><strong>{{g.currentAmount |
+                        currency:g.currency:'symbol':'1.0-0'}}</strong></div>
+                <div class="target"><small>Target amount</small><strong>{{g.targetAmount |
+                        currency:g.currency:'symbol':'1.0-0'}}</strong></div>
+            </div>
+            <div class="progress-track"><span [style.width.%]="progress(g)"></span></div>
+            <div class="progress-meta"><strong>{{progress(g) | number:'1.0-1'}}%
+                    completed</strong><span>{{g.remainingAmount | currency:g.currency:'symbol':'1.0-0'}}
+                    remaining</span></div>
+            <div class="goal-footer"><span>{{g.targetDate ? ('Target ' + (g.targetDate | date:'mediumDate')) : 'No
+                    target date'}}</span><button class="text-btn" (click)="openDetails(g)">View details →</button></div>
+        </article>
+        }
+    </div> }
+</section>
+
+@if (showForm()) {
+<div class="modal-backdrop" (click)="showForm.set(false)">
+    <section class="modal-card" (click)="$event.stopPropagation()">
+        <div class="modal-heading">
+            <div><span class="eyebrow">GOAL SETUP</span>
+                <h2>{{editingId()?'Update goal':'Create a financial goal'}}</h2>
+                <p>Define the milestone and the amount you want to reach.</p>
+            </div><button class="icon-btn" (click)="showForm.set(false)">✕</button>
+        </div>
+        <form [formGroup]="goalForm" (ngSubmit)="saveGoal()" class="form-grid">
+            <label class="full">Goal name<input formControlName="name" placeholder="e.g. Buy a home"
+                    maxlength="140" /></label>
+            <label>Goal type<select formControlName="goalType">@for(t of goalTypes;track t){<option [value]="t">
+                        {{label(t)}}</option>}</select></label>
+            <label>Target amount<input type="number" min="0.01" step="0.01" formControlName="targetAmount" /></label>
+            <label>Currency<input formControlName="currency" maxlength="3" /></label>
+            <label>Target date <span class="optional">(optional)</span><input type="date"
+                    formControlName="targetDate" /></label>
+            <label class="full">Description <span class="optional">(optional)</span><textarea rows="3"
+                    formControlName="description" maxlength="1000"
+                    placeholder="What are you saving for?"></textarea></label>
+            <div class="form-actions full"><button type="button" class="secondary-btn"
+                    (click)="showForm.set(false)">Cancel</button><button class="primary-btn" type="submit"
+                    [disabled]="saving()">{{saving()?'Saving…':(editingId()?'Save changes':'Create goal')}}</button>
+            </div>
+        </form>
+    </section>
+</div>
+}
+
+@if (selected(); as g) {
+<div class="drawer-backdrop" (click)="closeDetails()">
+    <aside class="goal-drawer" (click)="$event.stopPropagation()">
+        <div class="drawer-heading">
+            <div><span class="eyebrow">GOAL DETAILS</span>
+                <h2>{{g.name}}</h2><span class="status-pill"
+                    [class.positive]="g.status==='ACTIVE'||g.status==='COMPLETED'">{{label(g.status)}}</span>
+            </div><button class="icon-btn" (click)="closeDetails()">✕</button>
+        </div>
+        @if(detailLoading()){<div class="empty-state">Loading goal details…</div>} @else {
+        <div class="detail-progress">
+            <div class="progress-meta"><strong>{{progress(g) | number:'1.0-1'}}%
+                    complete</strong><span>{{g.currency}}</span></div>
+            <div class="progress-track large"><span [style.width.%]="progress(g)"></span></div>
+            <div class="detail-stats">
+                <div><small>Saved</small><strong>{{g.currentAmount | currency:g.currency:'symbol':'1.0-0'}}</strong>
+                </div>
+                <div><small>Target</small><strong>{{g.targetAmount | currency:g.currency:'symbol':'1.0-0'}}</strong>
+                </div>
+                <div><small>Remaining</small><strong>{{g.remainingAmount |
+                        currency:g.currency:'symbol':'1.0-0'}}</strong></div>
+            </div>
+        </div>
+        <div class="drawer-actions"><button class="primary-btn" [disabled]="g.status!=='ACTIVE'"
+                (click)="openContribution()">＋ Add contribution</button><button class="secondary-btn"
+                (click)="openEdit(g)">Edit goal</button></div>
+        <div class="section-row">
+            <h3>Goal status</h3>
+            <div class="status-actions"><button [disabled]="busyAction()||g.status==='ACTIVE'"
+                    (click)="changeStatus(g,'ACTIVE')">Activate</button><button
+                    [disabled]="busyAction()||g.status!=='ACTIVE'"
+                    (click)="changeStatus(g,'PAUSED')">Pause</button><button
+                    [disabled]="busyAction()||g.status==='COMPLETED'"
+                    (click)="changeStatus(g,'COMPLETED')">Complete</button><button
+                    [disabled]="busyAction()||g.status==='CANCELLED'"
+                    (click)="changeStatus(g,'CANCELLED')">Cancel</button></div>
+        </div>
+        <div class="section-row">
+            <h3>Contributions</h3>
+        </div>
+        @if(!contributions().length){<p class="muted">No contributions have been recorded for this goal.</p>} @else {
+        <div class="record-list">@for(c of contributions();track c.id){<div class="record-row">
+                <div><strong>{{c.amount | currency:c.currency:'symbol':'1.2-2'}}</strong><small>{{c.createdAt |
+                        date:'medium'}} · {{c.note||'Goal contribution'}}</small></div><span class="status-pill"
+                    [class.positive]="c.status==='CONFIRMED'"
+                    [class.negative]="c.status==='FAILED'">{{label(c.status)}}</span>
+            </div>}</div>}
+        @if(g.goalType==='GROUP'){
+        <div class="section-row group-heading">
+            <div>
+                <h3>Group members</h3>
+                <p class="muted">Members and contribution analytics</p>
+            </div><button class="secondary-btn" (click)="openMember()">＋ Add member</button>
+        </div>
+        @if(members().length){<div class="record-list">@for(m of members();track m.id){<div class="record-row">
+                <div><strong>User #{{m.userId}}</strong><small>{{label(m.role)}} · {{label(m.status)}}</small></div>
+                <small>{{m.joinedAt|date:'mediumDate'}}</small>
+            </div>}</div>}@else{<p class="muted">No group members found.</p>}
+        @if(analytics();as a){<div class="analytics-grid">
+            <div><small>Total contributions</small><strong>{{a.totalContributions}}</strong></div>
+            <div><small>Confirmed</small><strong>{{a.confirmedContributions}}</strong></div>
+            <div><small>Pending</small><strong>{{a.pendingContributions}}</strong></div>
+            <div><small>Failed</small><strong>{{a.failedContributions}}</strong></div>
+        </div>
+        @if(a.memberAnalytics?.length){<h4>Member contribution breakdown</h4>
+        <div class="record-list">@for(m of a.memberAnalytics;track m.userId){<div class="record-row">
+                <div><strong>User
+                        #{{m.userId}}</strong><small>{{m.confirmedAmount|currency:a.currency:'symbol':'1.0-0'}}
+                        confirmed · {{m.pendingAmount|currency:a.currency:'symbol':'1.0-0'}} pending</small></div>
+                <strong>{{m.contributionPercentage|number:'1.0-1'}}%</strong>
+            </div>}</div>}
+        }
+        }
+        }
+        @if(showContribution()){<div class="inline-form">
+            <h3>Add a contribution</h3>
+            <form [formGroup]="contributionForm" (ngSubmit)="addContribution()"><label>Amount<input type="number"
+                        min="0.01" step="0.01" formControlName="amount" /></label><label>Currency<input maxlength="3"
+                        formControlName="currency" /></label><label>Note<textarea rows="2" maxlength="500"
+                        formControlName="note"></textarea></label>
+                <div class="form-actions"><button type="button" class="secondary-btn"
+                        (click)="showContribution.set(false)">Cancel</button><button type="submit" class="primary-btn"
+                        [disabled]="busyAction()">{{busyAction()?'Saving…':'Record contribution'}}</button></div>
+            </form><small class="muted">This records a contribution through the Goals API. It does not initiate a
+                payment.</small>
+        </div>}
+        @if(showMember()){<div class="inline-form">
+            <h3>Add group member</h3>
+            <form [formGroup]="memberForm" (ngSubmit)="addMember()"><label>Member user ID<input type="number" min="1"
+                        formControlName="userId" /></label><small class="muted">The API accepts a numeric userId and
+                    assigns the member role/status.</small>
+                <div class="form-actions"><button type="button" class="secondary-btn"
+                        (click)="showMember.set(false)">Cancel</button><button type="submit" class="primary-btn"
+                        [disabled]="busyAction()">Add member</button></div>
+            </form>
+        </div>}
+    </aside>
+</div>
+}
