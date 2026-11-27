@@ -32,6 +32,10 @@ spring:
               uri: lb://payment-service
               predicates:
                 - Path=/api/payments/**
+            - id: payment-service
+              uri: lb://insurance-service
+              predicates:
+                - Path=/api/insurance/**
 
             #SWAGGER DOCUMENTATION ROUTES
             - id: identity-swagger
@@ -62,6 +66,12 @@ spring:
               uri: lb://payment-service
               predicates:
                 - Path=/payment/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: insurance-swagger
+              uri: lb://insurance-service
+              predicates:
+                - Path=/insurance/v3/api-docs
               filters:
                 - StripPrefix=1
 #    CORS -------------
@@ -106,6 +116,9 @@ springdoc:
 
       - name: Payment Service
         url: /payment/v3/api-docs
+
+      - name: Insurance Service
+        url: /insurance/v3/api-docs
 
     urls-primary-name: Identity Service
     disable-swagger-default-url: true
