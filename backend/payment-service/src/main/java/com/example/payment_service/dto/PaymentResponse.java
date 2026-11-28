@@ -1,6 +1,8 @@
 package com.example.payment_service.dto;
 
-import com.example.payment_service.model.*;
+import com.example.payment_service.model.PaymentBusinessType;
+import com.example.payment_service.model.PaymentMethod;
+import com.example.payment_service.model.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -22,5 +24,6 @@ public record PaymentResponse(
         Instant initiatedAt,
         Instant completedAt,
         Instant createdAt,
-        Instant updatedAt
+        Instant updatedAt,
+        String businessTransactionReference
 ) {}

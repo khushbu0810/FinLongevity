@@ -18,6 +18,7 @@ public class PaymentStatusEvent {
     private UUID paymentId;
     private Long identityUserId;
     private String businessReference;
+    private String businessTransactionReference;
     private String businessType;
     private String status;
     private BigDecimal amount;
@@ -31,10 +32,19 @@ public class PaymentStatusEvent {
                               String businessReference, String businessType,
                               String status, BigDecimal amount, String currency,
                               Instant occurredAt) {
+        this(eventId, paymentId, identityUserId, businessReference, null,
+                businessType, status, amount, currency, occurredAt);
+    }
+
+    public PaymentStatusEvent(UUID eventId, UUID paymentId, Long identityUserId,
+                              String businessReference, String businessTransactionReference,
+                              String businessType, String status, BigDecimal amount, String currency,
+                              Instant occurredAt) {
         this.eventId = eventId;
         this.paymentId = paymentId;
         this.identityUserId = identityUserId;
         this.businessReference = businessReference;
+        this.businessTransactionReference = businessTransactionReference;
         this.businessType = businessType;
         this.status = status;
         this.amount = amount;

@@ -1,7 +1,10 @@
 package com.example.payment_service.service;
 
 import com.example.core.events.PaymentStatusEvent;
-import com.example.payment_service.dto.*;
+import com.example.payment_service.dto.MockPaymentOutcome;
+import com.example.payment_service.dto.PaymentEventResponse;
+import com.example.payment_service.dto.PaymentRequest;
+import com.example.payment_service.dto.PaymentResponse;
 import com.example.payment_service.kafka.PaymentStatusEventPublisher;
 import com.example.payment_service.model.*;
 import com.example.payment_service.repository.PaymentEventRepository;
@@ -38,8 +41,10 @@ public class PaymentService {
 
     private void publishPaymentStatusEvent(Payment payment) {
 
-        // Only goal contributions are handled in this integration.
-        if (payment.getBusinessType() != PaymentBusinessType.GOAL_CONTRIBUTION) {
+        // Preserve Goal Service events and publish all investment payment outcomes
+        // for the Investment Service settlement consumer.
+        if (payment.getBusinessType() != PaymentBusinessType.GOAL_CONTRIBUTION
+                && !isInvestmentPayment(payment.getBusinessType())) {
             return;
         }
 
@@ -48,6 +53,7 @@ public class PaymentService {
                 payment.getId(),
                 payment.getIdentityUserId(),
                 payment.getBusinessReference(),
+                payment.getBusinessTransactionReference(),
                 payment.getBusinessType().name(),
                 payment.getStatus().name(),
                 payment.getAmount(),
@@ -77,6 +83,20 @@ public class PaymentService {
         payment.setPaymentReference("PAY-" + UUID.randomUUID());
         payment.setBusinessReference(request.businessReference().trim());
         payment.setBusinessType(request.businessType());
+        String transactionReference = request.businessTransactionReference();
+        if (isInvestmentPayment(request.businessType())) {
+            validateUuidReference(request.businessReference(), "businessReference");
+            if (transactionReference != null && !transactionReference.isBlank()) {
+                validateUuidReference(transactionReference, "businessTransactionReference");
+                payment.setBusinessTransactionReference(transactionReference.trim());
+            } else if (request.businessType() != PaymentBusinessType.INVESTMENT_PURCHASE) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "businessTransactionReference is required for additional contributions and redemptions");
+            }
+        } else if (transactionReference != null && !transactionReference.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Business transaction reference is supported only for investment payments");
+        }
         payment.setAmount(request.amount());
         payment.setCurrency(request.currency().trim().toUpperCase(Locale.ROOT));
         payment.setPaymentMethod(request.paymentMethod());
@@ -147,6 +167,21 @@ public class PaymentService {
                 .stream().map(this::toEventResponse).toList();
     }
 
+    private boolean isInvestmentPayment(PaymentBusinessType businessType) {
+        return businessType == PaymentBusinessType.INVESTMENT_PURCHASE
+                || businessType == PaymentBusinessType.INVESTMENT_ADDITIONAL_CONTRIBUTION
+                || businessType == PaymentBusinessType.INVESTMENT_REDEMPTION;
+    }
+
+    private void validateUuidReference(String value, String fieldName) {
+        try {
+            UUID.fromString(value.trim());
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    fieldName + " must contain a valid UUID");
+        }
+    }
+
     private Payment findOwnedPayment(Long userId, UUID paymentId) {
         return paymentRepository.findByIdAndIdentityUserId(paymentId, userId)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -171,7 +206,7 @@ public class PaymentService {
                 p.getCurrency(), p.getStatus(), p.getPaymentMethod(),
                 p.getGatewayName(), p.getGatewayTransactionId(),
                 p.getFailureReason(), p.getInitiatedAt(), p.getCompletedAt(),
-                p.getCreatedAt(), p.getUpdatedAt()
+                p.getCreatedAt(), p.getUpdatedAt(), p.getBusinessTransactionReference()
         );
     }
 

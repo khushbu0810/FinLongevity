@@ -3,6 +3,12 @@ spring:
     name: investment-service
   config:
     import: configserver:http://localhost:8012
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: investment-service-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
 
 # OpenAPI documentation
 springdoc:

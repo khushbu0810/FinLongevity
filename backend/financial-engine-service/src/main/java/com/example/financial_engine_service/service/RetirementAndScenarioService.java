@@ -3,8 +3,8 @@ package com.example.financial_engine_service.service;
 
 import com.example.financial_engine_service.dto.FinancialProjectionResponse;
 import com.example.financial_engine_service.dto.retirement.*;
-import com.example.financial_engine_service.dto.retirement.ScenarioSimulationResponse;
-import com.example.financial_engine_service.engine.*;
+import com.example.financial_engine_service.engine.RetirementProjectionCalculator;
+import com.example.financial_engine_service.engine.ScenarioSimulationCalculator;
 import com.example.financial_engine_service.entity.FinancialAnalysis;
 import com.example.financial_engine_service.repository.FinancialAnalysisRepository;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class RetirementAndScenarioService {
     }
 
     @Transactional
-    public com.example.financial_engine_service.dto.retirement.RetirementAnalysisResponse createRetirementProjection(
+    public RetirementAnalysisResponse createRetirementProjection(
             Long userId, UUID analysisId, RetirementProjectionRequest request) {
         FinancialAnalysis analysis = analysisRepository.findByIdAndUserId(analysisId, userId)
                 .orElseThrow(() -> new com.example.financial_engine_service.exception.ResourceNotFoundException(
@@ -45,7 +45,19 @@ public class RetirementAndScenarioService {
         if (request.retirementAge() <= request.currentAge()) {
             throw new IllegalArgumentException("Retirement age must be greater than current age");
         }
+        if (request.retirementPlanningAge() <= request.retirementAge()
+                || request.retirementPlanningAge() > 120) {
+            throw new IllegalArgumentException(
+                    "retirementPlanningAge must be greater than retirementAge and no greater than 120");
+        }
         int yearsUntilRetirement = request.retirementAge() - request.currentAge();
+        request.retirementIncomeStreams().forEach(stream -> {
+            if (stream.endsAtAge() != null && stream.endsAtAge() < stream.startsAtAge()) {
+                throw new IllegalArgumentException(
+                        "Retirement income end age must be greater than or equal to its start age: "
+                                + stream.name());
+            }
+        });
         if (!request.yearsToProject().equals(yearsUntilRetirement)) {
             throw new IllegalArgumentException(
                     "yearsToProject must equal retirementAge - currentAge (" + yearsUntilRetirement + ")");

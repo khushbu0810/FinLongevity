@@ -1,6 +1,7 @@
 package com.example.payment_service.dto;
 
-import com.example.payment_service.model.*;
+import com.example.payment_service.model.PaymentBusinessType;
+import com.example.payment_service.model.PaymentMethod;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,13 @@ public record PaymentRequest(
         String currency,
 
         @NotNull
-        PaymentMethod paymentMethod
+        PaymentMethod paymentMethod,
+
+        @Size(max = 120)
+        String businessTransactionReference
 ) {
+    public PaymentRequest(String businessReference, PaymentBusinessType businessType,
+                          BigDecimal amount, String currency, PaymentMethod paymentMethod) {
+        this(businessReference, businessType, amount, currency, paymentMethod, null);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.financial_engine_service.client;
 
 import com.example.financial_engine_service.dto.CustomerFinancialDataResponse;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,8 @@ public class CustomerServiceClient {
 
     private final RestClient restClient;
 
-    public CustomerServiceClient(RestClient customerServiceRestClient) {
+    public CustomerServiceClient(
+            @Qualifier("customerServiceRestClient") RestClient customerServiceRestClient) {
         this.restClient = customerServiceRestClient;
     }
 
@@ -36,8 +38,7 @@ public class CustomerServiceClient {
     private JsonNode get(Long userId, String email, String role, String path) {
         return restClient.get()
                 .uri(path)
-                .headers(headers -> addIdentityHeaders(
-                        headers, userId, email, role))
+                .headers(headers -> addIdentityHeaders(headers, userId, email, role))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(JsonNode.class);
@@ -55,11 +56,6 @@ public class CustomerServiceClient {
         headers.set("X-Authenticated-User-Id", userId.toString());
         headers.set("X-Authenticated-User-Email", email);
         headers.set("X-Authenticated-User-Role", role);
-        headers.setAccept(java.util.List.of(MediaType.APPLICATION_JSON));
-    }
-
-    private void addIdentityHeader(HttpHeaders headers, Long userId) {
-        headers.set("X-Authenticated-User-Id", userId.toString());
         headers.setAccept(java.util.List.of(MediaType.APPLICATION_JSON));
     }
 }

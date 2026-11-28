@@ -1,6 +1,7 @@
 package com.example.financial_engine_service.service;
 
-import com.example.financial_engine_service.dto.*;
+import com.example.financial_engine_service.dto.FinancialSnapshotAnalysisResponse;
+import com.example.financial_engine_service.dto.LongevityScoreResponse;
 import com.example.financial_engine_service.entity.FinancialAnalysis;
 import com.example.financial_engine_service.enums.AnalysisStatus;
 import com.example.financial_engine_service.enums.AnalysisType;

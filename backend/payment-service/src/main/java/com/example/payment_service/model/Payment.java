@@ -29,6 +29,10 @@ public class Payment {
     @Column(name = "business_reference", nullable = false, length = 120)
     private String businessReference;
 
+    /** Optional exact investment transaction ID; businessReference remains the parent investment ID. */
+    @Column(name = "business_transaction_reference", length = 120)
+    private String businessTransactionReference;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "business_type", nullable = false, length = 40)
     private PaymentBusinessType businessType;

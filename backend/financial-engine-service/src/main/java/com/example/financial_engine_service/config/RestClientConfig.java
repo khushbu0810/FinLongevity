@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-@EnableConfigurationProperties(CustomerServiceProperties.class)
+@EnableConfigurationProperties({
+        CustomerServiceProperties.class,
+        InvestmentServiceProperties.class
+})
 public class RestClientConfig {
 
     @Bean
@@ -19,6 +22,14 @@ public class RestClientConfig {
             RestClient.Builder builder,
             CustomerServiceProperties properties) {
         return builder
+                .baseUrl(properties.baseUrl())
+                .build();
+    }
+
+    @Bean
+    public RestClient investmentServiceRestClient(
+            InvestmentServiceProperties properties) {
+        return RestClient.builder()
                 .baseUrl(properties.baseUrl())
                 .build();
     }

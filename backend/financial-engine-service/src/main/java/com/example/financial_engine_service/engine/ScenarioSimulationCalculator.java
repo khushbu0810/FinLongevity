@@ -1,6 +1,5 @@
 package com.example.financial_engine_service.engine;
 
-import com.example.financial_engine_service.dto.*;
 import com.example.financial_engine_service.dto.retirement.ScenarioSimulationRequest;
 import com.example.financial_engine_service.dto.retirement.ScenarioSimulationResponse;
 import com.example.financial_engine_service.enums.ScenarioType;
@@ -16,9 +15,11 @@ import java.util.List;
 public class ScenarioSimulationCalculator {
 
     private static final MathContext MC = new MathContext(16, RoundingMode.HALF_UP);
-    private static final BigDecimal TWELVE = BigDecimal.valueOf(12);
     private static final BigDecimal HUNDRED = BigDecimal.valueOf(100);
     private static final BigDecimal ONE = BigDecimal.ONE;
+
+    private final RetirementAccumulationCalculator accumulationCalculator =
+            new RetirementAccumulationCalculator();
 
     public List<ScenarioSimulationResponse> simulate(ScenarioSimulationRequest request) {
         List<ScenarioSimulationResponse> results = new ArrayList<>();
@@ -37,13 +38,13 @@ public class ScenarioSimulationCalculator {
                                                  ScenarioType type,
                                                  BigDecimal annualReturnPercentage,
                                                  BigDecimal annualInflationPercentage) {
-        BigDecimal monthlyRate = annualReturnPercentage.divide(HUNDRED, MC).divide(TWELVE, MC);
-        BigDecimal monthlyContribution = request.monthlyContribution();
+        BigDecimal monthlyRate = accumulationCalculator.effectiveMonthlyRate(
+                annualReturnPercentage);
         BigDecimal corpus = request.currentCorpus();
 
         for (int month = 0; month < request.years() * 12; month++) {
-            corpus = corpus.multiply(ONE.add(monthlyRate), MC)
-                    .add(monthlyContribution, MC);
+            corpus = accumulationCalculator.applyEndOfMonthContribution(
+                    corpus, request.monthlyContribution(), monthlyRate);
         }
 
         BigDecimal inflationFactor = ONE.add(

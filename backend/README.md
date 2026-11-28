@@ -4,6 +4,53 @@ if exceeds memory:
 
 # FinLongevity – Microservices Setup
 
+Workflow 1: Customer financial analysis
+
+flowchart TD
+A["Angular Financial Engine"] --> B["API Gateway"]
+B --> C["JWT validation"]
+C --> D["Financial Engine Service"]
+D --> E["Customer Service Client"]
+E --> F["Customer Service"]
+F --> G["Profile, income, expenses, assets, liabilities"]
+G --> H["Customer Snapshot Assembler"]
+H --> I["Cash Flow Calculator"]
+H --> J["Net Worth Calculator"]
+H --> K["Financial Runway Calculator"]
+I --> L["Longevity Score Calculator"]
+J --> L
+K --> L
+L --> M["Persist Financial Analysis"]
+M --> N["Analysis History and Dashboard"]
+
+
+
+
+Workflow 2: Financial goal contribution and payment
+
+
+sequenceDiagram
+participant UI as Angular
+participant G as Goal Service
+participant P as Payment Service
+participant K as Kafka
+participant DB as Goal Database
+
+UI->>G: Create contribution
+G->>DB: Save PENDING contribution
+G->>P: Create payment through REST
+P-->>G: Payment ID
+G->>DB: Save payment reference
+UI->>P: Process mock payment
+P->>P: Update payment status
+P->>K: Publish payment status event
+K->>G: Consume event
+G->>DB: Lock contribution and goal
+G->>DB: Confirm contribution and update goal
+
+
+
+
 ## Application Details
 
 | Application              | Port | URL                                            | Purpose |

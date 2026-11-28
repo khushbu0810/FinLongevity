@@ -1,6 +1,8 @@
 package com.example.financial_engine_service.service;
 
-import com.example.financial_engine_service.dto.retirement.*;
+import com.example.financial_engine_service.dto.retirement.RetirementProjectionPointResponse;
+import com.example.financial_engine_service.dto.retirement.RetirementProjectionResponse;
+import com.example.financial_engine_service.dto.retirement.ScenarioSimulationResponse;
 import com.example.financial_engine_service.entity.FinancialAnalysis;
 import com.example.financial_engine_service.entity.FinancialProjection;
 import com.example.financial_engine_service.enums.ProjectionPeriodType;
@@ -30,7 +32,7 @@ public class FinancialProjectionPersistenceService {
 
     @Transactional
     public void saveRetirementProjection(Long userId, java.util.UUID analysisId,
-                                         com.example.financial_engine_service.dto.retirement.RetirementProjectionResponse response) {
+                                         RetirementProjectionResponse response) {
         analysisQueryService.getMyAnalysis(userId, analysisId);
         FinancialAnalysis analysis = analysisRepository.findByIdAndUserId(analysisId, userId)
                 .orElseThrow(() -> new com.example.financial_engine_service.exception.ResourceNotFoundException(
@@ -58,7 +60,8 @@ public class FinancialProjectionPersistenceService {
         projection.setScenarioType(ScenarioType.EXPECTED);
         projection.setPeriodType(ProjectionPeriodType.YEARLY);
         projection.setPeriodNumber(point.year());
-        projection.setProjectedIncome(BigDecimal.ZERO);
+        projection.setProjectedIncome(point.projectedMonthlyRetirementIncome()
+                .multiply(BigDecimal.valueOf(12)));
         projection.setProjectedExpenses(point.projectedAnnualExpenses());
         projection.setProjectedContributions(point.projectedContributions());
         projection.setProjectedCorpus(point.projectedCorpus());
