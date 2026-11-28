@@ -7,6 +7,18 @@ import { environment } from '../../environments/environment';
 export class FinancialEngineService {
     private readonly base = `${environment.apiUrl}/api/financial-engine`;
     constructor(private readonly http: HttpClient) { }
+    getRetirementPlanningPrefill<T>(currency = 'INR', maximumValuationAgeDays = 90, plannedRetirementAge?: number): Observable<T> {
+        let params = new HttpParams()
+            .set('currency', currency)
+            .set('maximumValuationAgeDays', maximumValuationAgeDays);
+        if (plannedRetirementAge != null) params = params.set('plannedRetirementAge', plannedRetirementAge);
+        return this.http.get<T>(`${this.base}/retirement/prefill/me`, { params });
+    }
+    getDebtRetirementAssessment<T>(currency = 'INR', plannedRetirementAge?: number): Observable<T> {
+        let params = new HttpParams().set('currency', currency);
+        if (plannedRetirementAge != null) params = params.set('plannedRetirementAge', plannedRetirementAge);
+        return this.http.get<T>(`${this.base}/debt/retirement-assessment/me`, { params });
+    }
     analyzeMyFinancials<T>(currency = 'INR'): Observable<T> { return this.http.post<T>(`${this.base}/analyze/me`, {}, { params: new HttpParams().set('currency', currency) }); }
     analyzeSnapshot<T>(body: unknown): Observable<T> { return this.http.post<T>(`${this.base}/analyze`, body); }
     getDashboard<T>(): Observable<T> { return this.http.get<T>(`${this.base}/dashboard`); }

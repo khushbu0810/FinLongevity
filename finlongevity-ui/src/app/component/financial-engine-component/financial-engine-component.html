@@ -9,6 +9,83 @@
 </section>
 @if(message()){<div class="alert success-alert">{{message()}}</div>}@if(error()){<div class="alert error-alert">
   {{error()}}</div>}
+
+<section class="retirement-prefill-panel">
+  <div class="panel-heading">
+    <div>
+      <span class="eyebrow">CONNECTED FINANCIAL DATA</span>
+      <h2>Retirement planning prefill</h2>
+      <p>Load saved customer, investment valuation and debt information before building a projection.</p>
+    </div>
+    <button class="primary-btn" type="button" [disabled]="prefillLoading()" (click)="loadRetirementPrefill()">
+      {{ prefillLoading() ? 'Loading…' : '↻ Load my financial data' }}
+    </button>
+  </div>
+  <form [formGroup]="prefillForm" class="prefill-controls" (ngSubmit)="loadRetirementPrefill()">
+    <label>Currency<input maxlength="3" formControlName="currency" /></label>
+    <label>Maximum valuation age (days)<input type="number" min="0" max="3650" formControlName="maximumValuationAgeDays" /></label>
+    <label>Planned retirement age <span class="muted">(optional)</span><input type="number" min="1" max="120" formControlName="plannedRetirementAge" placeholder="Enter age to assess debt overlap" /></label>
+    <button class="outline-btn" type="submit" [disabled]="prefillLoading() || prefillForm.invalid">Load prefill</button>
+  </form>
+  @if(retirementPrefill();as prefill){
+  <div class="prefill-metrics">
+    <article><small>Current retirement corpus</small><strong>{{prefill.currentRetirementCorpus|currency:prefill.currency:'symbol':'1.0-0'}}</strong></article>
+    <article><small>Current monthly income</small><strong>{{prefill.currentMonthlyIncome|currency:prefill.currency:'symbol':'1.0-0'}}</strong></article>
+    <article><small>Current monthly expenses</small><strong>{{prefill.currentMonthlyExpenses|currency:prefill.currency:'symbol':'1.0-0'}}</strong></article>
+    <article><small>Current age</small><strong>{{prefill.currentAge ?? 'Not available'}}</strong></article>
+  </div>
+  <div class="prefill-actions">
+    <button class="primary-btn" type="button" (click)="applyRetirementPrefill()">Apply available values to retirement form</button>
+    <span class="muted">Contribution, retirement age, return and inflation assumptions are not inferred.</span>
+  </div>
+  @if(prefill.missingPlanningInputs?.length){<div class="prefill-notes"><strong>Still needed for a complete plan</strong><ul>@for(item of prefill.missingPlanningInputs;track item){<li>{{item}}</li>}</ul></div>}
+  @if(prefill.expenseSuggestions?.length){
+  <div class="prefill-table-wrap"><h3>Expense suggestions from your records</h3><div class="prefill-table">
+    <div class="prefill-table-head"><span>Expense</span><span>Source category</span><span>Suggested category</span><span>Monthly amount</span></div>
+    @for(item of prefill.expenseSuggestions;track item.sourceExpenseId){<div class="prefill-table-row">
+    <strong>{{item.sourceExpenseName}}</strong><span>{{label(item.sourceExpenseCategory)}} · {{label(item.sourceFrequency)}}</span><span>{{label(item.suggestedCategory)}}</span><span>{{item.currentMonthlyAmount|currency:prefill.currency:'symbol':'1.0-0'}}</span>
+  </div>}
+  </div></div>
+  }
+  @if(prefill.investmentValuations?.length){
+  <div class="prefill-table-wrap"><h3>Investment valuation evidence</h3><p class="muted">These values are evidence only and are not automatically added to your retirement corpus.</p>
+    <div class="prefill-table">
+      <div class="prefill-table-head"><span>Investment</span><span>Principal</span><span>Recorded value</span><span>Usable value</span><span>Status</span></div>
+      @for(item of prefill.investmentValuations;track item.investmentId){<div class="prefill-table-row">
+      <strong>{{item.productName}}</strong><span>{{item.netInvestedPrincipal|currency:item.currency:'symbol':'1.0-0'}}</span>
+      <span>{{item.recordedMarketValue==null?'—':(item.recordedMarketValue|currency:item.currency:'symbol':'1.0-0')}}</span>
+      <span>{{item.usableMarketValue==null?'—':(item.usableMarketValue|currency:item.currency:'symbol':'1.0-0')}}</span>
+      <span class="status-pill" [class.negative]="item.stale" [class.positive]="item.valuationStatus==='AVAILABLE' && !item.stale">{{item.stale?'STALE':label(item.valuationStatus)}}</span>
+    </div>}
+    </div>
+  </div>
+  }
+  @if(prefill.warnings?.length){<div class="prefill-notes warning-notes"><strong>Data warnings</strong><ul>@for(w of prefill.warnings;track w){<li>{{w}}</li>}</ul></div>}
+  }
+  @if(debtAssessment();as debt){
+  <div class="debt-assessment-block">
+    <div class="panel-heading"><div><h3>Debt at retirement assessment</h3><p class="muted">Assessment as of {{debt.asOfDate|date:'mediumDate'}} · {{debt.plannedRetirementAge==null?'Retirement age not supplied':'Planned retirement age '+debt.plannedRetirementAge}}</p></div>
+      <button class="outline-btn" type="button" [disabled]="debtLoading()" (click)="refreshDebtAssessment()">{{debtLoading()?'Refreshing…':'Refresh debt assessment'}}</button>
+    </div>
+    <div class="prefill-metrics">
+      <article><small>Outstanding debt</small><strong>{{debt.summary.totalOutstandingDebt|currency:debt.currency:'symbol':'1.0-0'}}</strong></article>
+      <article><small>Monthly EMI</small><strong>{{debt.summary.totalMonthlyEmi|currency:debt.currency:'symbol':'1.0-0'}}</strong></article>
+      <article><small>Estimated debt at retirement</small><strong>{{debt.summary.estimatedOutstandingAtRetirementForAssessedLiabilities|currency:debt.currency:'symbol':'1.0-0'}}</strong></article>
+      <article><small>Continuing into retirement</small><strong>{{debt.summary.continuingIntoRetirementCount}}</strong></article>
+    </div>
+    @if(debt.liabilities?.length){<div class="prefill-table-wrap"><div class="prefill-table">
+    <div class="prefill-table-head"><span>Liability</span><span>Outstanding</span><span>EMI</span><span>Payoff estimate</span><span>At retirement</span></div>
+    @for(item of debt.liabilities;track item.liabilityId){<div class="prefill-table-row">
+    <strong>{{item.name}}</strong><span>{{item.outstandingAmount|currency:item.currency:'symbol':'1.0-0'}}</span>
+    <span>{{item.monthlyEmi==null?'—':(item.monthlyEmi|currency:item.currency:'symbol':'1.0-0')}}</span>
+    <span>{{item.estimatedPayoffDate?(item.estimatedPayoffDate|date:'mediumDate'):'Not estimated'}}</span>
+    <span>{{label(item.assessmentStatus)}} · {{item.estimatedBalanceAtRetirement==null?'—':(item.estimatedBalanceAtRetirement|currency:item.currency:'symbol':'1.0-0')}}</span>
+  </div>}
+  </div></div>}
+    @if(debt.warnings?.length){<div class="prefill-notes warning-notes"><strong>Debt assessment notes</strong><ul>@for(w of debt.warnings;track w){<li>{{w}}</li>}</ul></div>}
+  </div>
+  }
+</section>
 @if(dashboard()?.latestAnalysis;as latest){<section class="latest-banner">
   <div><span class="eyebrow">LATEST SAVED ANALYSIS</span>
     <h2>{{label(latest.analysisType)}}</h2>
@@ -133,6 +210,21 @@
                 [class.negative]="!rr.retirementProjection.projectedCorpusMeetsTarget">{{rr.retirementProjection.projectedCorpusMeetsTarget?'Target
             met':'Target gap'}}</span>
   </div>
+  @if(rr.retirementProjection.retirementIncomeStreams?.length){<section class="retirement-insight-panel result-detail-panel">
+  <div class="insight-heading"><div><span class="eyebrow">RETIREMENT INCOME</span><h3>Recurring income at retirement</h3></div></div>
+  <div class="prefill-table-wrap"><div class="prefill-table retirement-result-table">
+    <div class="prefill-table-head"><span>Income stream</span><span>Frequency</span><span>Active at retirement</span><span>Monthly equivalent</span></div>
+    @for(stream of rr.retirementProjection.retirementIncomeStreams;track stream.name){<div class="prefill-table-row"><strong>{{stream.name}}</strong><span>{{label(stream.frequency)}}</span><span>{{stream.activeAtRetirement?'Yes':'No'}}</span><span>{{stream.projectedMonthlyAmountAtRetirement|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</span></div>}
+  </div></div>
+  <div class="funding-grid"><article><small>Monthly retirement income</small><strong>{{rr.retirementProjection.projectedMonthlyRetirementIncome|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</strong></article><article><small>Monthly income gap</small><strong>{{rr.retirementProjection.projectedMonthlyIncomeGap|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</strong></article><article><small>Monthly income surplus</small><strong>{{rr.retirementProjection.projectedMonthlyIncomeSurplus|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</strong></article></div>
+</section>}
+  @if(rr.retirementProjection.retirementExpenseBreakdown?.length){<section class="retirement-insight-panel result-detail-panel">
+  <div class="insight-heading"><div><span class="eyebrow">EXPENSE ASSUMPTIONS</span><h3>Category-wise projected monthly expenses</h3></div></div>
+  <div class="prefill-table-wrap"><div class="prefill-table retirement-expense-result-table">
+    <div class="prefill-table-head"><span>Category</span><span>Expense</span><span>Current monthly</span><span>Inflation</span><span>At retirement</span></div>
+    @for(expense of rr.retirementProjection.retirementExpenseBreakdown;track expense.name){<div class="prefill-table-row"><strong>{{label(expense.category)}}</strong><span>{{expense.name}}</span><span>{{expense.currentMonthlyAmount|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</span><span>{{expense.annualInflationPercentage|number:'1.0-1'}}%</span><span>{{expense.projectedMonthlyAmount|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</span></div>}
+  </div></div>
+</section>}
   <div class="metric-grid">
     <article><small>Projected
       corpus</small><strong>{{rr.retirementProjection.projectedCorpus|currency:rr.retirementProjection.currency:'symbol':'1.0-0'}}</strong>
@@ -238,6 +330,41 @@
       type="number" min="1" max="100" formControlName="retirementAge" /></label><label
       class="full">Current monthly retirement expenses<input type="number" min="0"
                                                              formControlName="currentMonthlyRetirementExpenses" /></label>
+      <section class="retirement-input-section full">
+        <div class="retirement-input-heading"><div><h3>Recurring retirement income</h3><p>Add pension, annuity, rental or other recurring income. Amount is entered at the selected frequency in today's currency.</p></div><button type="button" class="outline-btn" (click)="addRetirementIncomeStream()">＋ Add income</button></div>
+        @if(retirementIncomeStreams.length === 0){<p class="retirement-empty-note">No recurring income added. The projection will assume no additional retirement income.</p>}
+        @for(income of retirementIncomeStreams.controls; track $index; let i = $index){
+        <div class="retirement-line-card" [formGroup]="income">
+          <div class="retirement-line-title"><strong>Income stream {{i + 1}}</strong><button type="button" class="text-danger-btn" (click)="removeRetirementIncomeStream(i)">Remove</button></div>
+          <div class="retirement-line-grid">
+            <label>Income type<select formControlName="type">@for(type of incomeTypes; track type){<option [value]="type">{{label(type)}}</option>}</select></label>
+            <label>Name<input type="text" maxlength="100" formControlName="name" placeholder="e.g. Monthly pension" /></label>
+            <label>Amount<input type="number" min="0" step="0.01" formControlName="amount" /></label>
+            <label>Frequency<select formControlName="frequency">@for(freq of incomeFrequencies; track freq){<option [value]="freq">{{label(freq)}}</option>}</select></label>
+            <label>Annual growth %<input type="number" min="-100" max="100" step="0.1" formControlName="annualGrowthPercentage" /></label>
+            <label>Starts at age<input type="number" min="1" max="120" formControlName="startsAtAge" /></label>
+            <label>Ends at age (optional)<input type="number" min="1" max="120" formControlName="endsAtAge" placeholder="No end age" /></label>
+          </div>
+          @if(income.invalid && income.touched){<small class="field-error">Complete the income details with valid amounts and ages.</small>}
+        </div>
+        }
+      </section>
+      <section class="retirement-input-section full">
+        <div class="retirement-input-heading"><div><h3>Categorized monthly expenses</h3><p>Add separate monthly expense lines with their own inflation assumptions. If no lines are added, the legacy monthly expense and general inflation fields above are used.</p></div><button type="button" class="outline-btn" (click)="addRetirementExpenseCategory()">＋ Add expense</button></div>
+        @if(retirementExpenseCategories.length === 0){<p class="retirement-empty-note">No categorized expenses added. Your current monthly retirement expenses field will be used.</p>}
+        @for(expense of retirementExpenseCategories.controls; track $index; let i = $index){
+        <div class="retirement-line-card" [formGroup]="expense">
+          <div class="retirement-line-title"><strong>Expense {{i + 1}}</strong><button type="button" class="text-danger-btn" (click)="removeRetirementExpenseCategory(i)">Remove</button></div>
+          <div class="retirement-line-grid expense-line-grid">
+            <label>Category<select formControlName="category">@for(type of expenseTypes; track type){<option [value]="type">{{label(type)}}</option>}</select></label>
+            <label>Expense name<input type="text" maxlength="100" formControlName="name" placeholder="e.g. Household essentials" /></label>
+            <label>Current monthly amount<input type="number" min="0" step="0.01" formControlName="currentMonthlyAmount" /></label>
+            <label>Annual inflation %<input type="number" min="0" max="100" step="0.1" formControlName="annualInflationPercentage" /></label>
+          </div>
+          @if(expense.invalid && expense.touched){<small class="field-error">Complete the expense details with valid amounts and inflation.</small>}
+        </div>
+        }
+      </section>
       <div class="form-actions full"><button type="button" class="secondary-btn"
                                              (click)="showRetirement.set(false)">Cancel</button><button type="submit" class="primary-btn"
                                                                                                         [disabled]="savingProjection()">{{savingProjection()?'Generating…':'Generate projection'}}</button>

@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InvestmentService } from '../../services/investment-service';
 import { PaymentService } from '../../services/payment-service';
 import { InvestmentDraftService, SelectedCatalogueProduct } from '../../services/investment-draft-service';
+import { InvestmentValuation, InvestmentValuationOverview, InvestmentValuationOverviewItem, InvestmentValuationRequest, InvestmentValuationSource } from '../../models/investment-valuation.models';
 
 type ProductType = 'FIXED_DEPOSIT' | 'MUTUAL_FUND' | 'STOCK' | 'BOND' | 'OTHER';
 type InvestmentStatus = 'DRAFT' | 'PENDING_PAYMENT' | 'ACTIVE' | 'PARTIALLY_REDEEMED' | 'REDEMPTION_PENDING' | 'REDEEMED' | 'CANCELLED' | 'FAILED';
@@ -30,7 +31,7 @@ interface TransactionRequest {
 }
 type PaymentStatus = 'CREATED' | 'INITIATED' | 'PENDING' | 'SUCCESS' | 'FAILED' | 'CANCELLED' | 'REFUNDED' | 'PARTIALLY_REFUNDED';
 interface LinkedPayment {
-  id: string; paymentReference?: string; businessReference: string; businessType: string;
+  id: string; paymentReference?: string; businessReference: string; businessTransactionReference?: string | null; businessType: string;
   amount: number; currency: string; status: PaymentStatus; paymentMethod: string;
   gatewayName?: string; gatewayTransactionId?: string; failureReason?: string;
   initiatedAt?: string; completedAt?: string; createdAt?: string;
@@ -48,6 +49,13 @@ export class InvestmentComponent {
   private readonly api = inject(InvestmentService);
   private readonly paymentApi = inject(PaymentService);
   private readonly investmentDraft = inject(InvestmentDraftService);
+
+  readonly valuationSources: InvestmentValuationSource[] = ['USER_REPORTED', 'PROVIDER_STATEMENT'];
+  readonly valuationOverview = signal<InvestmentValuationOverviewItem[]>([]);
+  readonly valuationHistory = signal<InvestmentValuation[]>([]);
+  readonly valuationLoading = signal(false);
+  readonly valuationSaving = signal(false);
+  readonly showValuationForm = signal(false);
 
   readonly productTypes: ProductType[] = ['FIXED_DEPOSIT', 'MUTUAL_FUND', 'STOCK', 'BOND', 'OTHER'];
   readonly transactionTypes: TransactionType[] = ['PURCHASE', 'ADDITIONAL_INVESTMENT', 'PARTIAL_REDEMPTION', 'FULL_REDEMPTION', 'INTEREST_CREDIT', 'DIVIDEND_CREDIT', 'FEE', 'REVERSAL'];
@@ -75,6 +83,12 @@ export class InvestmentComponent {
     units: [null as number | null, Validators.min(0.0000000001)],
     goalId: ['', Validators.pattern(/^$|^[0-9a-fA-F-]{36}$/)]
   });
+  readonly valuationForm = this.fb.nonNullable.group({
+    marketValue: [0, [Validators.required, Validators.min(0)]],
+    valuationDate: [this.localToday(), Validators.required],
+    valuationSource: ['USER_REPORTED' as InvestmentValuationSource, Validators.required],
+    sourceReference: ['', Validators.maxLength(200)]
+  });
   readonly transactionForm = this.fb.nonNullable.group({
     transactionType: ['' as TransactionType | '', Validators.required],
     amount: [0, [Validators.required, Validators.min(0.01)]],
@@ -85,6 +99,7 @@ export class InvestmentComponent {
 
   constructor() {
     this.loadInvestments();
+    this.loadValuationOverview();
     const selected = this.investmentDraft.consumeSelectedProduct();
     if (selected) {
       this.selectedCatalogueProduct.set(selected);
@@ -97,6 +112,71 @@ export class InvestmentComponent {
       this.showForm.set(true);
       this.message.set(`Selected catalogue product: ${selected.name}. Review the amount and complete your investment record.`);
     }
+  }
+
+  loadValuationOverview(): void {
+    this.valuationLoading.set(true);
+    this.api.getValuationOverview<InvestmentValuationOverview>().subscribe({
+      next: response => { this.valuationOverview.set(response?.investments ?? []); this.valuationLoading.set(false); },
+      error: err => { this.valuationLoading.set(false); this.error.set(err?.error?.message || 'Could not load investment valuation overview.'); }
+    });
+  }
+
+  loadValuationHistory(investmentId: string): void {
+    this.api.getValuationHistory<InvestmentValuation[]>(investmentId).subscribe({
+      next: rows => this.valuationHistory.set(rows ?? []),
+      error: err => { this.valuationHistory.set([]); this.error.set(err?.error?.message || 'Could not load valuation history.'); }
+    });
+  }
+
+  localToday(): string {
+    const date = new Date();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
+
+  openValuationForm(): void {
+    const selected = this.selectedInvestment();
+    if (!selected || !['ACTIVE', 'PARTIALLY_REDEEMED'].includes(selected.status)) {
+      this.error.set('Only active or partially redeemed investments can receive a new valuation.');
+      return;
+    }
+    this.valuationForm.reset({ marketValue: 0, valuationDate: this.localToday(), valuationSource: 'USER_REPORTED', sourceReference: '' });
+    this.showValuationForm.set(true);
+  }
+
+  recordValuation(): void {
+    const selected = this.selectedInvestment();
+    if (!selected || this.valuationForm.invalid || this.valuationSaving()) {
+      this.valuationForm.markAllAsTouched(); return;
+    }
+    const v = this.valuationForm.getRawValue();
+    if (v.valuationDate > this.localToday()) { this.error.set('Valuation date cannot be in the future.'); return; }
+    const request: InvestmentValuationRequest = {
+      marketValue: Number(v.marketValue),
+      valuationDate: v.valuationDate,
+      valuationSource: v.valuationSource,
+      ...(v.sourceReference.trim() ? { sourceReference: v.sourceReference.trim() } : {})
+    };
+    this.valuationSaving.set(true); this.error.set('');
+    this.api.recordValuation<InvestmentValuation>(selected.id, request).subscribe({
+      next: () => {
+        this.valuationSaving.set(false);
+        this.showValuationForm.set(false);
+        this.message.set('Investment valuation recorded. Historical entries are retained.');
+        this.loadValuationHistory(selected.id);
+        this.loadValuationOverview();
+      },
+      error: err => {
+        this.valuationSaving.set(false);
+        this.error.set(err?.error?.message || 'Unable to record this valuation. Check the date, amount and investment status.');
+      }
+    });
+  }
+
+  valuationFor(investmentId: string): InvestmentValuationOverviewItem | undefined {
+    return this.valuationOverview().find(item => item.investmentId === investmentId);
   }
 
   loadInvestments(): void {
@@ -141,11 +221,11 @@ export class InvestmentComponent {
   viewDetails(investment: Investment): void {
     this.selectedInvestment.set(investment); this.transactions.set([]); this.linkedPayment.set(null); this.detailLoading.set(true); this.error.set('');
     this.api.getInvestment<Investment>(investment.id).subscribe({
-      next: item => { this.selectedInvestment.set(item); this.detailLoading.set(false); this.loadTransactions(item.id); this.loadLinkedPayment(item.id); },
+      next: item => { this.selectedInvestment.set(item); this.detailLoading.set(false); this.loadTransactions(item.id); this.loadLinkedPayment(item.id); this.loadValuationHistory(item.id); },
       error: err => { this.detailLoading.set(false); this.error.set(err?.error?.message || 'Could not load investment details.'); }
     });
   }
-  closeDetails(): void { this.selectedInvestment.set(null); this.transactions.set([]); this.linkedPayment.set(null); this.showTransactionForm.set(false); }
+  closeDetails(): void { this.selectedInvestment.set(null); this.transactions.set([]); this.linkedPayment.set(null); this.valuationHistory.set([]); this.showTransactionForm.set(false); this.showValuationForm.set(false); }
 
   loadLinkedPayment(investmentId: string): void {
     this.paymentApi.getMyPayments<LinkedPayment[]>().subscribe({

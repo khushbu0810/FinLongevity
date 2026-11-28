@@ -1,10 +1,14 @@
 package com.example.insurance_service.controller;
 
-import com.example.insurance_service.dto.*;
+import com.example.insurance_service.dto.InsuranceApplicationRequest;
+import com.example.insurance_service.dto.InsuranceApplicationResponse;
+import com.example.insurance_service.dto.InsuranceDecisionRequest;
+import com.example.insurance_service.dto.InsurancePolicyResponse;
 import com.example.insurance_service.service.InsuranceService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -47,13 +51,17 @@ public class InsuranceController {
         return insuranceService.submitApplication(userId, applicationId);
     }
 
-    // Demo-only decision endpoint. Production decisions must be restricted to authorized insurer/admin roles.
+    // Demo decision endpoint: ADMIN-only until provider-specific decision authorization is implemented.
     @PatchMapping("/applications/{applicationId}/decision")
     public InsuranceApplicationResponse decideApplication(
-            @RequestHeader("X-Authenticated-User-Id") Long userId,
+            @RequestHeader("X-Authenticated-User-Role") String authenticatedRole,
             @PathVariable UUID applicationId,
             @Valid @RequestBody InsuranceDecisionRequest request) {
-        return insuranceService.decideApplication(userId, applicationId, request);
+        if (!"ADMIN".equalsIgnoreCase(authenticatedRole)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+                    "Only an authorized administrator can decide insurance applications");
+        }
+        return insuranceService.decideApplication(applicationId, request);
     }
 
     @GetMapping("/policies")

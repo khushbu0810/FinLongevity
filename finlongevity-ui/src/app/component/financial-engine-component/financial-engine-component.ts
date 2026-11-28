@@ -1,7 +1,8 @@
 import { CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FinancialEngineService } from '../../services/financial-engine-service';
+import { DebtRetirementAssessmentResponse, RetirementPlanningPrefillResponse } from '../../models/retirement-prefill.models';
 
 interface Analysis { id: string; userId: number; analysisType: string; status: 'REQUESTED' | 'PROCESSING' | 'COMPLETED' | 'FAILED'; baseCurrency: string; asOfDate?: string; monthlyIncome?: number; monthlyExpenses?: number; monthlyDebtPayments?: number; totalAssets?: number; totalLiabilities?: number; netWorth?: number; monthlySurplus?: number; savingsRate?: number; emergencyFundMonths?: number; financialRunwayMonths?: number; longevityScore?: number; healthBand?: 'CRITICAL' | 'NEEDS_IMPROVEMENT' | 'FAIR' | 'GOOD' | 'EXCELLENT'; failureReason?: string; createdAt?: string; updatedAt?: string; }
 interface CashFlow { monthlyIncome: number; monthlyExpenses: number; monthlyDebtPayments: number; monthlySurplus: number; savingsRatePercentage: number; cashFlowPositive: boolean; currency: string; }
@@ -13,7 +14,7 @@ interface ProjectionPoint { year: number; age: number; projectedCorpus: number; 
 interface CorpusRequirement { retirementAge: number; planningAge: number; requiredCorpusAtRetirement: number; projectedCorpusAtRetirement: number; corpusSurplus: number; corpusShortfall: number; fundingRatioPercentage: number; projectedCorpusMeetsRequirement: boolean; }
 interface DecumulationPoint { year: number; age: number; openingCorpus: number; annualExpenses: number; annualRecurringIncome: number; requiredWithdrawal: number; fundedWithdrawal: number; unfundedShortfall: number; annualIncomeSurplus: number; investmentGrowth: number; closingCorpus: number; corpusExhausted: boolean; }
 interface Decumulation { retirementAge: number; planningAge: number; startingRetirementCorpus: number; totalFundedWithdrawals: number; totalUnfundedShortfall: number; corpusExhaustionAge?: number | null; projectedCorpusAtPlanningAge: number; sustainableThroughPlanningAge: boolean; yearlyProjection: DecumulationPoint[]; }
-interface RetirementResult { retirementProjection: { currentAge: number; retirementAge: number; yearsProjected: number; startingCorpus: number; totalFutureContributions: number; projectedCorpus: number; projectedMonthlyRetirementExpenses: number; projectedAnnualRetirementExpenses: number; estimatedCorpusRequiredAtRetirement: number; projectedCorpusMeetsTarget: boolean; currency: string; yearlyProjection: ProjectionPoint[]; corpusRequirement?: CorpusRequirement; retirementDecumulation?: Decumulation }; scenarios: { scenarioType: string; annualReturnPercentage: number; annualInflationPercentage: number; projectedCorpus: number; projectedMonthlyExpenses: number; estimatedRealCorpus: number; years: number }[]; }
+interface RetirementResult { retirementProjection: { currentAge: number; retirementAge: number; yearsProjected: number; startingCorpus: number; totalFutureContributions: number; projectedCorpus: number; projectedMonthlyRetirementExpenses: number; projectedAnnualRetirementExpenses: number; estimatedCorpusRequiredAtRetirement: number; projectedCorpusMeetsTarget: boolean; currency: string; yearlyProjection: ProjectionPoint[]; projectedMonthlyRetirementIncome?: number; projectedMonthlyIncomeGap?: number; projectedMonthlyIncomeSurplus?: number; retirementIncomeStreams?: { type: string; name: string; frequency: string; startsAtAge: number; endsAtAge?: number | null; projectedMonthlyAmountAtRetirement: number; activeAtRetirement: boolean }[]; retirementExpenseBreakdown?: { category: string; name: string; currentMonthlyAmount: number; annualInflationPercentage: number; projectedMonthlyAmount: number }[]; corpusRequirement?: CorpusRequirement; retirementDecumulation?: Decumulation }; scenarios: { scenarioType: string; annualReturnPercentage: number; annualInflationPercentage: number; projectedCorpus: number; projectedMonthlyExpenses: number; estimatedRealCorpus: number; years: number }[]; }
 interface Projection { id: string; analysisId: string; scenarioType: string; periodType: string; periodNumber: number; projectedIncome: number; projectedExpenses: number; projectedContributions: number; projectedCorpus: number; projectedNetWorth: number; }
 interface Dashboard { latestAnalysis?: Analysis; projections?: Projection[]; }
 @Component({
@@ -26,8 +27,22 @@ export class FinancialEngineComponent {
   private readonly fb = inject(FormBuilder); private readonly api = inject(FinancialEngineService);
   readonly dashboard = signal<Dashboard | null>(null); readonly analyses = signal<Analysis[]>([]); readonly selected = signal<Analysis | null>(null); readonly engineResult = signal<EngineResult | null>(null); readonly mappingSummary = signal<AnalyzeResponse['mappingSummary'] | null>(null); readonly projections = signal<Projection[]>([]); readonly retirement = signal<RetirementResult | null>(null);
   readonly loading = signal(false); readonly analyzing = signal(false); readonly savingProjection = signal(false); readonly showSnapshot = signal(false); readonly showRetirement = signal(false); readonly error = signal(''); readonly message = signal(''); readonly currency = signal('INR');
+  readonly retirementPrefill = signal<RetirementPlanningPrefillResponse | null>(null);
+  readonly debtAssessment = signal<DebtRetirementAssessmentResponse | null>(null);
+  readonly prefillLoading = signal(false);
+  readonly debtLoading = signal(false);
+  readonly prefillForm = this.fb.nonNullable.group({
+    currency: ['INR', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]],
+    maximumValuationAgeDays: [90, [Validators.required, Validators.min(0), Validators.max(3650)]],
+    plannedRetirementAge: [null as number | null, [Validators.min(1), Validators.max(120)]]
+  });
   readonly snapshotForm = this.fb.nonNullable.group({ monthlyIncome: [0, [Validators.min(0)]], monthlyExpenses: [0, [Validators.min(0)]], monthlyDebtPayments: [0, [Validators.min(0)]], totalAssets: [0, [Validators.min(0)]], totalLiabilities: [0, [Validators.min(0)]], liquidAssets: [0, [Validators.min(0)]], currency: ['INR', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]] });
-  readonly retirementForm = this.fb.nonNullable.group({ currentInvestmentCorpus: [0, [Validators.required, Validators.min(0)]], monthlyContribution: [0, [Validators.required, Validators.min(0)]], annualExpectedReturnPercentage: [8, [Validators.required, Validators.min(0), Validators.max(100)]], annualInflationPercentage: [6, [Validators.required, Validators.min(0), Validators.max(100)]], annualContributionGrowthPercentage: [5, [Validators.required, Validators.min(0), Validators.max(100)]], yearsToProject: [20, [Validators.required, Validators.min(1), Validators.max(60)]], currentAge: [30, [Validators.required, Validators.min(1), Validators.max(100)]], retirementAge: [60, [Validators.required, Validators.min(1), Validators.max(100)]], currentMonthlyRetirementExpenses: [50000, [Validators.required, Validators.min(0)]] });
+  readonly retirementIncomeStreams = this.fb.array<FormGroup<any>>([]);
+  readonly retirementExpenseCategories = this.fb.array<FormGroup<any>>([]);
+  readonly incomeTypes = ['EPS_PENSION', 'EMPLOYER_PENSION', 'NPS_ANNUITY', 'OTHER_ANNUITY', 'RENTAL_INCOME', 'OTHER_RECURRING_INCOME'];
+  readonly incomeFrequencies = ['MONTHLY', 'QUARTERLY', 'ANNUALLY', 'YEARLY'];
+  readonly expenseTypes = ['ESSENTIAL', 'LIFESTYLE', 'HEALTHCARE', 'DEPENDENT_SUPPORT', 'OTHER'];
+  readonly retirementForm = this.fb.nonNullable.group({ retirementPlanningAge: [90, [Validators.required, Validators.min(1), Validators.max(120)]], currentInvestmentCorpus: [0, [Validators.required, Validators.min(0)]], monthlyContribution: [0, [Validators.required, Validators.min(0)]], annualExpectedReturnPercentage: [8, [Validators.required, Validators.min(0), Validators.max(100)]], annualInflationPercentage: [6, [Validators.required, Validators.min(0), Validators.max(100)]], annualContributionGrowthPercentage: [5, [Validators.required, Validators.min(0), Validators.max(100)]], yearsToProject: [20, [Validators.required, Validators.min(1), Validators.max(60)]], currentAge: [30, [Validators.required, Validators.min(1), Validators.max(100)]], retirementAge: [60, [Validators.required, Validators.min(1), Validators.max(100)]], currentMonthlyRetirementExpenses: [50000, [Validators.required, Validators.min(0)]] });
   constructor() { this.loadDashboard(); this.loadAnalyses(); }
   loadDashboard(): void { this.api.getDashboard<Dashboard>().subscribe({ next: r => this.dashboard.set(r), error: e => this.error.set(e?.error?.message || 'Unable to load the Financial Engine dashboard.') }); }
   loadAnalyses(): void { this.loading.set(true); this.api.getMyAnalyses<Analysis[]>().subscribe({ next: r => { this.analyses.set(r ?? []); this.loading.set(false); }, error: e => { this.loading.set(false); this.error.set(e?.error?.message || 'Unable to load analysis history.'); } }); }
@@ -36,8 +51,123 @@ export class FinancialEngineComponent {
   analyzeSnapshot(): void { if (this.snapshotForm.invalid) { this.snapshotForm.markAllAsTouched(); return; } const v = this.snapshotForm.getRawValue(); const body = { monthlyIncome: Number(v.monthlyIncome), monthlyExpenses: Number(v.monthlyExpenses), monthlyDebtPayments: Number(v.monthlyDebtPayments), totalAssets: Number(v.totalAssets), totalLiabilities: Number(v.totalLiabilities), liquidAssets: Number(v.liquidAssets), currency: v.currency }; this.analyzing.set(true); this.error.set(''); this.api.analyzeSnapshot<EngineResult>(body).subscribe({ next: r => { this.analyzing.set(false); this.showSnapshot.set(false); this.engineResult.set(r); this.mappingSummary.set(null); this.selected.set(r.analysis); this.message.set('Custom financial snapshot analysis completed.'); this.loadAnalyses(); this.loadDashboard(); this.loadSelectedProjections(r.analysis.id); }, error: e => { this.analyzing.set(false); this.error.set(e?.error?.message || 'Unable to analyze the supplied financial snapshot.'); } }); }
   selectAnalysis(a: Analysis): void { this.error.set(''); this.api.getAnalysis<Analysis>(a.id).subscribe({ next: r => { this.selected.set(r); this.engineResult.set(null); this.mappingSummary.set(null); this.retirement.set(null); this.loadSelectedProjections(r.id); }, error: e => this.error.set(e?.error?.message || 'Unable to load selected analysis.') }); }
   loadSelectedProjections(id: string): void { this.api.getProjections<Projection[]>(id).subscribe({ next: r => this.projections.set(r ?? []), error: () => this.projections.set([]) }); }
-  openRetirement(): void { this.retirementForm.reset({ currentInvestmentCorpus: 0, monthlyContribution: 0, annualExpectedReturnPercentage: 8, annualInflationPercentage: 6, annualContributionGrowthPercentage: 5, yearsToProject: 20, currentAge: 30, retirementAge: 60, currentMonthlyRetirementExpenses: 50000 }); this.showRetirement.set(true); }
-  createRetirementProjection(): void { const a = this.selected(); if (!a || this.retirementForm.invalid) { this.retirementForm.markAllAsTouched(); return; } const v = this.retirementForm.getRawValue(); if (v.retirementAge <= v.currentAge) { this.error.set('Retirement age must be greater than current age.'); return; } const body = { currentInvestmentCorpus: Number(v.currentInvestmentCorpus), monthlyContribution: Number(v.monthlyContribution), annualExpectedReturnPercentage: Number(v.annualExpectedReturnPercentage), annualInflationPercentage: Number(v.annualInflationPercentage), annualContributionGrowthPercentage: Number(v.annualContributionGrowthPercentage), yearsToProject: Number(v.yearsToProject), currentAge: Number(v.currentAge), retirementAge: Number(v.retirementAge), currentMonthlyRetirementExpenses: Number(v.currentMonthlyRetirementExpenses) }; this.savingProjection.set(true); this.error.set(''); this.api.createRetirementProjection<RetirementResult>(a.id, body).subscribe({ next: r => { this.savingProjection.set(false); this.showRetirement.set(false); this.retirement.set(r); this.message.set('Retirement projection generated.'); this.loadSelectedProjections(a.id); }, error: e => { this.savingProjection.set(false); this.error.set(e?.error?.message || 'Unable to generate retirement projection.'); } }); }
+  loadRetirementPrefill(): void {
+    if (this.prefillForm.invalid) { this.prefillForm.markAllAsTouched(); return; }
+    const v = this.prefillForm.getRawValue();
+    this.prefillLoading.set(true); this.error.set('');
+    this.api.getRetirementPlanningPrefill<RetirementPlanningPrefillResponse>(
+      v.currency.toUpperCase(), Number(v.maximumValuationAgeDays), v.plannedRetirementAge ?? undefined
+    ).subscribe({
+      next: response => {
+        this.retirementPrefill.set(response);
+        this.debtAssessment.set(response.debtRetirementAssessment ?? null);
+        this.prefillLoading.set(false);
+        this.message.set('Retirement planning data loaded from your saved financial records. Review it before applying.');
+      },
+      error: err => {
+        this.prefillLoading.set(false);
+        this.error.set(err?.error?.message || 'Unable to load retirement planning prefill. Check Customer, Investment and Financial Engine services.');
+      }
+    });
+  }
+  refreshDebtAssessment(): void {
+    const v = this.prefillForm.getRawValue();
+    if (this.prefillForm.controls.currency.invalid || this.prefillForm.controls.plannedRetirementAge.invalid) {
+      this.prefillForm.markAllAsTouched(); return;
+    }
+    this.debtLoading.set(true); this.error.set('');
+    this.api.getDebtRetirementAssessment<DebtRetirementAssessmentResponse>(
+      v.currency.toUpperCase(), v.plannedRetirementAge ?? undefined
+    ).subscribe({
+      next: response => { this.debtAssessment.set(response); this.debtLoading.set(false); },
+      error: err => { this.debtLoading.set(false); this.error.set(err?.error?.message || 'Unable to load the retirement debt assessment.'); }
+    });
+  }
+  applyRetirementPrefill(): void {
+    const p = this.retirementPrefill();
+    if (!p) return;
+    this.retirementForm.patchValue({
+      currentInvestmentCorpus: Number(p.currentRetirementCorpus ?? 0),
+      currentAge: p.currentAge ?? this.retirementForm.controls.currentAge.value,
+      currentMonthlyRetirementExpenses: Number(p.currentMonthlyExpenses ?? 0)
+    });
+    this.message.set('Saved corpus, age and monthly expenses applied. Contributions, retirement age, returns and inflation remain your decisions.');
+  }
+  openRetirement(): void {
+    const p = this.retirementPrefill();
+    this.retirementForm.reset({
+      retirementPlanningAge: 90,
+      currentInvestmentCorpus: Number(p?.currentRetirementCorpus ?? 0),
+      monthlyContribution: 0,
+      annualExpectedReturnPercentage: 8,
+      annualInflationPercentage: 6,
+      annualContributionGrowthPercentage: 5,
+      yearsToProject: 20,
+      currentAge: p?.currentAge ?? 30,
+      retirementAge: 60,
+      currentMonthlyRetirementExpenses: Number(p?.currentMonthlyExpenses ?? 50000)
+    });
+    this.retirementIncomeStreams.clear();
+    this.retirementExpenseCategories.clear();
+    this.showRetirement.set(true);
+  }
+  addRetirementIncomeStream(): void {
+    this.retirementIncomeStreams.push(this.fb.group({
+      type: ['OTHER_RECURRING_INCOME', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      amount: [0, [Validators.required, Validators.min(0)]],
+      frequency: ['MONTHLY', Validators.required],
+      annualGrowthPercentage: [0, [Validators.required, Validators.min(-100), Validators.max(100)]],
+      startsAtAge: [this.retirementForm.controls.retirementAge.value, [Validators.required, Validators.min(1), Validators.max(120)]],
+      endsAtAge: [null as number | null, [Validators.min(1), Validators.max(120)]]
+    }));
+  }
+  removeRetirementIncomeStream(index: number): void { this.retirementIncomeStreams.removeAt(index); }
+  addRetirementExpenseCategory(): void {
+    this.retirementExpenseCategories.push(this.fb.group({
+      category: ['ESSENTIAL', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
+      currentMonthlyAmount: [0, [Validators.required, Validators.min(0)]],
+      annualInflationPercentage: [this.retirementForm.controls.annualInflationPercentage.value, [Validators.required, Validators.min(0), Validators.max(100)]]
+    }));
+  }
+  removeRetirementExpenseCategory(index: number): void { this.retirementExpenseCategories.removeAt(index); }
+  createRetirementProjection(): void {
+    const a = this.selected();
+    if (!a || this.retirementForm.invalid || this.retirementIncomeStreams.invalid || this.retirementExpenseCategories.invalid) {
+      this.retirementForm.markAllAsTouched(); this.retirementIncomeStreams.markAllAsTouched(); this.retirementExpenseCategories.markAllAsTouched(); return;
+    }
+    const v = this.retirementForm.getRawValue();
+    if (v.retirementAge <= v.currentAge) { this.error.set('Retirement age must be greater than current age.'); return; }
+    if (v.retirementPlanningAge <= v.retirementAge) { this.error.set('Planning age must be greater than retirement age.'); return; }
+    const incomeStreams = this.retirementIncomeStreams.getRawValue().map((stream: any) => ({
+      type: stream.type, name: stream.name.trim(), amount: Number(stream.amount), frequency: stream.frequency,
+      annualGrowthPercentage: Number(stream.annualGrowthPercentage), startsAtAge: Number(stream.startsAtAge),
+      endsAtAge: stream.endsAtAge == null || stream.endsAtAge === '' ? null : Number(stream.endsAtAge)
+    }));
+    for (const stream of incomeStreams) {
+      if (stream.startsAtAge > v.retirementPlanningAge || (stream.endsAtAge != null && stream.endsAtAge < stream.startsAtAge)) {
+        this.error.set(`Check the age range for income stream: ${stream.name}.`); return;
+      }
+    }
+    const expenseCategories = this.retirementExpenseCategories.getRawValue().map((expense: any) => ({
+      category: expense.category, name: expense.name.trim(), currentMonthlyAmount: Number(expense.currentMonthlyAmount),
+      annualInflationPercentage: Number(expense.annualInflationPercentage)
+    }));
+    const body = {
+      retirementPlanningAge: Number(v.retirementPlanningAge), currentInvestmentCorpus: Number(v.currentInvestmentCorpus),
+      monthlyContribution: Number(v.monthlyContribution), annualExpectedReturnPercentage: Number(v.annualExpectedReturnPercentage),
+      annualInflationPercentage: Number(v.annualInflationPercentage), annualContributionGrowthPercentage: Number(v.annualContributionGrowthPercentage),
+      yearsToProject: Number(v.yearsToProject), currentAge: Number(v.currentAge), retirementAge: Number(v.retirementAge),
+      currentMonthlyRetirementExpenses: Number(v.currentMonthlyRetirementExpenses),
+      retirementIncomeStreams: incomeStreams, retirementExpenses: expenseCategories
+    };
+    this.savingProjection.set(true); this.error.set('');
+    this.api.createRetirementProjection<RetirementResult>(a.id, body).subscribe({
+      next: r => { this.savingProjection.set(false); this.showRetirement.set(false); this.retirement.set(r); this.message.set('Retirement projection generated with your income streams and expense assumptions.'); this.loadSelectedProjections(a.id); },
+      error: e => { this.savingProjection.set(false); this.error.set(e?.error?.message || 'Unable to generate retirement projection.'); }
+    });
+  }
   label(v: string): string { return (v || '').toLowerCase().split('_').map(x => x.charAt(0).toUpperCase() + x.slice(1)).join(' '); }
   healthClass(v: string): string { return ['GOOD', 'EXCELLENT'].includes(v) ? 'positive' : ['CRITICAL', 'NEEDS_IMPROVEMENT'].includes(v) ? 'negative' : 'neutral'; }
   scoreWidth(v: number | undefined): number { return Math.max(0, Math.min(100, Number(v) || 0)); }

@@ -22,6 +22,9 @@ export class CustomerService {
 
     getExpenses<T>(): Observable<T> { return this.http.get<T>(`${this.base}/expenses`); }
     getActiveExpenses<T>(): Observable<T> { return this.http.get<T>(`${this.base}/expenses/active`); }
+    getActiveExpensesByCurrency<T>(currency: string): Observable<T> {
+        return this.http.get<T>(`${this.base}/expenses/active/currency/${encodeURIComponent(currency.toUpperCase())}`);
+    }
     createExpense<T>(body: unknown): Observable<T> { return this.http.post<T>(`${this.base}/expenses`, body); }
     updateExpense<T>(id: string, body: unknown): Observable<T> { return this.http.put<T>(`${this.base}/expenses/${id}`, body); }
     deleteExpense(id: string): Observable<void> { return this.http.delete<void>(`${this.base}/expenses/${id}`); }

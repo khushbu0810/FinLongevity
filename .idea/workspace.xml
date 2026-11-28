@@ -5,9 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="phase 1-2 completed">
-      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/controller/CustomerRetirementPlanningPrefillController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/controller/CustomerRetirementPlanningPrefillController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/retirement/RetirementPlanningPrefillResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/retirement/RetirementPlanningPrefillResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/CustomerRetirementPlanningPrefillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/CustomerRetirementPlanningPrefillService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/client/CustomerServiceClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/client/CustomerServiceClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/config/RestClientConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/config/RestClientConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/retirement/RetirementProjectionPointResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/retirement/RetirementProjectionPointResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/retirement/RetirementProjectionRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/retirement/RetirementProjectionRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/retirement/RetirementProjectionResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/retirement/RetirementProjectionResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/engine/RetirementProjectionCalculator.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/engine/RetirementProjectionCalculator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/engine/ScenarioSimulationCalculator.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/engine/ScenarioSimulationCalculator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/FinancialAnalysisPersistenceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/FinancialAnalysisPersistenceService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/FinancialProjectionPersistenceService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/FinancialProjectionPersistenceService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/RetirementAndScenarioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/RetirementAndScenarioService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/src/main/java/com/example/insurance_service/controller/InsuranceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/src/main/java/com/example/insurance_service/controller/InsuranceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/insurance-service/src/main/java/com/example/insurance_service/service/InsuranceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/src/main/java/com/example/insurance_service/service/InsuranceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/employment-component/employment-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/financial-engine-component/financial-engine-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/financial-engine-component/financial-engine-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/financial-engine-component/financial-engine-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/financial-engine-component/financial-engine-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/insurance-component/insurance-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/insurance-component/insurance-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/insurance-component/insurance-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/insurance-component/insurance-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/investment-component/investment-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/payments-component/payments-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/profile-component/profile-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/services/customer-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/services/customer-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/services/financial-engine-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/services/financial-engine-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/services/investment-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/services/investment-service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,11 +138,11 @@
       <recent name="C:\projects\FinLongevity\backend\api-gateway" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.insurance_service.service" />
+      <recent name="com.example.insurance_service.controller" />
       <recent name="com.example.financial_engine_service.service" />
       <recent name="com.example.financial_engine_service.engine" />
       <recent name="com.example.financial_engine_service.enums" />
-      <recent name="com.example.financial_engine_service.dto.debt" />
-      <recent name="com.example.financial_engine_service.dto.retirement" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -127,19 +151,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.FinancialEngineServiceApplication">
-    <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.api_gateway.ApiGatewayApplication" />
-      <module name="api-gateway" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.api_gateway.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="FinancialEngineServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.financial_engine_service.FinancialEngineServiceApplication" />
       <module name="financial-engine-service" />
@@ -159,6 +170,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.example.insurance_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InvestmentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.investment_service.InvestmentServiceApplication" />
+      <module name="investment-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.investment_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -201,10 +225,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.FinancialEngineServiceApplication" />
-        <item itemvalue="Application.ApiGatewayApplication" />
-        <item itemvalue="Application.InsuranceServiceApplication" />
         <item itemvalue="Application.ProviderProductServiceApplication" />
         <item itemvalue="Application.PaymentServiceApplication" />
+        <item itemvalue="Application.InvestmentServiceApplication" />
+        <item itemvalue="Application.InsuranceServiceApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -383,7 +407,15 @@
       <option name="project" value="LOCAL" />
       <updated>1795863621991</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="phase 1-2 completed">
+      <option name="closed" value="true" />
+      <created>1795865566796</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1795865566796</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

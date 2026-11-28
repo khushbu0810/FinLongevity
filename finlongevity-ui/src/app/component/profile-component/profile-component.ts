@@ -206,7 +206,8 @@ export class ProfileComponent {
     this.error.set('');
     this.message.set('');
 
-    const request = this.form.getRawValue();
+    const raw = this.form.getRawValue();
+    const request = { ...raw, dateOfBirth: raw.dateOfBirth || null };
 
     // Existing profile = PUT.
     // Missing profile = POST.

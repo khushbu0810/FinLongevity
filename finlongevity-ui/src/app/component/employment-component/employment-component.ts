@@ -275,6 +275,7 @@ export class EmploymentComponent {
 
     const body = {
       ...value,
+      employmentStartDate: value.employmentStartDate || null,
       employmentEndDate: value.currentlyEmployed
         ? null
         : value.employmentEndDate || null

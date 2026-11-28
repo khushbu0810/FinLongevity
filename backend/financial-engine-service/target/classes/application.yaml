@@ -20,3 +20,5 @@ eureka:
 services:
   customer:
     base-url: http://localhost:8081
+  investment:
+    base-url: http://localhost:8084

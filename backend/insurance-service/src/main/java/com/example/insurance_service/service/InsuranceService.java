@@ -1,7 +1,13 @@
 package com.example.insurance_service.service;
 
-import com.example.insurance_service.dto.*;
-import com.example.insurance_service.model.*;
+import com.example.insurance_service.dto.InsuranceApplicationRequest;
+import com.example.insurance_service.dto.InsuranceApplicationResponse;
+import com.example.insurance_service.dto.InsuranceDecisionRequest;
+import com.example.insurance_service.dto.InsurancePolicyResponse;
+import com.example.insurance_service.model.InsuranceApplication;
+import com.example.insurance_service.model.InsuranceApplicationStatus;
+import com.example.insurance_service.model.InsurancePolicy;
+import com.example.insurance_service.model.InsurancePolicyStatus;
 import com.example.insurance_service.repository.InsuranceApplicationRepository;
 import com.example.insurance_service.repository.InsurancePolicyRepository;
 import org.springframework.stereotype.Service;
@@ -63,8 +69,9 @@ public class InsuranceService {
     }
 
     public InsuranceApplicationResponse decideApplication(
-            Long userId, UUID applicationId, InsuranceDecisionRequest request) {
-        InsuranceApplication application = findApplication(userId, applicationId);
+            UUID applicationId, InsuranceDecisionRequest request) {
+        InsuranceApplication application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Insurance application not found"));
         if (application.getStatus() != InsuranceApplicationStatus.SUBMITTED
                 && application.getStatus() != InsuranceApplicationStatus.UNDER_REVIEW) {
             throw new IllegalStateException("Only submitted or under-review applications can be decided");
@@ -98,7 +105,8 @@ public class InsuranceService {
         applicationRepository.save(application);
 
         InsurancePolicy policy = new InsurancePolicy();
-        policy.setIdentityUserId(userId);
+        // The policy belongs to the customer who submitted the application, not the administrator.
+        policy.setIdentityUserId(application.getIdentityUserId());
         policy.setApplication(application);
         policy.setPolicyNumber("DEMO-POL-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
         policy.setProviderProductId(application.getProviderProductId());

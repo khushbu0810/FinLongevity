@@ -1,190 +1,242 @@
 <div class="page-heading">
-    <div><span class="eyebrow">WEALTH PLANNING</span>
-        <h1>Investments</h1>
-        <p class="muted">Track your investment records, lifecycle and transaction history.</p>
-    </div>
-    <button class="primary-btn" type="button" (click)="openCreateForm()">＋ Add investment</button>
+  <div><span class="eyebrow">WEALTH PLANNING</span>
+    <h1>Investments</h1>
+    <p class="muted">Track your investment records, lifecycle and transaction history.</p>
+  </div>
+  <button class="primary-btn" type="button" (click)="openCreateForm()">＋ Add investment</button>
 </div>
 
 @if (message()) { <div class="alert-success">{{ message() }}</div> }
 @if (error()) { <div class="alert-error">{{ error() }}</div> }
 
 <section class="metric-grid investment-summary">
-    <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon green">₹</span><span class="metric-label">RECORDED INVESTMENTS
+  <article class="metric-card">
+    <div class="metric-top"><span class="metric-icon green">₹</span><span class="metric-label">RECORDED INVESTMENTS
                 · INR</span></div><strong>{{ totalInvestedInr | currency:'INR':'symbol':'1.0-0'
-            }}</strong><small>Excludes cancelled and failed records</small>
+    }}</strong><small>Excludes cancelled and failed records</small>
+  </article>
+  <article class="metric-card">
+    <div class="metric-top"><span class="metric-icon blue">◈</span><span class="metric-label">ACTIVE HOLDINGS</span>
+    </div><strong>{{ activeCount }}</strong><small>Active or partially redeemed</small>
+  </article>
+  <article class="metric-card">
+    <div class="metric-top"><span class="metric-icon orange">◷</span><span class="metric-label">IN PROGRESS</span>
+    </div><strong>{{ pendingCount }}</strong><small>Draft, payment or redemption pending</small>
+  </article>
+</section>
+
+<section class="content-card valuation-overview-card">
+  <div class="card-heading">
+    <div><span class="eyebrow">PORTFOLIO VALUATION</span><h3>Latest market-value evidence</h3>
+      <p class="muted">Latest recorded valuation per investment. Missing valuations are not treated as zero.</p>
+    </div>
+    <button class="outline-btn" type="button" [disabled]="valuationLoading()" (click)="loadValuationOverview()">{{valuationLoading()?'Refreshing…':'↻ Refresh valuations'}}</button>
+  </div>
+  @if(valuationLoading() && !valuationOverview().length){<div class="empty-state">Loading valuation overview…</div>}
+  @else if(!valuationOverview().length){<div class="empty-state compact-empty">No valuation overview is available yet. Open an active investment and record a valuation.</div>}
+  @else{
+  <div class="valuation-overview-grid">
+    @for(item of valuationOverview();track item.investmentId){
+    <article class="valuation-overview-item">
+      <div><strong>{{item.productNameSnapshot}}</strong><small>{{formatLabel(item.investmentStatus)}} · {{item.currency}}</small></div>
+      <div><small>Invested principal</small><strong>{{item.netInvestedPrincipal|currency:item.currency:'symbol':'1.0-0'}}</strong></div>
+      <div><small>Latest market value</small><strong>{{item.latestValuation ? (item.latestValuation.marketValue|currency:item.currency:'symbol':'1.0-0') : 'Unavailable'}}</strong>
+        @if(item.latestValuation){<small>{{item.latestValuation.valuationDate|date:'mediumDate'}} · {{formatLabel(item.latestValuation.valuationSource)}}</small>}
+      </div>
+      <span class="status-pill" [class.positive]="item.valuationStatus==='AVAILABLE'" [class.negative]="item.valuationStatus!=='AVAILABLE'">{{formatLabel(item.valuationStatus)}}</span>
     </article>
-    <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon blue">◈</span><span class="metric-label">ACTIVE HOLDINGS</span>
-        </div><strong>{{ activeCount }}</strong><small>Active or partially redeemed</small>
-    </article>
-    <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon orange">◷</span><span class="metric-label">IN PROGRESS</span>
-        </div><strong>{{ pendingCount }}</strong><small>Draft, payment or redemption pending</small>
-    </article>
+    }
+  </div>
+  }
 </section>
 
 @if (showForm()) {
 <section class="content-card investment-form-card">
-    <div class="card-heading form-title-row">
-        <div>
-            <h3>Create investment record</h3>
-            <p class="muted">Use a product ID from the Product Catalogue. The product name is stored as a snapshot.</p>
-        </div><button class="icon-btn" type="button" aria-label="Close form" (click)="closeCreateForm()">✕</button>
+  <div class="card-heading form-title-row">
+    <div>
+      <h3>Create investment record</h3>
+      <p class="muted">Use a product ID from the Product Catalogue. The product name is stored as a snapshot.</p>
+    </div><button class="icon-btn" type="button" aria-label="Close form" (click)="closeCreateForm()">✕</button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="createInvestment()" class="form-grid">
+    <div><label for="product-id">Provider product UUID *</label><input id="product-id"
+                                                                       formControlName="providerProductId" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"><small
+      class="hint">Required by Investment Service.</small>@if (form.controls.providerProductId.touched &&
+      form.controls.providerProductId.invalid) { <small class="field-error">Enter a valid 36-character product
+        UUID.</small> }</div>
+    <div><label for="product-name">Product name snapshot *</label><input id="product-name"
+                                                                         formControlName="productNameSnapshot" maxlength="180" placeholder="e.g. Long-term Growth Fund">@if
+      (form.controls.productNameSnapshot.touched && form.controls.productNameSnapshot.invalid) { <small
+        class="field-error">Product name is required (maximum 180 characters).</small> }</div>
+    <div><label for="product-type">Product type *</label><select id="product-type" formControlName="productType">
+      <option value="">Select type</option>@for (type of productTypes; track type) { <option [value]="type">{{
+      formatLabel(type) }}</option> }
+    </select>@if (form.controls.productType.touched && form.controls.productType.invalid) { <small
+      class="field-error">Select a product type.</small> }</div>
+    <div><label for="invested-amount">Invested amount *</label><input id="invested-amount" type="number" min="0.01"
+                                                                      step="0.01" formControlName="investedAmount">@if (form.controls.investedAmount.touched &&
+      form.controls.investedAmount.invalid) { <small class="field-error">Amount must be at least 0.01.</small> }
     </div>
-    <form [formGroup]="form" (ngSubmit)="createInvestment()" class="form-grid">
-        <div><label for="product-id">Provider product UUID *</label><input id="product-id"
-                formControlName="providerProductId" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"><small
-                class="hint">Required by Investment Service.</small>@if (form.controls.providerProductId.touched &&
-            form.controls.providerProductId.invalid) { <small class="field-error">Enter a valid 36-character product
-                UUID.</small> }</div>
-        <div><label for="product-name">Product name snapshot *</label><input id="product-name"
-                formControlName="productNameSnapshot" maxlength="180" placeholder="e.g. Long-term Growth Fund">@if
-            (form.controls.productNameSnapshot.touched && form.controls.productNameSnapshot.invalid) { <small
-                class="field-error">Product name is required (maximum 180 characters).</small> }</div>
-        <div><label for="product-type">Product type *</label><select id="product-type" formControlName="productType">
-                <option value="">Select type</option>@for (type of productTypes; track type) { <option [value]="type">{{
-                    formatLabel(type) }}</option> }
-            </select>@if (form.controls.productType.touched && form.controls.productType.invalid) { <small
-                class="field-error">Select a product type.</small> }</div>
-        <div><label for="invested-amount">Invested amount *</label><input id="invested-amount" type="number" min="0.01"
-                step="0.01" formControlName="investedAmount">@if (form.controls.investedAmount.touched &&
-            form.controls.investedAmount.invalid) { <small class="field-error">Amount must be at least 0.01.</small> }
-        </div>
-        <div><label for="investment-currency">Currency *</label><input id="investment-currency" maxlength="3"
-                formControlName="currency" class="currency-input" placeholder="INR">@if (form.controls.currency.touched
-            && form.controls.currency.invalid) { <small class="field-error">Enter a 3-letter currency code.</small> }
-        </div>
-        <div><label for="investment-units">Units <span class="optional">(optional)</span></label><input
-                id="investment-units" type="number" min="0.0000000001" step="any" formControlName="units"></div>
-        <div class="full-width"><label for="goal-id">Financial goal UUID <span
-                    class="optional">(optional)</span></label><input id="goal-id" formControlName="goalId"
-                placeholder="Link this investment to a goal"><small class="hint">Leave blank if this investment is not
-                linked to a goal.</small></div>
-        <div class="form-actions full-width"><button class="primary-btn" type="submit"
-                [disabled]="form.invalid || saving()">{{ saving() ? 'Creating…' : 'Create investment' }}</button><button
-                class="outline-btn" type="button" (click)="closeCreateForm()">Cancel</button></div>
-    </form>
+    <div><label for="investment-currency">Currency *</label><input id="investment-currency" maxlength="3"
+                                                                   formControlName="currency" class="currency-input" placeholder="INR">@if (form.controls.currency.touched
+      && form.controls.currency.invalid) { <small class="field-error">Enter a 3-letter currency code.</small> }
+    </div>
+    <div><label for="investment-units">Units <span class="optional">(optional)</span></label><input
+      id="investment-units" type="number" min="0.0000000001" step="any" formControlName="units"></div>
+    <div class="full-width"><label for="goal-id">Financial goal UUID <span
+      class="optional">(optional)</span></label><input id="goal-id" formControlName="goalId"
+                                                       placeholder="Link this investment to a goal"><small class="hint">Leave blank if this investment is not
+      linked to a goal.</small></div>
+    <div class="form-actions full-width"><button class="primary-btn" type="submit"
+                                                 [disabled]="form.invalid || saving()">{{ saving() ? 'Creating…' : 'Create investment' }}</button><button
+      class="outline-btn" type="button" (click)="closeCreateForm()">Cancel</button></div>
+  </form>
 </section>
 }
 
 <section class="content-card table-card">
-    <div class="card-heading investments-list-heading">
-        <div>
-            <h3>Your investment records</h3>
-            <p class="muted">Select a record to view its details and transaction history.</p>
-        </div><button class="outline-btn" type="button" (click)="loadInvestments()">↻ Refresh</button>
-    </div>
-    @if (loading()) { <div class="empty-state">Loading investments…</div> }
-    @else if (!investments().length) { <div class="empty-state"><span class="empty-icon">◈</span><strong>No investments
-            recorded yet</strong>
-        <p>Create an investment record using a product UUID from the catalogue.</p><button class="primary-btn"
-            type="button" (click)="openCreateForm()">Add your first investment</button>
-    </div> }
-    @else {
-    <div class="table-wrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>PRODUCT</th>
-                    <th>TYPE</th>
-                    <th>INVESTED AMOUNT</th>
-                    <th>UNITS</th>
-                    <th>STATUS</th>
-                    <th>OPENED</th>
-                    <th>ACTIONS</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (investment of investments(); track investment.id) {
-                <tr>
-                    <td><strong>{{ investment.productNameSnapshot }}</strong><small class="id-text">{{ investment.id
-                            }}</small></td>
-                    <td>{{ formatLabel(investment.productType) }}</td>
-                    <td class="amount-cell">{{ investment.investedAmount | currency:investment.currency:'symbol':'1.2-2'
-                        }}</td>
-                    <td>{{ investment.units ?? '—' }}</td>
-                    <td><span class="status-pill" [class]="statusClass(investment.status)">{{
+  <div class="card-heading investments-list-heading">
+    <div>
+      <h3>Your investment records</h3>
+      <p class="muted">Select a record to view its details and transaction history.</p>
+    </div><button class="outline-btn" type="button" (click)="loadInvestments()">↻ Refresh</button>
+  </div>
+  @if (loading()) { <div class="empty-state">Loading investments…</div> }
+  @else if (!investments().length) { <div class="empty-state"><span class="empty-icon">◈</span><strong>No investments
+  recorded yet</strong>
+  <p>Create an investment record using a product UUID from the catalogue.</p><button class="primary-btn"
+                                                                                     type="button" (click)="openCreateForm()">Add your first investment</button>
+</div> }
+  @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+      <tr>
+        <th>PRODUCT</th>
+        <th>TYPE</th>
+        <th>INVESTED AMOUNT</th>
+        <th>UNITS</th>
+        <th>STATUS</th>
+        <th>OPENED</th>
+        <th>ACTIONS</th>
+      </tr>
+      </thead>
+      <tbody>
+      @for (investment of investments(); track investment.id) {
+      <tr>
+        <td><strong>{{ investment.productNameSnapshot }}</strong><small class="id-text">{{ investment.id
+          }}</small></td>
+        <td>{{ formatLabel(investment.productType) }}</td>
+        <td class="amount-cell">{{ investment.investedAmount | currency:investment.currency:'symbol':'1.2-2'
+          }}</td>
+        <td>{{ investment.units ?? '—' }}</td>
+        <td><span class="status-pill" [class]="statusClass(investment.status)">{{
                             formatLabel(investment.status) }}</span></td>
-                    <td>{{ (investment.openedAt || investment.createdAt) ? ((investment.openedAt ||
-                        investment.createdAt) | date:'mediumDate') : '—' }}</td>
-                    <td>
-                        <div class="row-actions"><button type="button"
-                                (click)="viewDetails(investment)">Details</button>@if (investment.status === 'DRAFT') {
-                            <button type="button" class="danger-link" [disabled]="cancellingId() === investment.id"
-                                (click)="cancelDraft(investment)">{{ cancellingId() === investment.id ? 'Cancelling…' :
-                                'Cancel draft' }}</button> }</div>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    }
+        <td>{{ (investment.openedAt || investment.createdAt) ? ((investment.openedAt ||
+          investment.createdAt) | date:'mediumDate') : '—' }}</td>
+        <td>
+          <div class="row-actions"><button type="button"
+                                           (click)="viewDetails(investment)">Details</button>@if (investment.status === 'DRAFT') {
+            <button type="button" class="danger-link" [disabled]="cancellingId() === investment.id"
+                    (click)="cancelDraft(investment)">{{ cancellingId() === investment.id ? 'Cancelling…' :
+              'Cancel draft' }}</button> }</div>
+        </td>
+      </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+  }
 </section>
 
 @if (selectedInvestment(); as selected) {
 <div class="detail-backdrop" (click)="closeDetails()">
-    <section class="detail-panel" role="dialog" aria-modal="true" aria-label="Investment details"
-        (click)="$event.stopPropagation()">
-        <div class="detail-header">
-            <div><span class="eyebrow">INVESTMENT DETAILS</span>
-                <h2>{{ selected.productNameSnapshot }}</h2>
-                <p class="muted id-text">{{ selected.id }}</p>
-            </div><button class="icon-btn" type="button" aria-label="Close details" (click)="closeDetails()">✕</button>
-        </div>
-        @if (detailLoading()) { <div class="empty-state">Loading investment details…</div> }
-        @else {
-        <div class="detail-metrics">
-            <div><small>Invested amount</small><strong>{{ selected.investedAmount |
-                    currency:selected.currency:'symbol':'1.2-2' }}</strong></div>
-            <div><small>Status</small><span class="status-pill" [class]="statusClass(selected.status)">{{
+  <section class="detail-panel" role="dialog" aria-modal="true" aria-label="Investment details"
+           (click)="$event.stopPropagation()">
+    <div class="detail-header">
+      <div><span class="eyebrow">INVESTMENT DETAILS</span>
+        <h2>{{ selected.productNameSnapshot }}</h2>
+        <p class="muted id-text">{{ selected.id }}</p>
+      </div><button class="icon-btn" type="button" aria-label="Close details" (click)="closeDetails()">✕</button>
+    </div>
+    @if (detailLoading()) { <div class="empty-state">Loading investment details…</div> }
+    @else {
+    <div class="detail-metrics">
+      <div><small>Invested amount</small><strong>{{ selected.investedAmount |
+        currency:selected.currency:'symbol':'1.2-2' }}</strong></div>
+      <div><small>Status</small><span class="status-pill" [class]="statusClass(selected.status)">{{
                     formatLabel(selected.status) }}</span></div>
-            <div><small>Product type</small><strong>{{ formatLabel(selected.productType) }}</strong></div>
-            <div><small>Units</small><strong>{{ selected.units ?? '—' }}</strong></div>
-        </div>
-        <div class="transaction-heading">
-            <div>
-                <h3>Transaction history</h3>
-                <p class="muted">Transactions returned by the Investment Service.</p>
-            </div><button class="primary-btn" type="button" (click)="openTransactionForm()">＋ Add transaction</button>
-        </div>
-        @if (showTransactionForm()) {
-        <form [formGroup]="transactionForm" (ngSubmit)="addTransaction()" class="transaction-form">
-            <div><label for="txn-type">Transaction type *</label><select id="txn-type"
-                    formControlName="transactionType">
-                    <option value="">Select type</option>@for (type of transactionTypes; track type) { <option
-                        [value]="type">{{ formatLabel(type) }}</option> }
-                </select></div>
-            <div><label for="txn-amount">Amount *</label><input id="txn-amount" type="number" min="0.01" step="0.01"
-                    formControlName="amount"></div>
-            <div><label for="txn-currency">Currency</label><input id="txn-currency" maxlength="3"
-                    formControlName="currency"></div>
-            <div><label for="txn-units">Units</label><input id="txn-units" type="number" min="0.0000000001" step="any"
-                    formControlName="units"></div>
-            <div class="full-width"><label for="txn-description">Description</label><textarea id="txn-description"
-                    rows="2" maxlength="1000" formControlName="description"></textarea></div>
-            <div class="form-actions full-width"><button class="primary-btn" type="submit"
-                    [disabled]="transactionForm.invalid || saving()">{{ saving() ? 'Submitting…' : 'Submit transaction'
-                    }}</button><button class="outline-btn" type="button"
-                    (click)="showTransactionForm.set(false)">Cancel</button></div>
-        </form>
+      <div><small>Product type</small><strong>{{ formatLabel(selected.productType) }}</strong></div>
+      <div><small>Units</small><strong>{{ selected.units ?? '—' }}</strong></div>
+    </div>
+    <section class="investment-valuation-detail">
+      <div class="transaction-heading">
+        <div><h3>Market valuation history</h3><p class="muted">Record user-reported or statement-based market values. Valuations are append-only.</p></div>
+        @if(['ACTIVE','PARTIALLY_REDEEMED'].includes(selected.status)){
+        <button class="primary-btn" type="button" (click)="openValuationForm()">＋ Record valuation</button>
         }
-        @if (!transactions().length) { <div class="empty-state compact-empty">No transactions returned for this
-            investment.</div> }
-        @else { <div class="transaction-list">@for (txn of transactions(); track txn.id) { <article
-                class="transaction-row">
-                <div class="transaction-symbol">↔</div>
-                <div class="transaction-main"><strong>{{ formatLabel(txn.transactionType) }}</strong><small>{{
-                        txn.description || txn.paymentReference || 'No additional description' }}</small><small>{{
-                        (txn.processedAt || txn.createdAt) ? ((txn.processedAt || txn.createdAt) | date:'medium') :
-                        'Date unavailable' }}</small></div>
-                <div class="transaction-amount"><strong>{{ txn.amount | currency:(txn.currency ||
-                        selected.currency):'symbol':'1.2-2' }}</strong><span class="status-pill"
-                        [class]="statusClass(txn.status)">{{ formatLabel(txn.status) }}</span></div>
-            </article> }</div> }
+      </div>
+      @if(showValuationForm()){
+      <form [formGroup]="valuationForm" (ngSubmit)="recordValuation()" class="transaction-form valuation-form">
+        <div><label for="valuation-market-value">Market value *</label><input id="valuation-market-value" type="number" min="0" step="0.0001" formControlName="marketValue" /></div>
+        <div><label for="valuation-date">Valuation date *</label><input id="valuation-date" type="date" [max]="localToday()" formControlName="valuationDate" /></div>
+        <div><label for="valuation-source">Source *</label><select id="valuation-source" formControlName="valuationSource">@for(source of valuationSources;track source){<option [value]="source">{{formatLabel(source)}}</option>}</select></div>
+        <div><label for="valuation-reference">Statement/reference <span class="optional">(optional)</span></label><input id="valuation-reference" maxlength="200" formControlName="sourceReference" /></div>
+        <div class="form-actions full-width"><button class="primary-btn" type="submit" [disabled]="valuationForm.invalid || valuationSaving()">{{valuationSaving()?'Saving…':'Save valuation'}}</button><button class="outline-btn" type="button" (click)="showValuationForm.set(false)">Cancel</button></div>
+      </form>
+      }
+      @if(!valuationHistory().length){<div class="empty-state compact-empty">No valuation history recorded for this investment.</div>}
+      @else{
+      <div class="valuation-history-list">
+        @for(value of valuationHistory();track value.id){
+        <article><div><strong>{{value.marketValue|currency:value.currency:'symbol':'1.2-2'}}</strong><small>{{value.valuationDate|date:'mediumDate'}} · {{formatLabel(value.valuationSource)}}</small></div>
+          <small>{{value.sourceReference || 'No source reference'}} · Recorded {{value.recordedAt|date:'medium'}}</small>
+        </article>
         }
+      </div>
+      }
     </section>
+    <div class="transaction-heading">
+      <div>
+        <h3>Transaction history</h3>
+        <p class="muted">Transactions returned by the Investment Service.</p>
+      </div><button class="primary-btn" type="button" (click)="openTransactionForm()">＋ Add transaction</button>
+    </div>
+    @if (showTransactionForm()) {
+    <form [formGroup]="transactionForm" (ngSubmit)="addTransaction()" class="transaction-form">
+      <div><label for="txn-type">Transaction type *</label><select id="txn-type"
+                                                                   formControlName="transactionType">
+        <option value="">Select type</option>@for (type of transactionTypes; track type) { <option
+        [value]="type">{{ formatLabel(type) }}</option> }
+      </select></div>
+      <div><label for="txn-amount">Amount *</label><input id="txn-amount" type="number" min="0.01" step="0.01"
+                                                          formControlName="amount"></div>
+      <div><label for="txn-currency">Currency</label><input id="txn-currency" maxlength="3"
+                                                            formControlName="currency"></div>
+      <div><label for="txn-units">Units</label><input id="txn-units" type="number" min="0.0000000001" step="any"
+                                                      formControlName="units"></div>
+      <div class="full-width"><label for="txn-description">Description</label><textarea id="txn-description"
+                                                                                        rows="2" maxlength="1000" formControlName="description"></textarea></div>
+      <div class="form-actions full-width"><button class="primary-btn" type="submit"
+                                                   [disabled]="transactionForm.invalid || saving()">{{ saving() ? 'Submitting…' : 'Submit transaction'
+        }}</button><button class="outline-btn" type="button"
+                           (click)="showTransactionForm.set(false)">Cancel</button></div>
+    </form>
+    }
+    @if (!transactions().length) { <div class="empty-state compact-empty">No transactions returned for this
+    investment.</div> }
+    @else { <div class="transaction-list">@for (txn of transactions(); track txn.id) { <article
+    class="transaction-row">
+    <div class="transaction-symbol">↔</div>
+    <div class="transaction-main"><strong>{{ formatLabel(txn.transactionType) }}</strong><small>{{
+      txn.description || txn.paymentReference || 'No additional description' }}</small><small>{{
+      (txn.processedAt || txn.createdAt) ? ((txn.processedAt || txn.createdAt) | date:'medium') :
+      'Date unavailable' }}</small></div>
+    <div class="transaction-amount"><strong>{{ txn.amount | currency:(txn.currency ||
+      selected.currency):'symbol':'1.2-2' }}</strong><span class="status-pill"
+                                                           [class]="statusClass(txn.status)">{{ formatLabel(txn.status) }}</span></div>
+  </article> }</div> }
+    }
+  </section>
 </div>
 }

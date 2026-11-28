@@ -1,5 +1,7 @@
 package com.example.financial_engine_service.engine;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -11,6 +13,7 @@ import java.util.Objects;
  * <p>Contribution timing is explicitly end-of-month: each month's existing corpus earns
  * the monthly return first, then that month's contribution is added.</p>
  */
+@Component
 public final class RetirementAccumulationCalculator {
 
     private static final MathContext MC = new MathContext(20, RoundingMode.HALF_UP);

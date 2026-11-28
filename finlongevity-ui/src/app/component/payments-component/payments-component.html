@@ -1,217 +1,221 @@
 <div class="page-heading">
-    <div><span class="eyebrow">CASH FLOW & ACTIVITY</span>
-        <h1>Payments</h1>
-        <p class="muted">Review payment records, processing outcomes and their event history.</p>
-    </div>
-    <button class="primary-btn" type="button" (click)="openCreateForm()">＋ Create payment</button>
+  <div><span class="eyebrow">CASH FLOW & ACTIVITY</span>
+    <h1>Payments</h1>
+    <p class="muted">Review payment records, processing outcomes and their event history.</p>
+  </div>
+  <button class="primary-btn" type="button" (click)="openCreateForm()">＋ Create payment</button>
 </div>
 @if (message()) { <div class="alert-success">{{ message() }}</div> }
 @if (error()) { <div class="alert-error">{{ error() }}</div> }
 <div class="notice"><strong>Simulation environment:</strong> “Process mock payment” calls the backend mock-processing
-    endpoint. It does not initiate a real bank, UPI or card transaction.</div>
+  endpoint. It does not initiate a real bank, UPI or card transaction.</div>
 <section class="metric-grid payment-summary">
-    <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon green">₹</span><span class="metric-label">SUCCESSFUL PAYMENTS ·
+  <article class="metric-card">
+    <div class="metric-top"><span class="metric-icon green">₹</span><span class="metric-label">SUCCESSFUL PAYMENTS ·
                 INR</span></div><strong>{{ totalSuccessfulInr | currency:'INR':'symbol':'1.0-0' }}</strong><small>Sum of
-            payment records marked successful</small>
-    </article>
-    <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon blue">◷</span><span class="metric-label">PENDING
+    payment records marked successful</small>
+  </article>
+  <article class="metric-card">
+    <div class="metric-top"><span class="metric-icon blue">◷</span><span class="metric-label">PENDING
                 PAYMENTS</span></div><strong>{{ pendingCount }}</strong><small>Created, initiated or pending</small>
-    </article>
-    <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon orange">!</span><span class="metric-label">FAILED
+  </article>
+  <article class="metric-card">
+    <div class="metric-top"><span class="metric-icon orange">!</span><span class="metric-label">FAILED
                 PAYMENTS</span></div><strong>{{ failedCount }}</strong><small>Records marked failed</small>
-    </article>
+  </article>
 </section>
 @if (showForm()) {
 <section class="content-card payment-form-card">
-    <div class="card-heading form-title-row">
-        <div>
-            <h3>Create payment record</h3>
-            <p class="muted">Enter the business reference associated with this payment.</p>
-        </div><button class="icon-btn" type="button" aria-label="Close form" (click)="showForm.set(false)">✕</button>
-    </div>
-    <form [formGroup]="form" (ngSubmit)="createPayment()" class="form-grid">
-        <div><label for="business-reference">Business reference *</label><input id="business-reference"
-                formControlName="businessReference" maxlength="120"
-                placeholder="Investment or business record reference">@if (form.controls.businessReference.touched &&
-            form.controls.businessReference.invalid) { <small class="field-error">Reference is required (maximum 120
-                characters).</small> }</div>
-        <div><label for="business-type">Business type *</label><select id="business-type"
-                formControlName="businessType">
-                <option value="">Select business type</option>@for (type of businessTypes; track type) { <option
-                    [value]="type">{{ formatLabel(type) }}</option> }
-            </select>@if (form.controls.businessType.touched && form.controls.businessType.invalid) { <small
-                class="field-error">Select a business type.</small> }</div>
-        <div><label for="payment-amount">Amount *</label><input id="payment-amount" type="number" min="0.01" step="0.01"
-                formControlName="amount">@if (form.controls.amount.touched && form.controls.amount.invalid) { <small
-                class="field-error">Amount must be at least 0.01.</small> }</div>
-        <div><label for="payment-currency">Currency *</label><input id="payment-currency" maxlength="3"
-                formControlName="currency" placeholder="INR">@if (form.controls.currency.touched &&
-            form.controls.currency.invalid) { <small class="field-error">Enter a 3-letter currency code.</small> }</div>
-        <div><label for="payment-method">Payment method *</label><select id="payment-method"
-                formControlName="paymentMethod">
-                <option value="">Select method</option>@for (method of paymentMethods; track method) { <option
-                    [value]="method">{{ formatLabel(method) }}</option> }
-            </select>@if (form.controls.paymentMethod.touched && form.controls.paymentMethod.invalid) { <small
-                class="field-error">Select a payment method.</small> }</div>
-        <div class="form-actions full-width"><button class="primary-btn" type="submit"
-                [disabled]="form.invalid || saving()">{{ saving() ? 'Creating…' : 'Create payment' }}</button><button
-                class="outline-btn" type="button" (click)="showForm.set(false)">Cancel</button></div>
-    </form>
+  <div class="card-heading form-title-row">
+    <div>
+      <h3>Create payment record</h3>
+      <p class="muted">Enter the business reference associated with this payment.</p>
+    </div><button class="icon-btn" type="button" aria-label="Close form" (click)="showForm.set(false)">✕</button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="createPayment()" class="form-grid">
+    <div><label for="business-reference">Business reference *</label><input id="business-reference"
+                                                                            formControlName="businessReference" maxlength="120"
+                                                                            placeholder="Investment or business record reference">@if (form.controls.businessReference.touched &&
+      form.controls.businessReference.invalid) { <small class="field-error">Reference is required (maximum 120
+        characters).</small> }</div>
+    <div><label for="business-transaction-reference">Investment transaction UUID <span class="optional">(required for additional contribution / redemption)</span></label><input id="business-transaction-reference"
+                                                                                                                                                                                 formControlName="businessTransactionReference" maxlength="120"
+                                                                                                                                                                                 placeholder="Exact InvestmentTransaction UUID"><small class="hint">Keep the investment UUID in Business reference. This field links the payment to the exact transaction.</small></div>
+    <div><label for="business-type">Business type *</label><select id="business-type"
+                                                                   formControlName="businessType">
+      <option value="">Select business type</option>@for (type of businessTypes; track type) { <option
+      [value]="type">{{ formatLabel(type) }}</option> }
+    </select>@if (form.controls.businessType.touched && form.controls.businessType.invalid) { <small
+      class="field-error">Select a business type.</small> }</div>
+    <div><label for="payment-amount">Amount *</label><input id="payment-amount" type="number" min="0.01" step="0.01"
+                                                            formControlName="amount">@if (form.controls.amount.touched && form.controls.amount.invalid) { <small
+      class="field-error">Amount must be at least 0.01.</small> }</div>
+    <div><label for="payment-currency">Currency *</label><input id="payment-currency" maxlength="3"
+                                                                formControlName="currency" placeholder="INR">@if (form.controls.currency.touched &&
+      form.controls.currency.invalid) { <small class="field-error">Enter a 3-letter currency code.</small> }</div>
+    <div><label for="payment-method">Payment method *</label><select id="payment-method"
+                                                                     formControlName="paymentMethod">
+      <option value="">Select method</option>@for (method of paymentMethods; track method) { <option
+      [value]="method">{{ formatLabel(method) }}</option> }
+    </select>@if (form.controls.paymentMethod.touched && form.controls.paymentMethod.invalid) { <small
+      class="field-error">Select a payment method.</small> }</div>
+    <div class="form-actions full-width"><button class="primary-btn" type="submit"
+                                                 [disabled]="form.invalid || saving()">{{ saving() ? 'Creating…' : 'Create payment' }}</button><button
+      class="outline-btn" type="button" (click)="showForm.set(false)">Cancel</button></div>
+  </form>
 </section>
 }
 <section class="content-card table-card">
-    <div class="card-heading list-heading">
-        <div>
-            <h3>Payment activity</h3>
-            <p class="muted">Search and filter payment records returned by the Payment Service.</p>
-        </div>
-        <div class="list-tools"><button class="outline-btn" type="button" (click)="loadPayments()">↻
-                Refresh</button><button class="outline-btn" type="button" (click)="clearFilters()">Clear
-                filters</button></div>
+  <div class="card-heading list-heading">
+    <div>
+      <h3>Payment activity</h3>
+      <p class="muted">Search and filter payment records returned by the Payment Service.</p>
     </div>
-    <div class="payment-filters">
-        <input aria-label="Search payments" placeholder="Search payment, business reference or ID"
-            [value]="searchTerm()" (input)="searchTerm.set($any($event.target).value)">
-        <select aria-label="Filter by payment status" [value]="statusFilter()"
+    <div class="list-tools"><button class="outline-btn" type="button" (click)="loadPayments()">↻
+      Refresh</button><button class="outline-btn" type="button" (click)="clearFilters()">Clear
+      filters</button></div>
+  </div>
+  <div class="payment-filters">
+    <input aria-label="Search payments" placeholder="Search payment, business reference or ID"
+           [value]="searchTerm()" (input)="searchTerm.set($any($event.target).value)">
+    <select aria-label="Filter by payment status" [value]="statusFilter()"
             (change)="statusFilter.set($any($event.target).value)">
-            <option value="ALL">All statuses</option>@for (status of
-            ['CREATED','INITIATED','PENDING','SUCCESS','FAILED','CANCELLED','REFUNDED','PARTIALLY_REFUNDED']; track
-            status) { <option [value]="status">{{ formatLabel(status) }}</option> }
-        </select>
-        <select aria-label="Filter by payment method" [value]="methodFilter()"
+      <option value="ALL">All statuses</option>@for (status of
+      ['CREATED','INITIATED','PENDING','SUCCESS','FAILED','CANCELLED','REFUNDED','PARTIALLY_REFUNDED']; track
+      status) { <option [value]="status">{{ formatLabel(status) }}</option> }
+    </select>
+    <select aria-label="Filter by payment method" [value]="methodFilter()"
             (change)="methodFilter.set($any($event.target).value)">
-            <option value="ALL">All methods</option>@for (method of paymentMethods; track method) { <option
-                [value]="method">{{ formatLabel(method) }}</option> }
-        </select>
-    </div>
-    @if (loading()) { <div class="empty-state">Loading payments…</div> }
-    @else if (!payments().length) { <div class="empty-state"><span class="empty-icon">₹</span><strong>No payments
-            found</strong>
-        <p>Create a payment record to see its processing status and events.</p><button class="primary-btn" type="button"
-            (click)="openCreateForm()">Create your first payment</button>
-    </div> }
-    @else if (!filteredPayments.length) { <div class="empty-state compact-empty"><strong>No matching payments</strong>
-        <p>Try changing the search text or filters.</p>
-    </div> }
-    @else { <div class="table-wrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>PAYMENT</th>
-                    <th>BUSINESS TYPE</th>
-                    <th>AMOUNT</th>
-                    <th>METHOD</th>
-                    <th>STATUS</th>
-                    <th>CREATED</th>
-                    <th>ACTIONS</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (payment of filteredPayments; track payment.id) { <tr>
-                    <td><strong>{{ payment.paymentReference || 'Payment record' }}</strong><small class="id-text">{{
-                            payment.id }}</small></td>
-                    <td>{{ formatLabel(payment.businessType) }}<small class="id-text">{{ payment.businessReference
-                            }}</small></td>
-                    <td class="amount-cell">{{ payment.amount | currency:payment.currency:'symbol':'1.2-2' }}</td>
-                    <td>{{ formatLabel(payment.paymentMethod) }}</td>
-                    <td><span class="status-pill" [class]="statusClass(payment.status)">{{ formatLabel(payment.status)
+      <option value="ALL">All methods</option>@for (method of paymentMethods; track method) { <option
+      [value]="method">{{ formatLabel(method) }}</option> }
+    </select>
+  </div>
+  @if (loading()) { <div class="empty-state">Loading payments…</div> }
+  @else if (!payments().length) { <div class="empty-state"><span class="empty-icon">₹</span><strong>No payments
+  found</strong>
+  <p>Create a payment record to see its processing status and events.</p><button class="primary-btn" type="button"
+                                                                                 (click)="openCreateForm()">Create your first payment</button>
+</div> }
+  @else if (!filteredPayments.length) { <div class="empty-state compact-empty"><strong>No matching payments</strong>
+  <p>Try changing the search text or filters.</p>
+</div> }
+  @else { <div class="table-wrap">
+  <table>
+    <thead>
+    <tr>
+      <th>PAYMENT</th>
+      <th>BUSINESS TYPE</th>
+      <th>AMOUNT</th>
+      <th>METHOD</th>
+      <th>STATUS</th>
+      <th>CREATED</th>
+      <th>ACTIONS</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (payment of filteredPayments; track payment.id) { <tr>
+      <td><strong>{{ payment.paymentReference || 'Payment record' }}</strong><small class="id-text">{{
+        payment.id }}</small></td>
+      <td>{{ formatLabel(payment.businessType) }}<small class="id-text">{{ payment.businessReference
+        }}</small></td>
+      <td class="amount-cell">{{ payment.amount | currency:payment.currency:'symbol':'1.2-2' }}</td>
+      <td>{{ formatLabel(payment.paymentMethod) }}</td>
+      <td><span class="status-pill" [class]="statusClass(payment.status)">{{ formatLabel(payment.status)
                             }}</span></td>
-                    <td>{{ payment.createdAt ? (payment.createdAt | date:'mediumDate') : '—' }}</td>
-                    <td>
-                        <div class="row-actions"><button type="button" (click)="viewDetails(payment)">Details</button>
-                        </div>
-                    </td>
-                </tr> }
-            </tbody>
-        </table>
-    </div> }
+      <td>{{ payment.createdAt ? (payment.createdAt | date:'mediumDate') : '—' }}</td>
+      <td>
+        <div class="row-actions"><button type="button" (click)="viewDetails(payment)">Details</button>
+        </div>
+      </td>
+    </tr> }
+    </tbody>
+  </table>
+</div> }
 </section>
 @if (selectedPayment(); as selected) {
 <div class="detail-backdrop" (click)="closeDetails()">
-    <section class="detail-panel" role="dialog" aria-modal="true" aria-label="Payment details"
-        (click)="$event.stopPropagation()">
-        <div class="detail-header">
-            <div><span class="eyebrow">PAYMENT DETAILS</span>
-                <h2>{{ selected.paymentReference || 'Payment' }}</h2>
-                <p class="muted id-text">{{ selected.id }}</p>
-            </div><button class="icon-btn" type="button" aria-label="Close details" (click)="closeDetails()">✕</button>
-        </div>
-        @if (detailLoading()) { <div class="empty-state">Loading payment details…</div> }
-        @else {
-        <div class="detail-amount"><small>Payment amount</small><strong>{{ selected.amount |
-                currency:selected.currency:'symbol':'1.2-2' }}</strong><span class="status-pill"
-                [class]="statusClass(selected.status)">{{ formatLabel(selected.status) }}</span></div>
-        <div class="detail-grid">
-            <div><small>Business type</small><strong>{{ formatLabel(selected.businessType) }}</strong></div>
-            <div><small>Business reference</small><strong class="wrap-value">{{ selected.businessReference }}</strong>
-            </div>
-            <div><small>Payment method</small><strong>{{ formatLabel(selected.paymentMethod) }}</strong></div>
-            <div><small>Gateway</small><strong>{{ selected.gatewayName || '—' }}</strong></div>
-            <div><small>Gateway transaction ID</small><strong class="wrap-value">{{ selected.gatewayTransactionId || '—'
-                    }}</strong></div>
-            <div><small>Initiated</small><strong>{{ selected.initiatedAt ? (selected.initiatedAt | date:'medium') : '—'
-                    }}</strong></div>
-            <div><small>Completed</small><strong>{{ selected.completedAt ? (selected.completedAt | date:'medium') : '—'
-                    }}</strong></div>
-            <div><small>Updated</small><strong>{{ selected.updatedAt ? (selected.updatedAt | date:'medium') : '—'
-                    }}</strong></div>
-        </div>
-        @if (selected.failureReason) { <div class="failure-note"><strong>Failure reason</strong>
-            <p>{{ selected.failureReason }}</p>
-        </div> }
-        @if (canProcess(selected)) { <div class="mock-box"><strong>Mock payment simulation</strong>
-            <p>These actions call the test endpoint only. No real funds are moved.</p>
-            <div class="mock-actions"><button class="primary-btn" type="button"
-                    [disabled]="processingId() === selected.id" (click)="processMock(selected, 'SUCCESS')">{{
-                    processingId() === selected.id ? 'Processing…' : 'Simulate success' }}</button><button
-                    class="outline-btn fail-btn" type="button" [disabled]="processingId() === selected.id"
-                    (click)="processMock(selected, 'FAILED')">Simulate failure</button></div>
-        </div> }
-        <section class="reconciliation-card">
-            <div class="reconciliation-title">
-                <div><span class="eyebrow">RECONCILIATION VISIBILITY</span>
-                    <h3>Gateway & audit reconciliation</h3>
-                </div><span class="status-pill" [class.status-positive]="!!latestReconciliation"
+  <section class="detail-panel" role="dialog" aria-modal="true" aria-label="Payment details"
+           (click)="$event.stopPropagation()">
+    <div class="detail-header">
+      <div><span class="eyebrow">PAYMENT DETAILS</span>
+        <h2>{{ selected.paymentReference || 'Payment' }}</h2>
+        <p class="muted id-text">{{ selected.id }}</p>
+      </div><button class="icon-btn" type="button" aria-label="Close details" (click)="closeDetails()">✕</button>
+    </div>
+    @if (detailLoading()) { <div class="empty-state">Loading payment details…</div> }
+    @else {
+    <div class="detail-amount"><small>Payment amount</small><strong>{{ selected.amount |
+      currency:selected.currency:'symbol':'1.2-2' }}</strong><span class="status-pill"
+                                                                   [class]="statusClass(selected.status)">{{ formatLabel(selected.status) }}</span></div>
+    <div class="detail-grid">
+      <div><small>Business type</small><strong>{{ formatLabel(selected.businessType) }}</strong></div>
+      <div><small>Business reference</small><strong class="wrap-value">{{ selected.businessReference }}</strong>
+      </div>
+      <div><small>Investment transaction reference</small><strong class="wrap-value">{{ selected.businessTransactionReference || '—' }}</strong></div>
+      <div><small>Payment method</small><strong>{{ formatLabel(selected.paymentMethod) }}</strong></div>
+      <div><small>Gateway</small><strong>{{ selected.gatewayName || '—' }}</strong></div>
+      <div><small>Gateway transaction ID</small><strong class="wrap-value">{{ selected.gatewayTransactionId || '—'
+        }}</strong></div>
+      <div><small>Initiated</small><strong>{{ selected.initiatedAt ? (selected.initiatedAt | date:'medium') : '—'
+        }}</strong></div>
+      <div><small>Completed</small><strong>{{ selected.completedAt ? (selected.completedAt | date:'medium') : '—'
+        }}</strong></div>
+      <div><small>Updated</small><strong>{{ selected.updatedAt ? (selected.updatedAt | date:'medium') : '—'
+        }}</strong></div>
+    </div>
+    @if (selected.failureReason) { <div class="failure-note"><strong>Failure reason</strong>
+    <p>{{ selected.failureReason }}</p>
+  </div> }
+    @if (canProcess(selected)) { <div class="mock-box"><strong>Mock payment simulation</strong>
+    <p>These actions call the test endpoint only. No real funds are moved.</p>
+    <div class="mock-actions"><button class="primary-btn" type="button"
+                                      [disabled]="processingId() === selected.id" (click)="processMock(selected, 'SUCCESS')">{{
+      processingId() === selected.id ? 'Processing…' : 'Simulate success' }}</button><button
+      class="outline-btn fail-btn" type="button" [disabled]="processingId() === selected.id"
+      (click)="processMock(selected, 'FAILED')">Simulate failure</button></div>
+  </div> }
+    <section class="reconciliation-card">
+      <div class="reconciliation-title">
+        <div><span class="eyebrow">RECONCILIATION VISIBILITY</span>
+          <h3>Gateway & audit reconciliation</h3>
+        </div><span class="status-pill" [class.status-positive]="!!latestReconciliation"
                     [class.status-neutral]="!latestReconciliation">{{ latestReconciliation ? 'Event recorded' : 'No
                     event recorded' }}</span>
-            </div>
-            @if (latestReconciliation; as reconciliation) { <p class="muted">Latest reconciliation event was recorded {{
-                reconciliation.createdAt ? (reconciliation.createdAt | date:'medium') : 'without a timestamp' }}.</p>
-            <div class="reconciliation-meta">
-                <div><small>Event</small><strong>{{ formatLabel(reconciliation.eventType) }}</strong></div>
-                <div><small>Source</small><strong>{{ reconciliation.source || 'Not provided' }}</strong></div>
-                <div><small>External reference</small><strong class="wrap-value">{{ reconciliation.externalEventId ||
-                        'Not provided' }}</strong></div>
-            </div>
-            <p class="reconciliation-description">{{ reconciliation.description || 'No reconciliation description
-                supplied by the service.' }}</p> }
-            @else { <p class="muted">The Payment Service has not returned a <strong>RECONCILIATION_UPDATED</strong>
-                event for this payment. This screen displays recorded events; it does not trigger settlement or
-                reconciliation.</p> }
-        </section>
-        <div class="events-heading">
-            <div>
-                <h3>Payment event history <span class="event-count">{{ events().length }}</span></h3>
-                <p class="muted">Audit events recorded for this payment, newest first.</p>
-            </div><button class="outline-btn" type="button" [disabled]="eventLoading()"
-                (click)="loadEvents(selected.id)">{{ eventLoading() ? 'Refreshing…' : '↻ Refresh' }}</button>
-        </div>
-        @if (eventLoading()) { <div class="empty-state compact-empty">Loading event history…</div> }
-        @else if (eventError()) { <div class="alert-error">{{ eventError() }}</div> }
-        @else if (!events().length) { <div class="empty-state compact-empty">No payment events returned.</div> }
-        @else { <div class="event-timeline">@for (event of events(); track event.id) { <article class="event-row"><span
-                    class="event-dot" [class.reconciliation-dot]="event.eventType === 'RECONCILIATION_UPDATED'"></span>
-                <div class="event-content"><strong>{{ formatLabel(event.eventType) }} @if (event.eventType ===
-                        'RECONCILIATION_UPDATED') { <span class="event-tag">RECONCILIATION</span> }</strong><small>{{
-                        event.description || 'No event description' }}</small><small>{{ event.source ? 'Source: ' +
-                        event.source : '' }}{{ event.externalEventId ? ' · Ref: ' + event.externalEventId : ''
-                        }}</small><time>{{ event.createdAt ? (event.createdAt | date:'medium') : 'Date unavailable'
-                        }}</time></div>
-            </article> }</div> }
-        }
+      </div>
+      @if (latestReconciliation; as reconciliation) { <p class="muted">Latest reconciliation event was recorded {{
+      reconciliation.createdAt ? (reconciliation.createdAt | date:'medium') : 'without a timestamp' }}.</p>
+      <div class="reconciliation-meta">
+        <div><small>Event</small><strong>{{ formatLabel(reconciliation.eventType) }}</strong></div>
+        <div><small>Source</small><strong>{{ reconciliation.source || 'Not provided' }}</strong></div>
+        <div><small>External reference</small><strong class="wrap-value">{{ reconciliation.externalEventId ||
+          'Not provided' }}</strong></div>
+      </div>
+      <p class="reconciliation-description">{{ reconciliation.description || 'No reconciliation description
+        supplied by the service.' }}</p> }
+      @else { <p class="muted">The Payment Service has not returned a <strong>RECONCILIATION_UPDATED</strong>
+      event for this payment. This screen displays recorded events; it does not trigger settlement or
+      reconciliation.</p> }
     </section>
+    <div class="events-heading">
+      <div>
+        <h3>Payment event history <span class="event-count">{{ events().length }}</span></h3>
+        <p class="muted">Audit events recorded for this payment, newest first.</p>
+      </div><button class="outline-btn" type="button" [disabled]="eventLoading()"
+                    (click)="loadEvents(selected.id)">{{ eventLoading() ? 'Refreshing…' : '↻ Refresh' }}</button>
+    </div>
+    @if (eventLoading()) { <div class="empty-state compact-empty">Loading event history…</div> }
+    @else if (eventError()) { <div class="alert-error">{{ eventError() }}</div> }
+    @else if (!events().length) { <div class="empty-state compact-empty">No payment events returned.</div> }
+    @else { <div class="event-timeline">@for (event of events(); track event.id) { <article class="event-row"><span
+    class="event-dot" [class.reconciliation-dot]="event.eventType === 'RECONCILIATION_UPDATED'"></span>
+    <div class="event-content"><strong>{{ formatLabel(event.eventType) }} @if (event.eventType ===
+      'RECONCILIATION_UPDATED') { <span class="event-tag">RECONCILIATION</span> }</strong><small>{{
+      event.description || 'No event description' }}</small><small>{{ event.source ? 'Source: ' +
+      event.source : '' }}{{ event.externalEventId ? ' · Ref: ' + event.externalEventId : ''
+      }}</small><time>{{ event.createdAt ? (event.createdAt | date:'medium') : 'Date unavailable'
+      }}</time></div>
+  </article> }</div> }
+    }
+  </section>
 </div>
 }
