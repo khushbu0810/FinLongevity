@@ -1,59 +1,153 @@
 <div class="page-heading">
-    <div><span class="eyebrow">YOUR FINANCIAL SNAPSHOT</span>
+    <div>
+        <span class="eyebrow">YOUR FINANCIAL SNAPSHOT</span>
         <h1>Good to see you, {{ firstName }}.</h1>
-        <p class="muted">Here’s an overview of where you stand today.</p>
-    </div><button class="outline-btn" (click)="load()">↻ &nbsp; Refresh data</button>
+        <p class="muted">Here's an overview of where you stand today.</p>
+    </div>
+    <button class="outline-btn" (click)="load()">↻ &nbsp; Refresh data</button>
 </div>
-@if (error()) { <div class="alert-error">{{ error() }}</div> }
+
+@if (error()) {
+<div class="alert-error">{{ error() }}</div>
+}
+
 <section class="net-worth-card">
-    <div><span class="card-overline">TOTAL NET WORTH</span>
-        <h2>{{ netWorth()?.currency || 'INR' }} {{ netWorth()?.netWorth != null ? (netWorth()!.netWorth |
-            number:'1.2-2') : '—' }}</h2>
+    <div>
+        <span class="card-overline">TOTAL NET WORTH</span>
+        <h2>
+            {{ netWorth()?.currency || 'INR' }}
+            {{ netWorth()?.netWorth != null
+            ? (netWorth()!.netWorth | number:'1.2-2')
+            : '—' }}
+        </h2>
         <p>Your assets minus your liabilities</p>
     </div>
+
     <div class="net-worth-icon">↗</div>
-    <div class="net-worth-foot"><span>Calculated from your recorded financial data</span><span>{{
-            netWorth()?.calculatedAt ? (netWorth()!.calculatedAt | date:'medium') : 'Add financial data to get started'
-            }}</span></div>
+
+    <div class="net-worth-foot">
+        <span>Calculated from your recorded financial data</span>
+        <span>
+            {{ netWorth()?.calculatedAt
+            ? (netWorth()!.calculatedAt | date:'medium')
+            : 'Add financial data to get started' }}
+        </span>
+    </div>
 </section>
+
 <div class="section-heading">
     <div>
         <h3>Your financial health</h3>
         <p class="muted">A connected view of your financial position.</p>
     </div>
 </div>
+
 <section class="metric-grid">
     <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon green">↗</span><span class="metric-label">TOTAL ASSETS</span>
-        </div><strong>{{ money(netWorth()?.totalAssets) }}</strong><small>What you own</small>
+        <div class="metric-top">
+            <span class="metric-icon green">↗</span>
+            <span class="metric-label">TOTAL ASSETS</span>
+        </div>
+        <strong>{{ money(netWorth()?.totalAssets) }}</strong>
+        <small>What you own</small>
     </article>
+
     <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon orange">↘</span><span class="metric-label">TOTAL
-                LIABILITIES</span></div><strong>{{ money(netWorth()?.totalLiabilities) }}</strong><small>What you
-            owe</small>
+        <div class="metric-top">
+            <span class="metric-icon orange">↘</span>
+            <span class="metric-label">TOTAL LIABILITIES</span>
+        </div>
+        <strong>{{ money(netWorth()?.totalLiabilities) }}</strong>
+        <small>What you owe</small>
     </article>
+
     <article class="metric-card">
-        <div class="metric-top"><span class="metric-icon blue">◈</span><span class="metric-label">NET WORTH</span></div>
-        <strong>{{ money(netWorth()?.netWorth) }}</strong><small>Your current financial position</small>
+        <div class="metric-top">
+            <span class="metric-icon blue">◈</span>
+            <span class="metric-label">NET WORTH</span>
+        </div>
+        <strong>{{ money(netWorth()?.netWorth) }}</strong>
+        <small>Your current financial position</small>
     </article>
 </section>
+
 <div class="section-heading">
     <div>
         <h3>Build your financial picture</h3>
         <p class="muted">Complete these areas to make your dashboard more meaningful.</p>
     </div>
 </div>
+
 <section class="quick-grid">
-    <a routerLink="/income" class="quick-card"><span>↗</span>
-        <div><strong>Add income sources</strong><small>Salary, business, rental and more</small></div><b>→</b>
+    <a routerLink="/income" class="quick-card">
+        <span>↗</span>
+        <div>
+            <strong>Add income sources</strong>
+            <small>Salary, business, rental and more</small>
+        </div>
+        <b>→</b>
     </a>
-    <a routerLink="/expenses" class="quick-card"><span>↘</span>
-        <div><strong>Track expenses</strong><small>Understand where your money goes</small></div><b>→</b>
+
+    <a routerLink="/expenses" class="quick-card">
+        <span>↘</span>
+        <div>
+            <strong>Track expenses</strong>
+            <small>Understand where your money goes</small>
+        </div>
+        <b>→</b>
     </a>
-    <a routerLink="/assets" class="quick-card"><span>◇</span>
-        <div><strong>Record your assets</strong><small>Build a complete asset overview</small></div><b>→</b>
+
+    <a routerLink="/assets" class="quick-card">
+        <span>◇</span>
+        <div>
+            <strong>Record your assets</strong>
+            <small>Build a complete asset overview</small>
+        </div>
+        <b>→</b>
     </a>
-    <a routerLink="/risk-profile" class="quick-card"><span>◎</span>
-        <div><strong>Set your risk profile</strong><small>Capture goals and preferences</small></div><b>→</b>
+
+    <a routerLink="/liabilities" class="quick-card">
+        <span>▤</span>
+        <div>
+            <strong>Manage liabilities</strong>
+            <small>Track loans and outstanding debts</small>
+        </div>
+        <b>→</b>
+    </a>
+
+    <a routerLink="/risk-profile" class="quick-card">
+        <span>◎</span>
+        <div>
+            <strong>Set your risk profile</strong>
+            <small>Capture investment goals and preferences</small>
+        </div>
+        <b>→</b>
+    </a>
+
+    <a routerLink="/goals" class="quick-card">
+        <span>◎</span>
+        <div>
+            <strong>Plan financial goals</strong>
+            <small>Create goals and track contributions</small>
+        </div>
+        <b>→</b>
+    </a>
+
+    <a routerLink="/insurance" class="quick-card">
+        <span>♡</span>
+        <div>
+            <strong>Protect your future</strong>
+            <small>Manage insurance applications and policies</small>
+        </div>
+        <b>→</b>
+    </a>
+
+    <a routerLink="/financial-engine" class="quick-card">
+        <span>✧</span>
+        <div>
+            <strong>Analyze financial health</strong>
+            <small>Explore longevity scores and retirement projections</small>
+        </div>
+        <b>→</b>
     </a>
 </section>

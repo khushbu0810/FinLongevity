@@ -6,16 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="goal --- payment kafka configuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/controller/GoalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/controller/GoalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/FinancialGoalResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/FinancialGoalResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/identity-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/identity-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/dashboard/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/dashboard/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finlongevity-ui/src/app/component/layout/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/finlongevity-ui/src/app/component/layout/layout.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,44 +62,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ApiGatewayApplication.executor": "Run",
-    "Application.ConfigServerApplication.executor": "Run",
-    "Application.CustomerServiceApplication.executor": "Run",
-    "Application.EurekaDiscoveryServerApplication.executor": "Run",
-    "Application.GoalServiceApplication.executor": "Run",
-    "Application.IdentityServiceApplication.executor": "Run",
-    "Application.InsuranceServiceApplication.executor": "Run",
-    "Application.InvestmentServiceApplication.executor": "Run",
-    "Application.PaymentServiceApplication.executor": "Run",
-    "Application.ProviderProductServiceApplication.executor": "Run",
-    "Docker.backend: Compose Deployment.executor": "Run",
-    "Maven.api-gateway [clean].executor": "Run",
-    "Maven.api-gateway [install].executor": "Run",
-    "Maven.backend [clean].executor": "Run",
-    "Maven.finlongevity-backend [clean,install].executor": "Run",
-    "Maven.finlongevity-backend [clean].executor": "Run",
-    "Maven.finlongevity-backend [install].executor": "Run",
-    "Maven.finlongevity-backend [site].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/19-kafka-goal-payment",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/projects/FinLongevity/backend/payment-service/src/main/java/com/example/payment_service",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ConfigServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CustomerServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.EurekaDiscoveryServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GoalServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.IdentityServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.InsuranceServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.InvestmentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ProviderProductServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.backend: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.api-gateway [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.api-gateway [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.backend [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.finlongevity-backend [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.finlongevity-backend [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.finlongevity-backend [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.finlongevity-backend [site].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/FinLongevity/backend/payment-service/src/main/java/com/example/payment_service&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\projects\FinLongevity\backend\payment-service\src\main\java\com\example\payment_service" />
@@ -133,13 +125,13 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiGatewayApplication">
-    <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.api_gateway.ApiGatewayApplication" />
-      <module name="api-gateway" />
+  <component name="RunManager" selected="Application.InsuranceServiceApplication">
+    <configuration name="GoalServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.goal_service.GoalServiceApplication" />
+      <module name="goal-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.api_gateway.*" />
+          <option name="PATTERN" value="com.example.goal_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -147,12 +139,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GoalServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.goal_service.GoalServiceApplication" />
-      <module name="goal-service" />
+    <configuration name="IdentityServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.identity_service.IdentityServiceApplication" />
+      <module name="identity-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.goal_service.*" />
+          <option name="PATTERN" value="com.example.identity_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -173,12 +165,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PaymentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.payment_service.PaymentServiceApplication" />
-      <module name="payment-service" />
+    <configuration name="InvestmentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.investment_service.InvestmentServiceApplication" />
+      <module name="investment-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.payment_service.*" />
+          <option name="PATTERN" value="com.example.investment_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -186,12 +178,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProviderProductServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.provider_product_service.ProviderProductServiceApplication" />
-      <module name="provider-product-service" />
+    <configuration name="PaymentServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.payment_service.PaymentServiceApplication" />
+      <module name="payment-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.provider_product_service.*" />
+          <option name="PATTERN" value="com.example.payment_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -207,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.InsuranceServiceApplication" />
-        <item itemvalue="Application.ProviderProductServiceApplication" />
-        <item itemvalue="Application.PaymentServiceApplication" />
+        <item itemvalue="Application.IdentityServiceApplication" />
         <item itemvalue="Application.GoalServiceApplication" />
+        <item itemvalue="Application.PaymentServiceApplication" />
+        <item itemvalue="Application.InvestmentServiceApplication" />
       </list>
     </recent_temporary>
   </component>
