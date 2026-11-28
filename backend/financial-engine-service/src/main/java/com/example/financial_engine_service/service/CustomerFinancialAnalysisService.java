@@ -24,10 +24,14 @@ public class CustomerFinancialAnalysisService {
         this.orchestrationService = orchestrationService;
     }
 
-    public CustomerAnalysisResult analyzeMyFinancials(Long userId, String currency) {
+    public CustomerAnalysisResult analyzeMyFinancials(
+            Long userId, String email, String role, String currency) {
+
         String normalizedCurrency = currency.toUpperCase(Locale.ROOT);
+
         CustomerFinancialDataResponse customerData =
-                customerServiceClient.getCustomerFinancialData(userId);
+                customerServiceClient.getCustomerFinancialData(
+                        userId, email, role);
 
         CustomerFinancialSnapshotAssembler.AssembledCustomerSnapshot assembled =
                 snapshotAssembler.assemble(customerData, normalizedCurrency);

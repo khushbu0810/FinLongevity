@@ -20,9 +20,14 @@ public class CustomerFinancialAnalysisController {
     @PostMapping("/analyze/me")
     public CustomerFinancialAnalysisService.CustomerAnalysisResult analyzeMyFinancials(
             @RequestHeader("X-Authenticated-User-Id") Long userId,
+            @RequestHeader("X-Authenticated-User-Email") String email,
+            @RequestHeader("X-Authenticated-User-Role") String role,
             @RequestParam(defaultValue = "INR")
-            @Pattern(regexp = "^[A-Za-z]{3}$", message = "Currency must be a 3-letter ISO code")
+            @Pattern(regexp = "^[A-Za-z]{3}$",
+                    message = "Currency must be a 3-letter ISO code")
             String currency) {
-        return customerFinancialAnalysisService.analyzeMyFinancials(userId, currency);
+
+        return customerFinancialAnalysisService.analyzeMyFinancials(
+                userId, email, role, currency);
     }
 }

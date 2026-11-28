@@ -1,6 +1,7 @@
 package com.example.financial_engine_service.dto;
 
-import com.fasterxml.jackson.databind.JsonNode;
+
+import tools.jackson.databind.JsonNode;
 
 public record CustomerFinancialDataResponse(
         JsonNode profile,

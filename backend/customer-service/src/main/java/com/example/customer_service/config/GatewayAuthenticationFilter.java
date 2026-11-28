@@ -46,7 +46,11 @@ public class GatewayAuthenticationFilter extends OncePerRequestFilter {
         String email = request.getHeader("X-Authenticated-User-Email");
         String userId = request.getHeader("X-Authenticated-User-Id");
         String role = request.getHeader("X-Authenticated-User-Role");
-
+        System.out.println("========== GATEWAY AUTH DEBUG ==========");
+        System.out.println("User ID: " + userId);
+        System.out.println("Email: " + email);
+        System.out.println("Role: " + role);
+        System.out.println("========================================");
         if (blank(userId) || blank(email) || blank(role)) {
             response.sendError(401, "Missing authenticated-user context. Access this service through the API Gateway.");
             return;
@@ -65,6 +69,9 @@ public class GatewayAuthenticationFilter extends OncePerRequestFilter {
                 null,
                 List.of(new SimpleGrantedAuthority("ROLE_" + normalizedRole))
         );
+        System.out.println("AUTHENTICATED: " + auth.isAuthenticated());
+        System.out.println("AUTHORITIES: " + auth.getAuthorities());
+        System.out.println("PRINCIPAL: " + auth.getPrincipal());
         SecurityContextHolder.getContext().setAuthentication(auth);
         try {
             filterChain.doFilter(request, response);

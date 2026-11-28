@@ -3,8 +3,8 @@ package com.example.financial_engine_service.service;
 import com.example.financial_engine_service.dto.CustomerDataMappingSummary;
 import com.example.financial_engine_service.dto.CustomerFinancialDataResponse;
 import com.example.financial_engine_service.dto.FinancialSnapshotRequest;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.JsonNode;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

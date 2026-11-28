@@ -4,18 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="goal --- payment kafka configuration">
+    <list default="true" id="513e44c1-a9d4-44c4-9532-3823f080fbcd" name="Changes" comment="Merge branch 'develop' of https://github.com/khushbu0810/FinLongevity into develop&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/controller/GoalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/controller/GoalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/FinancialGoalResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/dto/FinancialGoalResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/java/com/example/goal_service/service/GoalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/goal-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/identity-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/identity-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/insurance-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/insurance-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/investment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/investment-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/GatewayAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/GatewayAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/service/CustomerProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/customer-service/src/main/java/com/example/customer_service/service/CustomerProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/client/CustomerServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/client/CustomerServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/controller/CustomerFinancialAnalysisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/controller/CustomerFinancialAnalysisController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/CustomerFinancialDataResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/dto/CustomerFinancialDataResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/CustomerFinancialAnalysisService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/CustomerFinancialAnalysisService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/CustomerFinancialSnapshotAssembler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/src/main/java/com/example/financial_engine_service/service/CustomerFinancialSnapshotAssembler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/client/CustomerServiceClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/client/CustomerServiceClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/controller/CustomerFinancialAnalysisController.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/controller/CustomerFinancialAnalysisController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/CustomerFinancialDataResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/dto/CustomerFinancialDataResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/CustomerFinancialAnalysisService$CustomerAnalysisResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/CustomerFinancialAnalysisService$CustomerAnalysisResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/CustomerFinancialAnalysisService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/CustomerFinancialAnalysisService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/CustomerFinancialSnapshotAssembler.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/financial-engine-service/target/classes/com/example/financial_engine_service/service/CustomerFinancialSnapshotAssembler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payment-service/src/main/java/com/example/payment_service/config/KafkaProducerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/provider-product-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/provider-product-service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +83,7 @@
     "Application.ConfigServerApplication.executor": "Run",
     "Application.CustomerServiceApplication.executor": "Run",
     "Application.EurekaDiscoveryServerApplication.executor": "Run",
+    "Application.FinancialEngineServiceApplication.executor": "Run",
     "Application.GoalServiceApplication.executor": "Run",
     "Application.IdentityServiceApplication.executor": "Run",
     "Application.InsuranceServiceApplication.executor": "Run",
@@ -97,7 +105,7 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "feature/19-kafka-goal-payment",
+    "git-widget-placeholder": "develop",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/projects/FinLongevity/backend/payment-service/src/main/java/com/example/payment_service",
@@ -133,7 +141,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiGatewayApplication">
+  <component name="RunManager" selected="Application.FinancialEngineServiceApplication">
     <configuration name="ApiGatewayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.api_gateway.ApiGatewayApplication" />
       <module name="api-gateway" />
@@ -147,12 +155,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GoalServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.goal_service.GoalServiceApplication" />
-      <module name="goal-service" />
+    <configuration name="FinancialEngineServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.financial_engine_service.FinancialEngineServiceApplication" />
+      <module name="financial-engine-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.goal_service.*" />
+          <option name="PATTERN" value="com.example.financial_engine_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -207,11 +215,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.FinancialEngineServiceApplication" />
         <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.InsuranceServiceApplication" />
         <item itemvalue="Application.ProviderProductServiceApplication" />
         <item itemvalue="Application.PaymentServiceApplication" />
-        <item itemvalue="Application.GoalServiceApplication" />
       </list>
     </recent_temporary>
   </component>

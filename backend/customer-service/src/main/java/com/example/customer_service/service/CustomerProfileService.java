@@ -39,9 +39,22 @@ public class CustomerProfileService {
 
     @Transactional(readOnly = true)
     public CustomerProfileResponse getMyProfile() {
-        return toResponse(
-                findProfile(currentUser().userId())
-        );
+
+        String userId = currentUser().userId();
+
+        System.out.println("PROFILE LOOKUP FOR USER: " + userId);
+
+        CustomerProfile profile = repository.findByIdentityUserId(userId)
+                .orElseThrow(() -> {
+                    System.out.println("PROFILE NOT FOUND - RETURNING 404");
+
+                    return new ResponseStatusException(
+                            HttpStatus.NOT_FOUND,
+                            "Customer profile not found"
+                    );
+                });
+
+        return toResponse(profile);
     }
 
     @Transactional
